@@ -15,7 +15,7 @@ baseurl:            '' # The subpath of your site, e.g. /blog
 url:                'https://zanbaldwin.com' # The base hostname & protocol for your site
 twitter:            'https://twitter.com/ZanBaldwin'
 
-markdown:  'commonmark'
+markdown:  'kramdown'
 permalink: 'pretty'
 paginate:  11
 sass:
