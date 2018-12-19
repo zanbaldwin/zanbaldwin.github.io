@@ -5,55 +5,57 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'jekyll serve'. If you change this file, please restart the server process.
 
-theme_version: 1.0.4
+theme_version: '1.0.4'
 
 # Site settings
-title:              Nubia
+title:              'Zan Baldwin'
 logo:               # Logo image URL
-description:        Thoughts, Stories and Ideas
+description:        'Software Developer'
 baseurl:            '' # The subpath of your site, e.g. /blog
-url:                'https://nubia-jekyll.netlify.com/' # The base hostname & protocol for your site
-twitter:            https://twitter.com/aspirethemes
-facebook:           https://www.facebook.com/aspirethemes
-instagram:          https://www.instagram.com/aspirethemes
+url:                'https://zanbaldwin.com' # The base hostname & protocol for your site
+twitter:            'https://twitter.com/ZanBaldwin'
 
-markdown:  kramdown
-permalink: pretty
+markdown:  'commonmark'
+permalink: 'pretty'
 paginate:  11
 sass:
-  style: compressed
+    style: 'compressed'
 
-gems:
-  - jekyll-paginate
-  - jekyll/tagging
+plugins:
+    - 'jekyll-paginate'
+    - 'jekyll/tagging'
+    - 'jekyll-feed'
+    - 'jekyll-sitemap'
+    - 'jekyll-seo-tag'
 
 include:
-  - _pages
+    - '_pages'
 
 exclude:
-  - vendor
-  - Gemfile
-  - Gemfile.lock
+    - 'vendor'
+    - 'Gemfile'
+    - 'Gemfile.lock'
+    - 'Makefile'
 
 # Tags
-tag_page_dir:         tag
-tag_page_layout:      tag_page
-tag_permalink_style:  pretty
+tag_page_dir:         'tag'
+tag_page_layout:      'tag_page'
+tag_permalink_style:  'pretty'
 
 # Pages path
 defaults:
-  - scope:
-      path: '_pages'
-    values:
-      permalink: /:basename:output_ext
+    - scope:
+          path: '_pages'
+      values:
+          permalink: '/:basename:output_ext'
 
 # Authors
 authors:
-  ahmad:
-    name:     Ahmad Ajmi
-    bio:      Author & developer of Aspire Themes. Minimalist. I love creating clean and minimal websites.Technical writer at SitePoint.
-    gravatar: https://s.gravatar.com/avatar/f83141edd9e6339e678648596a403fd5?s=150
-    email:    info@aspirethemes.com
-    website:  http://aspirethemes.com
-    github:   https://github.com/aspirethemes
-    twitter:  https://twitter.com/aspirethemes
+    zanbaldwin:
+        name:     'Zan Baldwin'
+        bio:      'Symfony Software Developer'
+        gravatar: 'https://s.gravatar.com/avatar/f83141edd9e6339e678648596a403fd5?s=150'
+        email:    'hello@zanbaldwin.com'
+        website:  'https://zanbaldwin.com'
+        github:   'https://github.com/zanbaldwin'
+        twitter:  'https://twitter.com/ZanBaldwin'

@@ -3,7 +3,7 @@
 
   <div class='c-post-card {% if page.url == '/' %} {% if forloop.first == true %} c-post-card--first {% endif %} {% endif %}'>
     <div class='c-post-card__media'>
-      <a href='{{ post.url | prepend: site.baseurl }}' class='c-post-card__image js-fadein' style='background-image: url({{ post.image | prepend: site.baseurl }})'>
+      <a href='{{ post.url | prepend: site.baseurl }}' class='c-post-card__image js-fadein' style='background-image: url({{ post.image.path | default: post.image | prepend: site.baseurl }})'>
         {% if post.featured %}
           <span title='Featured Post'>
             <span class='c-post-card--featured__icon' data-icon='ei-star' data-size='s'></span>

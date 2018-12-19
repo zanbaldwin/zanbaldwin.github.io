@@ -10,7 +10,7 @@
         </div>
         {% if post.image %}
           <div class='c-teaser__media'>
-            <div class='c-teaser__image js-fadein' style='background-image: url({{ post.image | prepend: site.baseurl }})' aria-label='{{ post.title }}'></div>
+            <div class='c-teaser__image js-fadein' style='background-image: url({{ post.image.path | default: post.image | prepend: site.baseurl }})' aria-label='{{ post.title }}'></div>
           </div>
         {% endif %}
       </a>

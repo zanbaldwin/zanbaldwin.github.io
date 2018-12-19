@@ -1,15 +1,25 @@
 ---
-layout: default
+layout: 'default'
+image:
+    path: '/images/pages/cv.jpg'
+    credit: 'Patrick Fore'
+    source: 'https://unsplash.com/photos/0gkw_9fy0eQ'
 ---
 
 <div class='o-wrapper'>
-  <div class='o-grid js-grid'>
-    {% for post in paginator.posts %}
-      {% include post-card.html %}
-    {% endfor %}
-  </div>
-
-  <div class='o-grid'>
-    {% include pagination.html %}
-  </div>
+    {% assign post_count = site.posts | size %}
+    {% if psize == 0 %}
+        <div class='o-grid js-grid'>
+            {% for post in paginator.posts %}
+                {% include post-card.html %}
+            {% endfor %}
+        </div>
+        <div class='o-grid'>
+            {% include pagination.html %}
+        </div>
+    {% else %}
+        <div class="o-grid">
+            <p style="text-align:center;display:block;width:100%">&uarr;</p>
+        </div>
+    {% endif %}
 </div>

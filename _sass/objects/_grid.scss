@@ -53,6 +53,10 @@ $grid-gutter: $base-spacing-unit;
     width: percentage(3 / 4);
   } // 75%;
 
+  &--4-5-s {
+    width: percentage(4 / 5);
+  }
+
   &--4-4-s {
     width: 100%;
   }
@@ -77,6 +81,10 @@ $grid-gutter: $base-spacing-unit;
     &--3-4-m {
       width: percentage(3 / 4);
     } // 75%;
+
+    &--4-5-m {
+      width: percentage(4 / 5);
+    }
 
     &--4-4-m {
       width: 100%;
@@ -103,6 +111,10 @@ $grid-gutter: $base-spacing-unit;
     &--3-4-l {
       width: percentage(3 / 4);
     } // 75%;
+
+    &--4-5-l {
+      width: percentage(4 / 5);
+    }
 
     &--4-4-l {
       width: 100%;

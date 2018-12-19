@@ -73,4 +73,17 @@
       margin-top: auto;
     }
   }
+  &__credit {
+    margin-top: $base-spacing-unit;
+    color: lighten($color-gray, 30%);
+    text-transform: uppercase;
+    font-size: $font-size-tiny;
+
+    a {
+      color: lighten($color-gray, 20%);
+      &:hover {
+        color: lighten($color-brand, 20%);
+      }
+    }
+  }
 }

@@ -8,13 +8,9 @@
   border-top: half(quarter($base-spacing-unit)) solid $color-white;
   background-color: $bg-gray;
 
-  @include mq($from: desktop) {
-    padding: (quadruple($base-spacing-unit) + $base-spacing-unit) 0 $base-spacing-unit 0;
-  }
-
   &__bottom {
-    margin-top: double($base-spacing-unit);
-    padding-top: double($base-spacing-unit);
+    //margin-top: double($base-spacing-unit);
+    //padding-top: double($base-spacing-unit);
     border-top: 1px solid $color-border;
   }
 
