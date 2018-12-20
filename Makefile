@@ -5,7 +5,7 @@ usage:
 MKFILE := $(abspath $(lastword $(MAKEFILE_LIST)))
 MKDIR  := $(dir $(MKFILE))
 
-JEKYLL_VERSION := 3.8.5
+JEKYLL_VERSION := 3.8.3
 SERVER_HOST := jekyll.transpridebrighton.org
 SERVER_PORT := 12345
 SERVER_USER := root

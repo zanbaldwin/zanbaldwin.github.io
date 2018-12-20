@@ -15,6 +15,17 @@ baseurl:            '' # The subpath of your site, e.g. /blog
 url:                'https://zanbaldwin.com' # The base hostname & protocol for your site
 twitter:            'https://twitter.com/ZanBaldwin'
 
+social:
+    twitter:
+        text: '@ZanBaldwin'
+        link: 'https://twitter.com/ZanBaldwin'
+    github:
+        text: 'github.com/zanbaldwin'
+        link: 'https://github.com/zanbaldwin'
+#    linkedin:
+#        text: 'LinkedIn'
+#        link: 'https://www.linkedin.com/in/zanbaldwin'
+
 markdown:  'kramdown'
 permalink: 'pretty'
 paginate:  11

@@ -32,7 +32,18 @@ layout: default
                     {% endif %}
 
                     <h4>Contact</h4>
-                    <p>{{ page.email | default: site.email }}</p>
+                    <ul>
+                        <li><span class="e-type__protect">{{ page.email | default: site.email | split: "" | reverse | join: "" }}</span></li>
+                        {% if site.social.github %}
+                            <li><a href="{{ site.social.github.link }}">{{ site.social.github.text }}</a></li>
+                        {% endif %}
+                        {% if site.social.twitter %}
+                            <li><a href="{{ site.social.twitter.link }}">{{ site.social.twitter.text }}</a></li>
+                        {% endif %}
+                        {% if site.social.linkedin %}
+                            <li><a href="{{ site.social.linkedin.link }}">{{ site.social.linkedin.text }}</a></li>
+                        {% endif %}
+                    </ul>
 
                 </div>
             </article>

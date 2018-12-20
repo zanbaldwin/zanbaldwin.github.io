@@ -48,3 +48,8 @@ b,
 strong {
   font-weight: $font-weight-bold;
 }
+
+.e-type__protect {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
