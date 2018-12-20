@@ -127,22 +127,29 @@ main backend codebase and other minor projects, leaning towards DevOps/SysAdmin.
   Behat.
 - Upgraded legacy systems to be compatible with the main codebase.
 
+#### [Nosco Systems](https://nosco-systems.com/) · **Lead Technical Developer** · Pontypridd, Wales · *2012–2015*
+Lead technical developer for a continuously-evolving, cloud-based digital debt
+and loan management application.
+
+- Working directly with Experian developers.
+- Managing multiple projects concurrently, custom deployment models for multiple
+  targets, including the support and succession of legacy codebases.
+- Creating software stacks to be deployed on Raspberry Pi's for shop kioks,
+  secure authentication/communication with backend infrastructure, and automated
+  processes for distribution and synchronisation of data.
+- Handling small teams of other developers both in-house and remote (Bulgaria),
+  including travelling to provide training.
+- Software demonstrations at conferences for non-technical audiences (financial
+  sector).
+- Solely responsible for the setup and management of the company’s server
+  infrastructure.
+
 <div class="o-grid">
     <div class="o-grid__col o-grid__col--2-4-l o-grid__col--2-4-m o-grid__col-4-4-s">
-        <h5><a href="https://nosco-systems.com/">Nosco Systems</a> · <strong>Lead Technical Developer</strong> · Pontypridd, Wales · <em>2012–2015</em></h5>
-        <p>Lead technical developer for a continuously-evolving, cloud-based digital debt and loan management application.</p>
-        <ul>
-            <li>Working directly with Experian developers.</li>
-            <li>Managing multiple projects concurrently, custom deployment models for multiple targets, including the support and succession of legacy codebases.</li>
-            <li>Creating software stacks to be deployed on Raspberry Pi's for shop kioks, secure authentication/communication with backend infrastructure, and automated processes for distribution and synchronisation of data.</li>
-            <li>Handling small teams of other developers both in-house and remote (Bulgaria), including travelling to provide training.</li>
-            <li>Software demonstrations at conferences for non-technical audiences (financial sector).</li>
-            <li>Solely responsible for the setup and management of the company’s server infrastructure.</li>
-        </ul>
-    </div>
-    <div class="o-grid__col 0-grid__col--2-4-l o-grid__col--2-4-m o-grid__col-4-4-s">
         <h5>nerv Interactive · ​<strong>Web Developer</strong> · Cheltenham, England · <em>2010–2011</em></h5>
         <p>Worked to deliver white-label products for clients such as BAE Systems, NHS, Skype, Gossip Consultancy, and Molson Coors.</p>
+    </div>
+    <div class="o-grid__col 0-grid__col--2-4-l o-grid__col--2-4-m o-grid__col-4-4-s">
         <h5><a href="https://tiger-fish.com/">Tigerfish Interactive</a> · ​<strong>Drupal Developer</strong> · Cheltenham, England · <em>2010</em></h5>
         <p>Developer for a modular-based automated online social-media marketing platform.</p>
     </div>
