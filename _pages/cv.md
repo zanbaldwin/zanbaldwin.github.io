@@ -68,17 +68,17 @@ on a Linux environment, whether that be a local or remote, desktop or
 orchestration services.
 
 Caring about the presentation and accuracy of my work I am logical and thorough
-in my coding, profiling performance to make optimisations where I can, and
-utilising continuous integration to automate unit tests and behavioural
+in my coding, profiling performance to make optimizations where I can, and
+utilizing continuous integration to automate unit tests and behavioural
 integration testing.
 
 As a developer I'm not the greatest wordsmith in the world but I do make an
 effort to maintain documentation, both technical and non-technical, for the
-things I build; being able to help stakeholders visualise processes through
+things I build; being able to help stakeholders visualize processes through
 tools such as specifications, requirements and user-guides is an important tool
 to improve and streamline those already in place.
 
-I passionate about constantly learning new things in a hands-on approach and, if
+I passionate about constantly learning new things in a hands-on approach and if
 practical, willing to throw away my own code the moment a better solution
 presents itself. I'm involved in this industry beyond just a day job because I
 believe in community; I have great interest in sharing knowledge with others,
@@ -134,6 +134,7 @@ main backend codebase and other minor projects, leaning towards DevOps/SysAdmin.
         <ul>
             <li>Working directly with Experian developers.</li>
             <li>Managing multiple projects concurrently, custom deployment models for multiple targets, including the support and succession of legacy codebases.</li>
+            <li>Creating software stacks to be deployed on Raspberry Pi's for shop kioks, secure authentication/communication with backend infrastructure, and automated processes for distribution and synchronisation of data.</li>
             <li>Handling small teams of other developers both in-house and remote (Bulgaria), including travelling to provide training.</li>
             <li>Software demonstrations at conferences for non-technical audiences (financial sector).</li>
             <li>Solely responsible for the setup and management of the company’s server infrastructure.</li>
