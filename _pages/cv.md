@@ -1,50 +1,81 @@
 ---
-layout: page
+layout: cv
 title: 'Résumé'
 image:
     path: '/images/pages/cv.jpg'
     credit: 'Patrick Fore'
     source: 'https://unsplash.com/photos/0gkw_9fy0eQ'
+email: 'hello@zanbaldwin.com'
+skills:
+    - '<abbr title="PHP: Hypertext Preprocessor">PHP</abbr>'
+    - OAuth
+    - '<abbr title="JSON Web Tokens">JWT</abbr>'
+    - libsodium
+    - '<abbr title="Secure Shell">SSH</abbr>'
+    - '<abbr title="GNU Privacy Guard">GPG</abbr>'
+    - Redis
+    - Varnish
+    - Nginx
+    - Ubuntu
+    - '<abbr title="Advanced Messaging Queue Protocol">AMQP</abbr>'
+    - Neo4j
+    - Elasticsearch
+    - Ansible
+    - '<abbr title="Amazon Web Services">AWS</abbr>'
+    - '<abbr title="Structured Query Language">SQL</abbr> (MySQL)'
+    - 'Doctrine <abbr title="Database Abstraction Layer">DBAL</abbr> & <abbr title="Object Relational Mapper">ORM</abbr>'
+    - Symfony
+    - Git & Git Flow
+    - GitHub
+    - GitLab
+    - Jenkins
+    - JIRA
+    - Ubuntu
+    - Agile; certified ScrumMaster
+    - Semantic Versioning
+    - '<abbr title="Domain Driven Design">DDD</abbr>'
+    - '<abbr title="Model-View-Controller">MVC</abbr>'
+    - '<abbr title="Command Query Responsibility Segregation">CQRS</abbr>'
 ---
 
 {% comment %}
-1. Programming
-2. Architecture
-3. Testing
-4. Databases
-5. Sysadmin/DevOps
-6. People and Softskills
+> I currently aim to move to Vancouver in the Spring of 2019. However, I already
+> have a working visa and can speed up the moving process for the right opportunity.
 {% endcomment %}
 
+With many years developing in object-orientated PHP following industry best practices
+I build fault-tolerant RESTful Hypermedia APIs and web applications that scale with
+high performance. Preferring to find elegant and robust solutions to problems, I
+craft aesthetic and readable code to future-proof for other developers.
 
-With many years developing in object-orientated PHP following industry best practices I build high-performance, fault-tolerant RESTful Hypermedia APIs and web applications that scale. Preferring to find elegant and robust solutions to problems, I craft aesthetic and readable code to future-proof for other developers.
+My experience tends heavily towards data-centric solutions relying on multiple types
+of storage including relational databases, NoSQL, and key-value stores. I am just as
+comfortable using database libraries as I am writing raw SQL for edge cases. 
 
-I enjoy architecting solutions to problems, from designing applications using various methodologies (MVC, DDD, CQRS, etc) to entire containerized environment stacks with all its moving parts (app, server, data stores, cache, message queue, etc).
+I enjoy architecting solutions to problems, from designing applications using various
+methodologies covering security to <abbr title="Internationalisation">i18n</abbr>, all
+the way to entire containerized environment stacks with all its moving parts (app, web
+server, data stores, cache, message queue, etc). I am most comfortable on a Linux
+environment, whether that be a local desktop or remote infrastructure or orchestration
+services like AWS.
 
-Caring about the presentation and accuracy of my work I am logical and thorough in my coding, profiling performance and making optimisations where I can, and utilising continuous integration to automate unit tests and bahvioural integration testing.
+Caring about the presentation and accuracy of my work I am logical and thorough in
+my coding, profiling performance to make optimisations where I can, and utilising
+continuous integration to automate unit tests and behavioural integration testing.
 
-I passionate about constantly learning new things in a hands-on approach and, if practical, willing to throw away my own code the moment a better solution presents itself. I believe in community and so have great interest in sharing knowledge with others, advocating communication by collaborating with my peers, and leading others to their potential by mentoring whenever I can to pay forward everything I am constantly learning from those with more experience than me.
+As a developer I'm not the greatest wordsmith in the world but I do make an effort
+to maintain documentation, both technical and non-technical, for the things I build;
+being able to help stakeholders visualise processes through tools such as specifications,
+requirements and user-guides is an important tool to improve and streamline those
+already in place.
 
-{% comment %}
-Database (MySQL and variants) interaction through raw SQL or abstraction libraries
-Nginx web-server, asynchronous PHP (Amp/React), pure-PHP FastCGI
-Virtualisation (Vagrant/Virtualbox)
-Git, Git Flow branching model
-Other / Areas of Interest
-GitHub, GitLab, Jenkins, JIRA
-curious, problem solving
-stakeholders, requirements and specification, visualise and present, improving and streamlining processes
-technical and non-technical documentation
-Involved in the industry and its communities beyond just a day job
-Linux, infrastructure & sysadmin, orchestration (kubernetes), automation (ansible), cloud providers (AWS, google cloud)
-vast knowledge of the Symfony framework and its components.
-SQL databases (predominantly MySQL)
-Have a portfolio of large projects driven to completion?
-Authentication and security (OAuth, JWT, libsodium, SSH, GPG, etc)
-Software: caching, server, message queues
-Software examples: Redis, varnish, nginx, ubuntu, amqp, Neo4j, Elasticsearch
-Scrum master, agile
-{% endcomment %}
+I passionate about constantly learning new things in a hands-on approach and, if
+practical, willing to throw away my own code the moment a better solution presents
+itself. I'm involved in this industry beyond just a day job because I believe in
+community; I have great interest in sharing knowledge with others, advocating
+communication by collaborating with my peers, and leading others to their potential
+by mentoring whenever I can to pay forward everything I am constantly learning from
+those with more experience than me.
 
 # Contributions
 
@@ -63,9 +94,9 @@ industry, and previously a crew and committee member of the largest medieval ree
 festival in Europe.
 
 Member (and previous host) for [PHPSW](http://phpsw.uk). Member/co-host of various other,
-non-industry related community groups in the Bristol area. I will obviously be decreasing
-my responsibilities in the UK, but am already interested in getting involved with similar
-communities in Vancouver.
+non-industry related community groups in the Bristol area. I'm already interested in
+getting involved with similar communities in Vancouver and will obviously be decreasing
+my responsibilities in the UK over the course of 2019.
 
 # Experience
 

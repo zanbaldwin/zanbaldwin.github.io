@@ -3,7 +3,7 @@
         {% if page.image %}
             <div class='o-grid__col o-grid__col--4-4-s o-grid__col--4-4-m o-grid__col--2-3-l'>
                 <div class='c-post-hero__media'>
-                    <div class='c-post-hero__image js-fadein' style='background-image: url({{ page.image.path | default: page.image | prepend: site.baseurl }})'></div>
+                    <div class='c-post-hero__image' style='background-image: url({{ page.image.path | default: page.image | prepend: site.baseurl }})'></div>
                 </div>
             </div>
         {% endif %}
