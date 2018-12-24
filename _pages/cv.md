@@ -42,6 +42,8 @@ skills:
     - Semantic Versioning
 ---
 
+> A [recruiter-friendly document][cvdoc] version of this resume is also available.
+
 {% comment %}
 > I currently aim to move to Vancouver in the Spring of 2019. However, I already
 > have a working visa and can speed up the moving process for the right
@@ -155,6 +157,7 @@ and loan management application.
     </div>
 </div>
 
+[cvdoc]: https://docs.google.com/document/d/1kIi9gS60OsZhGSrRpy6-0-XWFbca_s5TdZ05mtOdbcw/edit?usp=sharing "Recruiter-friendly version on Google Docs"
 [ip]: https://github.com/darsyn/ip "Darsyn IP Abstraction Library"
 [symfony]: https://symfony.com "Symfony"
 [argon2i]: https://symfony.com/blog/new-in-symfony-3-4-argon2i-password-hasher "Symfony 3.4: Argon2i Password Hasher"
