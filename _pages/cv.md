@@ -1,6 +1,7 @@
 ---
 layout: cv
 title: 'Résumé'
+permalink: /resume/
 image:
     path: '/images/pages/cv.jpg'
     credit: 'Patrick Fore'
