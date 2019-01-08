@@ -114,38 +114,50 @@ obviously be decreasing my responsibilities in the UK over the course of 2019.
 # Experience
 
 #### [CarePlanner](https://www.care-planner.co.uk/) · **Senior Software Developer** · Bristol, England · *2018–Present*
-Team lead role spearheading a project to build a RESTful API platform from the
-ground up for a rapidly-growing SaaS provider in the Home Care sector.
+Progressed through a series of positions in the Software Development industry to
+swiftly render a leading role spearheading a project to build a RESTful API
+platform from the ground up for a rapidly-growing SaaS provider in the Home Care
+sector.
 
-- Ensuring compliance with [ISO 27001][iso27001] and [GDPR][gdpr].
+- Ensured strict compliance with [ISO 27001][iso27001] and [GDPR][gdpr], a
+  framework of policies and procedures that includes all legal, physical and
+  technical controls involved in an organization information risk management
+  processes.
+- Collaborated with the developer teams of two external companies and a local
+  government authority in a joint effort to consolidate further market share
+  rather than competing.
+- Represented the company at conferences across three different countries.
 
 #### [BaseKit](https://www.basekit.com/) · **Software Engineer** · Bristol, England · *2015–2018*
-Back-end PHP developer for a global B2B site-building platform, working on the
-main backend codebase and other minor projects, leaning towards DevOps/SysAdmin.
+Performed duties as Back-end PHP developer for a global B2B site-building
+platform, worked on the main back-end codebase and other minor projects, leaning
+towards DevOps/Sysadmin. Produced project status reports, managed the team and
+resolved day-to-day issues. Ensured that objectives were accomplished in
+accordance with outlined priorities.
 
-- Part of the company’s developer on-call program.
-- Responsible for maintaining the WHMCS platform plugin.
-- Spearheaded overhauling the automation tests towards an automated QA process,
-  adding coverage for the majority of the main product, and pushing BDD using
-  Behat.
-- Upgraded legacy systems to be compatible with the main codebase.
+- Building PHP websites using Symfony components, tested work produced as part
+  of the development process.
+- Upgraded legacy systems for ensuring compatibility with main codebase and
+  maintained WHMCS platform plugin.
+- Automated tests towards an automated QA process, adding coverage for the
+  majority of the main product, and pushing BDD using Behat. Documented
+  features, technical specifications and infrastructure requirements.
 
 #### [Nosco Systems](https://nosco-systems.com/) · **Lead Technical Developer** · Pontypridd, Wales · *2012–2015*
-Lead technical developer for a continuously-evolving, cloud-based digital debt
-and loan management application.
+Handled evolving challenges associated with cloud-based digital debt and loan
+management application. Created software stacks to be deployed on Raspberry Pi’s
+for shop kiosks, secure authentication/communication with backend
+infrastructure, and automated processes for distribution and synchronization of
+data.
 
-- Working directly with Experian developers.
-- Managing multiple projects concurrently, custom deployment models for multiple
-  targets, including the support and succession of legacy codebases.
-- Creating software stacks to be deployed on Raspberry Pi's for shop kioks,
-  secure authentication/communication with backend infrastructure, and automated
-  processes for distribution and synchronisation of data.
-- Handling small teams of other developers both in-house and remote (Bulgaria),
-  including travelling to provide training.
-- Software demonstrations at conferences for non-technical audiences (financial
-  sector).
-- Solely responsible for the setup and management of the company’s server
-  infrastructure.
+- Built collaborative rapport with others developers, administered and complete
+  multiple projects, custom deployment models for various targets including the
+  support and succession of legacy codebases.
+- Mentored, developed and led teams of developers both in-house and remote
+  (Bulgaria), including travelling to provide training, performed Software
+  demonstrations at conferences for non-technical audiences (financial sector).
+- Held bottom-line accountability for initiating, reviewing and managing
+  company’s server infrastructure.
 
 <div class="o-grid">
     <div class="o-grid__col o-grid__col--2-4-l o-grid__col--2-4-m o-grid__col-4-4-s">
