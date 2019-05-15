@@ -2,6 +2,7 @@
 layout: cv
 title: 'Résumé'
 permalink: /resume/
+published: false
 image:
     path: '/images/pages/cv.jpg'
     credit: 'Patrick Fore'
