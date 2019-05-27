@@ -1,18 +1,9 @@
-[submodule "themes/parsa"]
-	path = themes/parsa
-	url = git://github.com/themefisher/parsa-hugo-personal-blog-theme.git
-[submodule "themes/future-imperfect-slim"]
-	path = themes/future-imperfect-slim
-	url = git://github.com/pacollins/hugo-future-imperfect-slim.git
 [submodule "themes/book"]
 	path = themes/book
 	url = git://github.com/alex-shpak/hugo-book.git
 [submodule "themes/terminal"]
 	path = themes/terminal
 	url = git://github.com/panr/hugo-theme-terminal.git
-[submodule "themes/navigator"]
-	path = themes/navigator
-	url = git://github.com/themefisher/navigator-hugo
 [submodule "themes/learn"]
 	path = themes/learn
 	url = git://github.com/matcornic/hugo-theme-learn.git
