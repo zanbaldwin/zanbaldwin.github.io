@@ -4,6 +4,3 @@
 [submodule "themes/terminal"]
 	path = themes/terminal
 	url = git://github.com/panr/hugo-theme-terminal.git
-[submodule "themes/learn"]
-	path = themes/learn
-	url = git://github.com/matcornic/hugo-theme-learn.git
