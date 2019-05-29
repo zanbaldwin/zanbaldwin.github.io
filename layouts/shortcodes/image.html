@@ -1,0 +1,21 @@
+{{ if .Get "src" }}
+    {{ $image := $.Page.Resources.GetMatch ( .Get "src" ) }}
+    {{ if $image }}
+        <div class="picture">
+            {{ if .Get "caption"}}
+                <figure>
+            {{ end }}
+            <picture>
+                <!-- Resized -->
+                {{ $resize := $image.Resize "784x" }}
+                <source srcset="{{ $resize.Permalink }}" height="{{ $resize.Height }}" width="{{ $resize.Width }}" alt="{{ .Get "alt" | plainify }}">
+                <!-- Fallback (Original) -->
+                <img src="{{ $image.Permalink }}" alt="{{ .Get "alt" | plainify }}">
+            </picture>
+            {{ if .Get "caption"}}
+                    <figcaption>{{ .Get "caption" }}</figcaption>
+                </figure>
+            {{ end }}
+        </div>
+    {{ end }}
+{{ end }}

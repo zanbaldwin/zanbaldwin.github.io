@@ -1,0 +1,8 @@
+<!--
+To add an extended head section, please create
+`layouts/partials/extended_head.html` in your Hugo directory.
+-->
+
+<script type="application/ld+json">
+    {{ .Params.Schema | default .Page.Params.Schema | default .Site.Params.Schema | default dict | jsonify | safeJS }}
+</script>

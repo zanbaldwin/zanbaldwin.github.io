@@ -1,6 +1,65 @@
-baseURL: http://example.org/
-languageCode: en-us
-title: My New Hugo Site
+baseURL: '/'
+relativeURLs: false
+license: 'MIT'
+licenselink: 'https://github.com/zanbaldwin/tarzan/blob/master/LICENSE.md'
+description: 'Tarzan Theme for Hugo'
+homepage: 'https://github.com/zanbaldwin/tarzan'
 
-theme: 'terminal'
-relativeURLs: true
+pygmentsStyle: 'dracula'
+pygmentsUseClasses: false
+pygmentsCodeFences: true
+
+languageCode: 'en'
+title: 'Tarzan'
+paginate: 5
+
+author:
+    name: 'Zan Baldwin'
+    homepage: 'https://zanbaldwin.com'
+    twitter: 'https://twitter.com/ZanBaldwin'
+
+menus:
+    main:
+        - identifier: 'github'
+          name: 'GitHub'
+          pre: '<i class="fa fa-github"></i>'
+          url: https://github.com/zanbaldwin
+          weight: 1000
+
+params:
+    fullWidthTheme: false
+    centerTheme: true
+    themeColour: 'green'
+    schema:
+        '@context': 'http://schema.org/'
+        '@type': 'Person'
+        email: 'hello@zanbaldwin.com'
+        familyName: 'Baldwin'
+        gender: 'Androgynous'
+        givenName: 'Zan'
+        honorificPrefix: 'Mx'
+        image: 'https://zanbaldwin.com/profile.jpg'
+        jobTitle: 'Software Developer'
+        nationality:
+            '@type': 'Country'
+            name: 'United Kingdom'
+        sameAs:
+            - 'https://twitter.com/ZanBaldwin'
+            - 'https://www.instagram.com/zanbaldwin'
+            - 'https://github.com/zanbaldwin'
+        url: 'https://zanbaldwin.com'
+        worksFor:
+            '@type': 'Organization'
+            address:
+                '@type': 'PostalAddress'
+                addressCountry:
+                    '@type': 'Country'
+                    name: 'Canada'
+                addressLocality: 'Vancouver'
+                addressRegion: 'British Columbia'
+                postalCode: 'V6B 2S8'
+                streetAddress: '302 - 1224 Hamilton Street'
+            email: 'info@intergalactic.com'
+            name: 'Intergalactic Agency'
+            telephone: '+1 (604) 738-3311'
+            url: 'https://intergalactic.com'

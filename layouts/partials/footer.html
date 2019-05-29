@@ -1,0 +1,18 @@
+<footer class="footer">
+  <div class="footer__inner">
+    {{ if $.Site.Copyright }}
+      <div class="copyright copyright--user">{{ $.Site.Copyright | safeHTML }}</div>
+    {{else}}
+      <div class="copyright">
+        <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+        <span>:: Theme adapted from <a href="https://twitter.com/panr">panr</a></span>
+      </div>
+    {{end}}
+  </div>
+</footer>
+
+{{ $js := slice (resources.Get "js/main.js") (resources.Get "js/menu.js") | resources.Concat "js/app.js" | resources.Fingerprint }}
+<script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+
+<!-- Extended footer section-->
+{{ partial "extended_footer.html" . }}

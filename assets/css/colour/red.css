@@ -1,0 +1,18 @@
+/**
+ * CSS is processed via Unix-pipes so therefore has no concept of a filepath. The only available information is a
+ current working directory of the process which is set to the parent directory of this file (in postcss.config.js).
+ */
+@import 'main.css';
+@import 'header.css';
+@import 'logo.css';
+@import 'pagination.css';
+@import 'post.css';
+@import 'syntax.css';
+@import 'variables.css';
+
+:root {
+  --accent: #FF6266;
+  --background: color-mod(var(--accent) blend(#1D1E28 98%));
+  --color: white;
+  --border-color: rgba(255, 255, 255, .1);
+}

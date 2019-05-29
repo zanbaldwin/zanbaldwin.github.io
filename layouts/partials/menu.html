@@ -1,0 +1,35 @@
+<nav class="menu">
+
+    {{ $currentPage := . }}
+    <ul class="menu__inner menu__inner--desktop">
+        {{ range .Site.Menus.main }}
+            <li>
+                <a href="{{ .URL }}" class="{{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}active{{ end }}">
+                    {{ .Pre }}
+                    <span>{{ .Name }}</span>
+                </a>
+                {{ if .HasChildren }}
+                    <ul class="children">
+                        {{ range .Children }}
+                            <li>
+                                <a href="{{ .URL }}" class="{{ if $currentPage.IsMenuCurrent "main" . }}active{{ end }}">
+                                    {{ .Pre }}
+                                    <span>{{ .Name }}</span>
+                                </a>
+                            </li>
+                        {{ end }}
+                    </ul>
+                {{ end }}
+            </li>
+        {{ end }}
+    </ul>
+
+    <ul class="menu__inner menu__inner--mobile">
+        {{ range .Site.Menus.main }}
+            <li>
+                <a href="{{ .URL }}" class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">{{ .Name }}</a>
+            </li>
+        {{ end }}
+    </ul>
+
+</nav>
