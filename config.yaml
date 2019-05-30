@@ -10,7 +10,7 @@ pygmentsUseClasses: false
 pygmentsCodeFences: true
 
 languageCode: 'en'
-title: 'Tarzan'
+title: 'Zan Baldwin'
 paginate: 5
 
 author:
@@ -23,7 +23,12 @@ menus:
         - identifier: 'github'
           name: 'GitHub'
           pre: '<i class="fa fa-github"></i>'
-          url: https://github.com/zanbaldwin
+          url: 'https://github.com/zanbaldwin'
+          weight: 990
+        - identifier: 'twitter'
+          name: 'Twitter'
+          pre: '<i class="fa fa-twitter"></i>'
+          url: 'https://twitter.com/ZanBaldwin'
           weight: 1000
 
 params:
@@ -63,3 +68,9 @@ params:
             name: 'Intergalactic Agency'
             telephone: '+1 (604) 738-3311'
             url: 'https://intergalactic.com'
+
+languages:
+    en:
+        menuMore: 'show more'
+        readMore: 'read more'
+        readOtherPosts: 'read other posts'
