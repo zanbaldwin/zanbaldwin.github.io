@@ -1,4 +1,4 @@
-baseURL: '/'
+baseURL: 'https://zanbaldwin.com/'
 relativeURLs: false
 license: 'MIT'
 licenselink: 'https://github.com/zanbaldwin/tarzan/blob/master/LICENSE.md'
