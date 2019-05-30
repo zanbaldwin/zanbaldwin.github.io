@@ -8,14 +8,6 @@
 {{ $style := resources.Get (printf "css/colour/%s.css" ($.Site.Params.ThemeColour | default "green")) | resources.PostCSS | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}" type="text/css" integrity="{{ $style.Data.Integrity }}">
 
-<!-- Icons -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ "img/apple-touch-icon-144-precomposed.png" | absURL }}">
-{{ if isset $.Site.Params "favicon" }}
-<link rel="shortcut icon" href="{{ $.Site.Params.favicon | absURL }}">
-{{ else }}
-<link rel="shortcut icon" href="{{ printf "img/favicon/%s.png" $.Site.Params.ThemeColor | absURL }}">
-{{ end }}
-
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="{{ if .IsHome }}{{ $.Site.Title }} — {{ $.Site.Params.Subtitle }}{{ else }}{{ .Title }} :: {{ $.Site.Title }} — {{ $.Site.Params.Subtitle }}{{ end }}" />
