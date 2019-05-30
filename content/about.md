@@ -2,7 +2,7 @@
 title: "About"
 date: "2019-05-27"
 author: 'Zan Baldwin'
-published: true
+published: false
 menu:
     main:
         weight: 100
