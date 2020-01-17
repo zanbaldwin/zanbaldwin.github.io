@@ -4,9 +4,13 @@ date: '2019-04-08'
 author: 'Zan Baldwin'
 cover: 'science.jpg'
 description: |
-    I'll show you the crazy things you can do in PHP with streams and autoloader overloading to write your own language features, including generics. I'll also show you how you can supercharge your applications using aspect-oriented programming or encrypt source code on-the-fly using only PHP. As if that wasn't enough, we'll go even further and make PHP a polyglot language by importing esoteric language scripts!
-    These aren't your average hacks and shouldn't be run in production... but let's explore these concepts as fun experiments so you'll never think of PHP as boring again!
-published: false
+    I'll show you the crazy things you can do in PHP with streams and autoloader overloading to write your own language
+    features, including generics. I'll also show you how you can supercharge your applications using aspect-oriented
+    programming or encrypt source code on-the-fly using only PHP. As if that wasn't enough, we'll go even further and
+    make PHP a polyglot language by importing esoteric language scripts!
+    These aren't your average hacks and shouldn't be run in production... but let's explore these concepts as fun
+    experiments so you'll never think of PHP as boring again!
+published: true
 ---
 
 # Introduction
@@ -42,8 +46,8 @@ wrappers in userland PHP.
 ## Esoteric Language
 
 Introducing [Brainf*ck](https://en.wikipedia.org/wiki/Brainfuck)! Obviously not exactly the best name to use (especially
-at an [international conference](https://phpconference.nl) where this article was given as a talk) but it’s perhaps the
-world's most well known esoteric language. Let’s assume we have a script `hello.bf`:
+at an [international conference](https://phpconference.nl) where this article was given as a talk) but it's perhaps the
+world's most well known esoteric language. Let's assume we have a script `hello.bf`:
 
 ```
 ++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.
@@ -79,7 +83,7 @@ class BfStreamWrapper
 Stream wrappers don't extend or implement anything in PHP core, but we need to implement a minimum of 5 methods to
 process an incoming stream.
 
-The first is `stream_open()`; we’re just checking that the file specified exists and taking note of its path.
+The first is `stream_open()`; we're just checking that the file specified exists and taking note of its path.
  
 ```php
 <?php
@@ -97,7 +101,7 @@ public function stream_open(string $path, string $mode, int $options, &$opened_p
 }
 ```
 
-`stream_stat()` is something that’s called each time to collect information, it’s obviously recommended that you return
+`stream_stat()` is something that's called each time to collect information, it's obviously recommended that you return
 some useful information about the stream here but technically it's not actually required; in this example we're just
 returning an empty array:
 
@@ -172,7 +176,7 @@ public function stream_close(): bool
 ```
 
 Finally, for completeness, the powerhouse of stream wrapper is the method that executes Brainf*ck scripts. In this
-example I’m using [Anthony Ferrara’s library](https://github.com/ircmaxell/brainfuck). We take the contents of the
+example I'm using [Anthony Ferrara's library](https://github.com/ircmaxell/brainfuck). We take the contents of the
 Brainf*ck script, pump it through the language runtime, and save the result as a string in the `$output` class property.
 
 ```php
@@ -197,7 +201,7 @@ private function execute(): void
 }
 ```
 
-However, requiring a script using our new stream wrapper doesn’t give us a change to provide the script with any input,
+However, requiring a script using our new stream wrapper doesn't give us a change to provide the script with any input,
 which is kind of important for some scripts.
 
 We can accept an input string, and save it in a class property to use when we execute the script. Unfortunately in our
@@ -225,13 +229,13 @@ public function stream_write(string $data): int
 }
 ```
 
-Now it’s time to use it! After registering our stream filter, we can open up a stream handle, pump in some input, and
-get the output of our script! Notice how if our script needs input, we can’t `require` the script like we would a PHP
+Now it's time to use it! After registering our stream filter, we can open up a stream handle, pump in some input, and
+get the output of our script! Notice how if our script needs input, we can't `require` the script like we would a PHP
 file.
 
 ## Stream Filters
 
-Next up in the PHP streams arsenal is stream filters. They’re simpler than wrappers: just a method to modify data as it
+Next up in the PHP streams arsenal is stream filters. They're simpler than wrappers: just a method to modify data as it
 passes through - this does mean that it cannot deal with both input and output so this is a perfect time to introduce
 **source code transformation**!
 
@@ -289,6 +293,9 @@ public function filter($in, $out, &$consumed, $closing): int
 }
 ```
 
+Almost every time I've had to output XML from an application, I've used Twig rather than deal with encoding data
+structures. Why not do it for PHP, too?
+
 ```twig
 <?php declare(strict_types=1);
 
@@ -309,3 +316,209 @@ return function (array $input = []): string {
    ));
 };
 ```
+
+Similar to before, we register our stream filter, except this time we attach our stream filter to an already existing
+stream handle. When we read the contents of the stream we get back valid PHP code that we can `eval()`!
+
+```php
+<?php
+
+BfStreamFilter::register('bf');
+
+$handle = fopen('/app/hello.bf', 'r+');
+stream_filter_append($handle, 'bf');
+
+$closureCode = stream_get_contents($handle);
+$closure = eval('?>' . $closureCode);
+
+$output = $closure($input);
+```
+
+Attaching a filter to a stream handle and evaluating the result each time isn't ideal - and most importantly we can't
+attach a stream filter to a `require` statement. That's where one of the most underrated features of PHP comes in: the
+`php://` stream wrapper... in particular the `php://filter` meta-wrapper.
+
+The `php://filter` meta-wrapper allows us to act upon any other stream resource (`/resource=`), while attaching any
+number of filters to manipulate the stream when reading it (`/read=`) as well as when writing to it (`/write=`).
+
+Most importantly, this allows us to specify a resource and attach a filter to it all in one string which we can pass to
+require. This one string saves us from having to open up a handle, attaching a filter, and evaluating the result of the
+stream. This one feature of PHP is the basis of this entire article.
+
+```php
+<?php
+
+BfStreamFilter::register('bf');
+
+$script = '/app/hello.bf';
+
+// php://filter/read=bf/resource=file:///app/hello.bf
+$closure = require 'php://filter'
+                 . '/read=bf'
+                 . '/resource=file://' . $script;
+
+$output = $closure($input);
+```
+
+# Go! AOP
+
+At [Dutch PHP Conference](https://phpconference.nl) 2016 I saw [Alexander Lisachenko](https://twitter.com/lisachenko)
+talk about the [Go! AOP](http://go.aopphp.com/) framework he created, which is the main inspiration for this article.
+I'll give an extremely brief idea of what the project does, then dive straight into the internals to figure out what's
+going on.
+
+Go! AOP is a framework for developing PHP application using aspect-oriented programming: separating out logic when
+developing and joining it back together at runtime.
+
+- Allows separation of cross-cutting concerns
+- Increases modularity
+- Adds additional behaviour to existing code
+
+_To ensure that I explain the framework accurately, I'll use the same examples as the creator of this framework and I
+recommend you look up Lisachenko's previous presentations on this subject._
+
+Let's say we have a method that creates a new user in our application. As far as business logic goes, all that's
+required for creating a new user is pretty simple:
+
+```php
+<?php
+
+function createNewUser(string $email, string $password): UserInterface {
+    $user = new User($email, $password);
+    $this->entityManager->persist($user);
+    $this->entityManager->flush();
+    return $user;
+}
+```
+
+But in the real world things are never this simple:
+
+- We'll need to the authorization of the currently logged-in user to make sure they're allowed to create new users.
+- We should log that a new user is being created.
+- We need to emit an event onto a queue so that an email can be sent asynchronously to the new user informing them that
+  their account is ready to use.
+- And we need exception handling in case something goes wrong.
+
+```php
+<?php
+
+function createNewUser(string $email, string $password): UserInterface {
+    if (!$this->security->isGranted('ROLE_ADMIN')) {
+        throw new AccessDeniedException;
+    }
+    try {
+        $user = new User($email, $password);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    } catch (ORMException $e) {
+        $this->logger->error('Could not persist new user.', ['email' => $email]);
+        throw $e;
+    }
+    $this->eventDispatcher->dispatch(new UserCreatedEvent($email));
+    $this->logger->info('User created successfully.', ['email' => $email]);
+    return $user;
+}
+```
+
+While this example may not be unwieldy once everything has been factored in, it does demonstrate how even the simplest
+things need to consider many different cross-cutting concerns. More complex situations can get unwieldy very quickly.
+
+Aspect-oriented programming is about keeping your method simple and interrupting the execution flow of the application
+at specific points to add logic. You keep logic separated, and inject each piece to where it needs to be. These injected
+pieces of logic are called **pointcuts**.
+
+```php
+<?php
+
+function createNewUser(string $email, string $password): UserInterface {
+    $user = new User($email, $password);
+    $this->entityManager->persist($user);
+    $this->entityManager->flush();
+    return $user
+}
+
+/** @Before(pointcut=”public UserService->*(*)”) */
+function checkCurrentUserCanCreateUsers(MethodInvocation $method): void {
+    if (!$this->security->isGranted('ROLE_ADMIN')) {
+        throw new AccessDeniedException;
+    }
+}
+
+/** @AfterThrow(pointcut=”public UserService->createNewUser(*)”) */
+function handleNewUserDatabaseError(MethodInvocation $method): void {
+    $this->logger->error('Could not persist new user.', ['email' => $method->getArguments()[0]]);
+    throw $e;
+}
+
+/** @After(pointcut=”public UserService->createNewUser(*)”) */
+function onNewUserSuccessfullyCreated(MethodInvocation $method): void {
+    $email = $method->getArguments()[0];
+    $this->eventDispatcher->dispatch(new UserCreatedEvent($email));
+    $this->logger->info('User created successfully.', ['email' => $email]);
+}
+```
+
+We can even decorate the original method and make modifications to the result if we want to.
+
+```php
+<?php
+
+/** @Around(pointcut=”public UserService->createNewUser(*)”) */
+function logTimeTakenToCreateUser(MethodInvocation $method): UserInterface {
+    $start = microtime(true);
+    $result = $method->proceed();
+    $duration = microtime(true) - $start;
+    $this->logger->log(sprintf('Creating a user took %f seconds', $duration));
+    return new TimedUserCreation($result, $duration);
+}
+```
+
+## Source Transformers
+
+The majority of the AOP’s logic is in the form of source transformers. By using AOP in your application, you’re entering
+the realm of meta-programming: your application transforms its own source code when including it. So what is AOP doing
+inside that transformer?
+
+- AOP queries Composer’s class loader for the location of the file that should contain the class definition for
+  `MyClass`.
+- It generates a load of metadata about the source code file, including its contents and the Abstract Syntax Tree
+  generated from its contents by [Nikita Popov’s pure-PHP language parser
+  `nikic/php-parser`](https://github.com/nikic/PHP-Parser).
+- It passes that metadata through a series of source transforming classes, each manipulating the AST to provide a
+  particular feature.
+- Dump the final manipulated AST back into PHP code as a string. It’s at this point that the final compiled source is
+  saved to cache so that subsequent requests skip the expensive source transformation stage.
+- The final transformed code is returned to be executed by the PHP engine.
+
+All of this happens while you’re writing PHP applications normally without worrying about loading classes or compiling
+into usable code. As this article is all about PHP streams, it may not come as a surprise that the main logic behind the
+AOP framework is built around PHP’s stream filters.
+
+A huge amount of complexity is held within this process, enough for an entirely different presentation, so for the sake
+of simplicity, we’ll simplify AOP’s source transforming process into a single function call. From now on, we’ll use the
+following function as an alias to implementing and registering a stream filter because, quite frankly, implementing a
+stream filter didn't fit on the original slides!
+
+```php
+<?php
+
+$executableCodeContents = transformCodeFilter($sourceCodeFileOnDisk);
+```
+
+## Autoloader Overloading
+
+> `new MyClass` ⇢ ??? ⇢ `transformCodeFilter()`
+
+But if you try to create a new instance of `MyClass`, how does AOP manipulate Composer to pass the source code file
+through the `transformCodeFilter()` function before getting PHP to execute the contents?
+
+- You go to instantiate a new class, eg `new MyClass`
+- Composer does its normal thing of figuring out where the class definition is located, eg `/var/www/MyClass.php`
+- AOP hijacks the normal Composer logic... _I'd like to interject for a moment_
+- and tells PHP to load a new URI that uses the PHP stream wrapper:
+  `php://filter/read=go.source.transforming.loader/resource=file:///var/www/MyClass.php`
+
+PHP then applies the `go.source.transforming.loader` filter when reading the contents of the URI `/var/www/MyClass.php`
+from the `file://` system.
+
+So what kind of sneaky magic is this? 🐍

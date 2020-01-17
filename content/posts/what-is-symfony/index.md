@@ -39,25 +39,23 @@ Projects that are using Symfony components include:
 ## Framework
 
 The framework is a methodology (or "assembly guide") for web applications built on top of the components as glue-code to
-bring them all together in a structured approach.
-
-Efficiently and effectively guaranteeing stability, maintainability and upgradability of complex applications.
+bring them all together in a structured approach. It efficiently and effectively guarantees stability, maintainability
+and upgradability of complex applications.
 
 # Philospohy
 
-Its philosophy is: embracing and promoting professionalism, best practices, standardization and interoperability of
-applications.
+The philosophy of Symfony is to embrace and promote professionalism, best practices, standardization and
+interoperability of applications.
 
 ## Community
 
-Symfony is a huge and diverse community of over 600,000 developers across 120 countries.
-
-It is committed to fostering an open and welcoming environment for everyone, with an appropriate Code of Conduct,
-Diversity Initiative, support system, user groups, and 9 conferences a year spread across 4 continents.
+Symfony is a huge and diverse community of over 600,000 developers across 120 countries. It is committed to fostering an
+open and welcoming environment for everyone, with an appropriate Code of Conduct, Diversity Initiative, support system,
+user groups, and 9 conferences a year spread across 4 continents.
 
 # Structure
 
-Symfony has a very simple file structure
+A Symfony application has a very simple file structure.
 
 ```
 ├ bin                Binary executables
@@ -81,10 +79,8 @@ Symfony has a very simple file structure
 
 ## Flex and Recipes
 
-Modern Symfony (`v4.0`+) relies heavily on Composer.
-
-**Flex** is a Symfony-specific Composer plugin that provides extra steps ("**recipes**") to execute when installing
-specific, third-party packages.
+Modern Symfony (`v4.0`+) relies heavily on Composer. **Flex** is a Symfony-specific Composer plugin that provides extra
+steps ("**recipes**") to execute when installing specific, third-party packages.
 
 ### Example Recipe (Doctrine)
 
