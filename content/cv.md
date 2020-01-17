@@ -10,94 +10,144 @@ menu:
         name: "Résumé"
 ---
 
-I’m a motivated backend developer continuously learning new skills, techniques and technologies.
+Software Architect & Engineer
 
-Caring about the presentation and accuracy of my work, I am logical and thorough in my coding.<br />
-Preferring to find elegant and robust solutions to problems, I craft aesthetic and readable code to future-proof for future developers.
+> A decade of professional experience architecting, building and deploying
+> data-centric RESTful APIs and web applications that scale with
+> high-performance.
 
-## Skills
+- Vancouver, Canada
+- +1 (236) 838 3427
+- hello@zanbaldwin.com
+- [linkedin.com/in/zanbaldwin][li]
+- [github.com/zanbaldwin][gh]
 
-### Development
+## Prominent Skills
 
-- PHP 7 and modern OOP for console/web/API
-  - Industry practices (PHP-FIG, semantic versioning, etc)
-  - Testing (unit, functional, mutation, stubs/mocking, etc)
-  - Composer package management and distribution
-  - RESTful providers and consumers
-  - Authentication and security (OAuth, JWT, libsodium, etc)
-  - Vast experience of Symfony framework/components
-- Database (MySQL and variants) interaction through raw SQL or abstraction libraries
-- Nginx web-server, asynchronous PHP (Amp/React), pure-PHP FastCGI
-- Virtualisation (Vagrant/Virtualbox)
-- Git, Git Flow branching model
+|                             |                             |                       |
+|-----------------------------|-----------------------------|-----------------------|
+| Modern (7+) PHP Development | Software Architecture       | Design Patterns       |
+| Relational Databases        | NoSQL/Graph Data Stores     | Documentation Writing |
+| API Design & Specification  | Linux System Administration | Cloud Providers       |
+| Unit & Behavioural Testing  | Containerization            | Automation            |
 
-### Deployment
+**Keyword Dump**
 
-- Amazon Web Services (learning Google Cloud Platform)
-- System administration with Debian/Alpine-based Linux
-- Containerisation (Docker, learning Rkt as an alternative)
-- Learning orchestration with Kubernetes/Swarm
-- SSH, GPG, symmetric and asymmetric cryptography
+  Composer · Symfony Framework · Backend · Git · MVC · DDD · OOP · SOLID ·
+  CQRS · REST · GraphQL · MySQL · Postgres · SQLite · Elastic · Mongo · Redis ·
+  Cache · OpenAPI · Debian · Ubuntu · Alpine · SystemD · SSL · Let's Encrypt ·
+  Git Version Control · AWS · Google Cloud · Behat · PHPUnit · Puppeteer ·
+  Functional · CI/CD · Jenkins · GitLab · GitHub · Travis CI · Docker ·
+  Kubernetes · Doctrine · DBAL · ORM · OAuth · JWT · JIRA · AMQP · RabbitMQ ·
+  Agile
 
-### Other / Areas of Interest
+## Accomplishments
 
-- GitHub, GitLab, Jenkins, JIRA
-- Elasticsearch, Neo4j, Redis
-- CQRS, Event Sourcing, Domain-driven Design, hypermedia APIs (with HAL/Hydra/JSON-LD/Schema).
+- Technical speaker and two-time keynote speaker for [Symfony
+  conferences][sflive]
+- Meeting facilitator, sub-initiative champion and [member of the guidance
+  team][guidance] for Symfony Diversity Initiative
+- Technical speaker and CfP Selection Committee member for [Dutch PHP
+  Conference][dpc]
+- [Certified ScrumMaster][scrum], and formal training with GDPR & ISO 27001
+- Previous committee member for Brighton Pride and other international festivals
+  before leaving Europe
 
-## Open-source
+## Example Work
 
-I’ve made contributions to many vendors such as The PHP League, PHP FIG, Yii Framework and CakePHP, along with publishing an [IP abstraction library](https://github.com/darsyn/ip) that is actively used.
-However, I’m most involved with the [Symfony](https://symfony.com) community - being an [active contributor](https://symfony.com/blog/new-in-symfony-3-4-argon2i-password-hasher) to both the [core framework](https://github.com/symfony/symfony/commits?author=zanbaldwin) and [documentation](https://github.com/symfony/symfony-docs/commits?author=zanbaldwin), plus being a [keynote speaker for the SymfonyLive London 2018](https://london2018.live.symfony.com/speakers#session-2670) conference.
+- The [presentation slides][sfconslides] and corresponding [example code
+  repository][sfconrepo] for the first of my two talks at [SymfonyCon Amsterdam
+  2019][sfcon].
+- [Source code][darsynip] and [documentation][ipdocs] for my open-source
+  library, [`darsyn/ip`][ippackagist], which deals with IP addresses.
 
 ## Experience
 
-### [CarePlanner](https://www.care-planner.co.uk/) — **Senior Software Developer**
+### Software Developer, Intergalactic Agency
+Vancouver, Canada · 2019 – Present
+> _**Core Skills:** PHP · Symfony · OpenAPI · DevOps · Deployment Strategies_
 
-**Bristol, England** · *2018–Present*
+Lead PHP developer for in-house and client projects, both new and legacy,
+including: BC Liquor, Mental Health Commission Canada, Palo Alto, Eventbase,
+Sundance Film Festival.
+- Upgrading internal source control with automatic upgrades and backups for
+  greater company resilience while spread across multiple continents
+- Enabled CI job artifacts, container registry and Dockerized deployment
+  strategies to allow the company to spend less time on deploying manually
+- Started automatic scaling and load balancing, improving the reputation of
+  Intergalactic for high-traffic projects based on physical events/conferences
 
-Team lead role spearheading a project to build an API platform from the ground up for a rapidly-growing SaaS provider in the Home Care sector, along with ensuring industry standards and [GDPR​](https://www.eugdpr.org/) compliance.
+### Senior Software Developer, CarePlanner Ltd
+Bristol, England · 2018 – 2019
+> _**Core Skills:** PHP · Symfony · RESTful APIs · SaaS · Data Protection · GDPR_
 
-### [BaseKit](https://www.basekit.com/) — **Software Engineer**
+A leading role spearheading a project to build a RESTful API platform from the
+ground up for a rapidly-growing SaaS provider in the Home Care sector.
+- Ensured strict compliance of ISO 27001 & GDPR within developer teams to reduce
+  organization's risk while storing/handling health and medical data of
+  vulnerable individuals
+- Collaborated with the developer teams of two external companies and a local
+  government authority in a joint effort to consolidate further market share
+  rather than competing
+- Represented the company at conferences across three separate countries
 
-**Bristol, England** · *2015–2018*
+### Software Engineer, BaseKit Platform
+Bristol, England · 2015 – 2018
+> _**Core Skills:** PHP · Symfony · B2B · DevOps · Sysadmin · WHMCS · Behat_
 
-- Predominantly a PHP developer working on the main backend codebase and other minor projects, leaning towards DevOps/SysAdmin.
-- Part of the company’s developer on-call program.
-- Responsible for maintaining the WHMCS platform plugin for BaseKit.
-- Spearheaded overhauling the automation tests, adding coverage for the majority of the main product, which began the move towards an automated QA process.
-- Dedicated a large chunk of time to upgrading the control panel of the product - a legacy part of the codebase to be compatible with the rest of the codebase.
+Worked on the backend of a global B2B site-building SaaS platform and its
+supporting projects.
 
-### [Nosco Systems](https://nosco-systems.com/) — **Lead Technical Developer**
-**Pontypridd, Wales** · *2012–2015*
+- Kept a multi-million line codebase up to date, or rewrote several legacy
+  parts, to transition the application from PHP 5.x to 7
+- Dramatically increased test case coverage to push for an automated QA process
+  in the CI pipeline using BDD/Behat
+- Documented features, technical specifications and infrastructure requirements
+  to streamline the onboarding process for new developers
 
-- Developer for a continuously-evolving, cloud-based digital debt and loan management application working directly with Experian developers, moving on to manage multiple projects concurrently.
-- Handling small teams of other developers both inhouse and remote (Bulgaria), including travelling to provide training.
-- Software demonstrations at conferences for non-technical audiences (financial sector).
-- Solely responsible for the setup and management of the company’s server infrastructure.
+### Lead Technical Developer, Nosco Systems
+Pontypridd, Wales · 2012 – 2015
+> _**Core Skills:** PHP · Yii · Raspberry Pi · Fintech · Legal & Regulation ·
+> Sysadmin · Mentorship_
 
----
+Developer for a cloud-based digital debt and loan management application, and
+supporting software/hardware.
+- Kept the software ahead of all the constantly changing legal and regulatory
+  changes required by the industry
+- Handled deployments of software for both cloud-based servers and in-store
+  shop kiosks (Raspberry Pis), with bottom-line accountability for the
+  company's infrastructure
+- Led and mentored teams of developers both in-house and remote (Bulgaria),
+  including travelling to provide training
+- Performed software demonstrations at conferences for financial sector audiences
 
-nerv Interactive — ​**Web Developer**
+#### Web Developer, nerv Interactive
+Cheltenham, England · 2010 – 2011
 
-**Cheltenham, England** · *2010–2011*
+Delivered white-label products for clients such as BAE Systems, NHS, Skype,
+Gossip Consultancy, and Molson Coors.
 
-Worked to deliver white-label products for clients such as BAE Systems, NHS, Skype, Gossip Consultancy, and Molson Coors.
+#### Drupal Developer, Tigerfish Interactive
+Cheltenham, England · 2010
 
----
+Developed modular-based automated online social-media marketing platform.
 
-[Tigerfish Interactive](https://tiger-fish.com/) — ​ **Drupal Developer**
+## About
 
-**Cheltenham, England** · *2010*
+New to Canada in 2019, a cat person constantly covered in dog hair with a
+stereotypical British compulsion for cups of tea and queueing.
 
-Developer for a modular-based automated online social-media marketing platform.
 
-## Other Activities
 
-Help coordinate [​PHPSW​](http://phpsw.uk/) meetup group in Bristol and mentor on [PHP Mentoring](http://php-mentoring.org/)​.
-
-Current committee member of Brighton Pride. Member/co-host of various other, non-industry related community groups around Bristol.
-
-Previously crew and committee member of the largest free medieval reenactment festival in Europe. Part of, and help manage, a seasonal SME company called Crew Salam Ltd. that’s quickly gaining a large reputation within the festival industry for events in the UK and Europe.
-
-**<center>~ Learn &middot; Build &middot; Repeat ~</center>**
+[li]: https://www.linkedin.com/in/zanbaldwin/ "Zan Baldwin on LinkedIn"
+[gh]: https://github.com/zanbaldwin "Zan Baldwin on GitHub"
+[sfconslides]: https://docs.google.com/presentation/d/1cTDYd4tNHH37MKbNEm1jqdMW-NcqaVU2MLIsUWtCs7k/edit?usp=sharing "SymfonyCon Amsterdam 2019: Presentation by Zan Baldwin"
+[sfconrepo]: https://github.com/zanbaldwin/sfcon19 "zanbaldwin/sfcon19 on GitHub"
+[darsynip]: https://github.com/darsyn/ip "darsyn/ip on GitHub"
+[ipdocs]: http://darsyn.github.io/ip/ "Documentation for darsyn/ip"
+[ippackagist]: https://packagist.org/packages/darsyn/ip "darsyn/ip on Packagist"
+[sflive]: https://live.symfony.com "Symfony Live Conferences"
+[sfcon]: https://amsterdam2019.symfony.com/ "SymfonyCon Amsterdam 2019"
+[guidance]: https://symfony.com/doc/current/contributing/diversity/governance.html#guidance "Diversity Initiative Governance"
+[dpc]: https://phpconference.nl "Dutch PHP Conference"
+[scrum]: https://www.scrumalliance.org "Scrum Alliance"
