@@ -1,0 +1,579 @@
+<!doctype html>
+<html class="no-js" lang="en-GB">
+    <head>
+        <meta charset="utf-8">
+        <title>The Symfony Open-source Community</title>
+        <meta name="description" content="The Symfony Open-source Community; article version of the SymfonyLive London 2018 closing keynote.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/assets/css/latex.css">
+        <link rel="stylesheet" href="/assets/css/code.css">
+        <meta name="theme-color" content="#ffffff">
+    </head>
+    <body>
+
+        <p class="author">
+            <a href="/">Zan Baldwin</a>
+            <br>
+            Thursday, 21<sup>st</sup> November, 2019
+        </p>
+        <aside class="abstract">
+            <p>
+                This is an article version of the <a href="https://live.symfony.com/2019-amsterdam-con/">SymfonyCon Amsterdam 2019</a>
+                technical talk.
+            </p>
+        </aside>
+
+        <h2>Fun Experiments in PHP (Not For Production)</h2>
+
+        <nav role="navigation" class="toc">
+            <h3>Contents</h3>
+            <ol>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#streams">Streams</a></li>
+                <li><a href="#esoteric-language">Esoteric Language</a></li>
+                <li><a href="#custom-stream-wrapper">Custom Stream Wrapper</a></li>
+                <li><a href="#stream-filters">Stream Filters</a></li>
+                <li><a href="#go-aop">Go! AOP</a></li>
+                <li><a href="#source-transformers">Source Transformers</a></li>
+                <li><a href="#autoloader-overloading">Autoloader Overloading</a></li>
+            </ol>
+        </nav>
+
+        <h3 id="introduction">Introduction</h3>
+        <p>
+            This is a technical article, but it's not the main focus. It's designed to make you go <em>"huh?"</em> or
+            <em>"what?"</em> Most importantly however, even if for a split second, I want this article to make you go
+            <em>"I wonder…"</em> or <em>"what if?"</em>.
+        </p>
+        <p>
+            Also, for the remainder of this article, imagine that we don't care about performance - there are many
+            articles on the web about performant PHP and this article is the opposite of that.
+        </p>
+
+        <h3 id="streams">Streams</h3>
+        <p>
+            In computer science, a stream is a sequence of data elements made available over time. Think of it as items
+            on a conveyor belt that are processed as they arrive - most streams, like conveyor belts, end once there are
+            no more items but they can run continuously if need be.
+        </p>
+        <p>
+            If you write PHP applications that deal with the input and output of data, you use streams. They're a core
+            function in PHP and pretty unavoidable for any developer. Streams in PHP are a way of generalizing file,
+            network, data compression, and other operations which share a common set of functions and uses: a stream is
+            resource object which can be read from and written to in a linear fashion.
+        </p>
+        <p>
+            If you've used Guzzle or sockets, accessed the filesystem, or even dealt with a <code>$_POST</code> request,
+            you've used streams. PHP is known for its low barrier-of-entry so the vast majority of stream handling is
+            abstracted away from the developer.
+        </p>
+        <p>
+            An example of this is <code>file_get_contents('hello.txt')</code> which implicitly means
+            <code>file_get_contents('file://hello.txt')</code> - fetching the specified URI using the
+            <code>file://</code> protocol.
+        </p>
+        <p>
+            Known as stream wrappers, PHP supports the following protocols natively: <code>file</code>, <code>http</code>,
+            <code>ftp</code>, <code>php</code>, <code>zlib</code>, <code>bzip2</code>, <code>data</code>,
+            <code>glob</code>, <code>phar</code>. The following protocols are also supported if their associated
+            extensions are installed: <code>zip</code>, <code>ssh2</code>, <code>rar</code>, <code>ogg</code>,
+            <code>expect</code>. If you've come across the <code>s3://</code> protocol while using the
+            <a href="https://aws.amazon.com/sdk-for-php/">AWS SDK</a>, you've come across a stream wrapper. PHP lets us
+            define out own stream wrappers in userland PHP.
+        </p>
+
+        <h3 id="esoteric-language">Esoteric Language</h3>
+        <p>
+            Introducing <a href="https://en.wikipedia.org/wiki/Brainfuck" title="Brainf*ck on Wikipedia">Brainf*ck</a>!
+            Obviously not exactly the best name to use (especially at an international conference where this article was
+            given as a talk) but it's perhaps the world's most well known esoteric language. Let's assume we have a
+            script <code>hello.bf</code>:
+        </p>
+        <pre><code>++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</code></pre>
+        <p>
+            If, for some arcane, horrendous reason, we wanted to write parts of our application in BF, and require it in
+            our application the <code>file://</code> protocol is implicitly used when we <code>require</code> it in our
+            application and the contents of the file will get dumped byte-for-byte because the PHP interpreter doesn't
+            find any PHP code.
+        </p>
+        <p>
+            However, we can substitute the implicit protocol for explicitly using a custom stream wrapper in userland
+            PHP to manipulate the input before including the result in our application.
+        </p>
+
+        <h3 id="custom-stream-wrapper">Custom Stream Wrapper</h3>
+        <p>
+            Here we have the boilerplate code for a stream wrapper: the class definition and a static method to
+            register it with PHP:
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">class</span> <span class="identifier">BfStreamWrapper</span>
+{
+    <span class="doc">/** @var resource $context */</span>
+    <span class="keyword">public</span> <span class="variable">$context</span>;
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <span class="identifier">register</span>(string <span class="variable">$filterName</span>)<span class="keyword">:</span> void
+    {
+        stream_wrapper_register(<span class="variable">$filterName</span>, <span class="keyword">static</span><span class="keyword">::</span><span class="identifier">class</span>);
+    }
+}
+</code></pre>
+        <p>
+            Stream wrappers don't extend or implement anything in PHP core, but we need to implement a minimum of 5
+            methods to process an incoming stream.
+        </p>
+        <p>
+            The first is <code>stream_open()</code>; we're just checking that the file specified exists and taking note
+            of its path.
+        </p>
+        <pre><code class="php"><span class="keyword">private</span> <span class="variable">$uri</span>;
+
+<span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_open</span>(string <span class="variable">$path</span>, string <span class="variable">$mode</span>, int <span class="variable">$options</span>, <span class="keyword">&amp;</span><span class="variable">$opened_path</span>)<span class="keyword">:</span> bool
+{
+    <span class="variable">$realpath</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">removeProtocolFromPath</span>(<span class="variable">$path</span>, <span class="keyword">static</span><span class="keyword">::</span><span class="identifier">WRAPPER_PROTOCOL</span>);
+    <span class="keyword">if</span> (file_exists(<span class="string">'file://'</span> <span class="keyword">.</span> <span class="variable">$realpath</span>)) {
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">uri</span> <span class="keyword">=</span> <span class="variable">$opened_path</span> <span class="keyword">=</span> <span class="variable">$realpath</span>;
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+    <span class="keyword">return</span> <span class="keyword">false</span>;
+}
+</code></pre>
+        <p>
+            <code>stream_stat()</code> is something that's called each time to collect information, it's obviously
+            recommended that you return some useful information about the stream here but technically it's not actually
+            required; in this example we're just returning an empty array:
+        </p>
+        <pre><code class="php"><span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_stat</span>()<span class="keyword">:</span> <span class="keyword">array</span>
+{
+    <span class="keyword">return</span> [];
+}
+</code></pre>
+        <p>
+            Streams are read from and written to in chunks, meaning <code>stream_read()</code> could be invoked multiple
+            times. This method is more complicated than the rest because it needs to keep track of how much data has
+            flowed out. But simplified, the first line is the Brainf*ck script getting executed; every line thereafter
+            is dealing with returning the buffered script output in chunks as they're requested by the stream user.
+        </p>
+        <pre><code class="php"><span class="keyword">private</span> <span class="variable">$output</span>;
+<span class="keyword">private</span> <span class="variable">$pointer</span> <span class="keyword">=</span> <span class="literal">0</span>;
+<span class="keyword">private</span> <span class="variable">$eof</span> <span class="keyword">=</span> <span class="keyword">false</span>;
+
+<span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_read</span>(int <span class="variable">$readNumBytes</span>)
+{
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">execute</span>();
+    <span class="variable">$remainingBytes</span> <span class="keyword">=</span> strlen(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span>) <span class="keyword">-</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">pointer</span>;
+    <span class="keyword">if</span> (<span class="variable">$remainingBytes</span> <span class="keyword">&gt;</span> <span class="literal">0</span>) {
+        <span class="variable">$buffer</span> <span class="keyword">=</span> substr(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span>, <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">pointer</span>, <span class="variable">$readNumBytes</span>);
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">pointer</span> <span class="keyword">+=</span> <span class="variable">$readNumBytes</span>;
+        <span class="keyword">return</span> <span class="variable">$buffer</span>;
+    }
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eof</span> <span class="keyword">=</span> <span class="keyword">true</span>;
+    <span class="keyword">return</span> <span class="keyword">false</span>;
+}
+</code></pre>
+        <p>
+            The <code>stream_eof()</code> method returns a boolean value indicating whether the previous
+            <code>stream_read()</code> has been called enough times to reach the end of the stream.
+        </p>
+        <pre><code class="php"><span class="keyword">private</span> <span class="variable">$eof</span> <span class="keyword">=</span> <span class="keyword">false</span>;
+
+<span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_eof</span>()<span class="keyword">:</span> bool
+{
+    <span class="keyword">return</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eof</span>;
+}
+</code></pre>
+        <p>
+            <code>stream_close()</code> is just cleaning up the internal state - in other protocols this might be where
+            you close a connection or delete a lock file.
+        </p>
+        <pre><code class="php"><span class="keyword">private</span> <span class="variable">$uri</span>;
+<span class="keyword">private</span> <span class="variable">$output</span>;
+<span class="keyword">private</span> <span class="variable">$pointer</span> <span class="keyword">=</span> <span class="literal">0</span>;
+<span class="keyword">private</span> <span class="variable">$eof</span> <span class="keyword">=</span> <span class="keyword">false</span>;
+
+<span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_close</span>()<span class="keyword">:</span> bool
+{
+    <span class="comment">// Clear internal buffers.
+</span><span class="comment"></span>    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">uri</span> <span class="keyword">=</span> <span class="keyword">null</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span> <span class="keyword">=</span> <span class="keyword">null</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">pointer</span> <span class="keyword">=</span> <span class="literal">0</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eof</span> <span class="keyword">=</span> <span class="keyword">false</span>;
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}
+</code></pre>
+        <p>
+            Finally, for completeness, the powerhouse of stream wrapper is the method that executes Brainf*ck scripts.
+            In this example I'm using <a href="https://github.com/ircmaxell/brainfuck">Anthony Ferrara's library</a>.
+            We take the contents of the Brainf*ck script, pump it through the language runtime, and save the result as
+            a string in the <code>$output</code> class property.
+        </p>
+        <pre><code class="php"><span class="keyword">private</span> <span class="variable">$input</span> <span class="keyword">=</span> [];
+<span class="keyword">private</span> <span class="variable">$output</span>;
+
+<span class="keyword">private</span> <span class="keyword">function</span> <span class="identifier">execute</span>()<span class="keyword">:</span> void
+{
+    <span class="keyword">if</span> (is_string(<span class="variable">$output</span>)) {
+        <span class="keyword">return</span>;
+    }
+    <span class="variable">$result</span> <span class="keyword">=</span> (<span class="keyword">new</span> \Brainfuck\Language)<span class="keyword">-&gt;</span><span class="identifier">run</span>(
+        file_get_contents(<span class="string">'file://'</span> <span class="keyword">.</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">uri</span>),
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>
+    );
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span> <span class="keyword">=</span> implode(<span class="string">''</span>, array_map(<span class="keyword">function</span> (int <span class="variable">$ord</span>)<span class="keyword">:</span> string {
+        <span class="comment">// Brainf*ck returns result in bytes (8-bit integers). Convert to ASCII.
+</span><span class="comment"></span>        <span class="keyword">return</span> chr(<span class="variable">$ord</span>);
+    }, <span class="variable">$result</span>));
+}</code></pre>
+        <p>
+            However, requiring a script using our new stream wrapper doesn't give us a change to provide the script with
+            any input, which is kind of important for some scripts.
+        </p>
+        <p>
+            We can accept an input string, and save it in a class property to use when we execute the script.
+            Unfortunately in our example this means that we can only accept input before we execute our script, which
+            is whenever we attempt to read the output.
+        </p>
+        <pre><code class="php"><span class="keyword">private</span> <span class="variable">$input</span> <span class="keyword">=</span> [];
+
+<span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_write</span>(string <span class="variable">$data</span>)<span class="keyword">:</span> int
+{
+   <span class="comment">// No point in recording input if script has already been executed.
+</span><span class="comment"></span>   <span class="keyword">if</span> (is_string(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span>)) {
+       <span class="keyword">return</span> <span class="literal">0</span>;
+   }
+   <span class="variable">$count</span> <span class="keyword">=</span> <span class="literal">0</span>;
+   <span class="keyword">foreach</span> (str_split(<span class="variable">$data</span>) <span class="keyword">as</span> <span class="variable">$chr</span>) {
+       <span class="comment">// Brainf*ck takes bytes (8-bit integers) as input.
+</span><span class="comment"></span>       <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>[] <span class="keyword">=</span> ord(<span class="variable">$chr</span>);
+       <span class="variable">$count</span><span class="keyword">++</span>;
+   }
+   <span class="keyword">return</span> <span class="variable">$count</span>;
+}
+</code></pre>
+        <p>
+            Now it's time to use it! After registering our stream filter, we can open up a stream handle, pump in some
+            input, and get the output of our script! Notice how if our script needs input, we can't <code>require</code>
+            the script like we would a PHP file.
+        </p>
+
+        <h3 id="stream-filters">Stream Filters</h3>
+        <p>
+            Next up in the PHP streams arsenal is stream filters. They're simpler than wrappers: just a method to modify
+            data as it passes through - this does mean that it cannot deal with both input and output so this is a
+            perfect time to introduce <strong>source code transformation</strong>!
+        </p>
+        <p>
+            Here we have the boilerplate for a stream filter, the class definition and a static method to register it
+            with PHP. Unlike wrappers, stream filters extend a core PHP class and only need to implement one method.
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">class</span> <span class="identifier">BfStreamFilter</span> <span class="keyword">extends</span> \php_user_filter
+{
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <span class="identifier">register</span>(string <span class="variable">$filterName</span>)<span class="keyword">:</span> void
+    {
+        stream_filter_register(<span class="variable">$filterName</span>, self<span class="keyword">::</span><span class="identifier">class</span>);
+    }
+
+    <span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">filter</span>(<span class="variable">$in</span>, <span class="variable">$out</span>, <span class="keyword">&amp;</span><span class="variable">$consumed</span>, <span class="variable">$closing</span>)<span class="keyword">:</span> int
+    {
+        <span class="keyword">while</span> (<span class="variable">$bucket</span> <span class="keyword">=</span> stream_bucket_make_writeable(<span class="variable">$in</span>)) {
+            <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span> <span class="keyword">.=</span> <span class="variable">$bucket</span><span class="keyword">-&gt;</span><span class="identifier">data</span>;
+        }
+        <span class="keyword">if</span> (<span class="variable">$closing</span> <span class="keyword">||</span> feof(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">stream</span>)) {
+            <span class="variable">$consumed</span> <span class="keyword">=</span> strlen(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>);
+            <span class="variable">$bucket</span> <span class="keyword">=</span> stream_bucket_new(
+                <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">stream</span>,
+                <span class="comment">// Has to be static because userland doesn't control instantiation.</span>
+                <span class="keyword">static</span><span class="keyword">::</span><span class="variable">$twig</span><span class="keyword">-&gt;</span><span class="identifier">render</span>(<span class="string">'bf_closure.twig.php'</span>, [
+                    <span class="string">'bf_php_value'</span> <span class="keyword">=&gt;</span> var_export(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>, <span class="keyword">true</span>),
+                ])
+            );
+            stream_bucket_append(<span class="variable">$out</span>, <span class="variable">$bucket</span>);
+            <span class="keyword">return</span> \PSFS_PASS_ON;
+        }
+        <span class="keyword">return</span> \PSFS_FEED_ME;
+    }
+}</code></pre>
+        <p>
+            Again, streams are processed in chunks so the vast majority of this method is dealing with pulling in the
+            contents of the stream, possibly over multiple invocations… But the main logic of this method is still
+            simply just data in and data out:
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">filter</span>(<span class="variable">$in</span>, <span class="variable">$out</span>, <span class="keyword">&amp;</span><span class="variable">$consumed</span>, <span class="variable">$closing</span>)<span class="keyword">:</span> int
+{
+    <span class="comment">// Data in...</span>
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span> <span class="keyword">.=</span> <span class="variable">$bucket</span><span class="keyword">-&gt;</span><span class="identifier">data</span>;
+
+    <span class="comment">// Data out...
+</span><span class="comment"></span>    <span class="keyword">static</span><span class="keyword">::</span><span class="variable">$twig</span><span class="keyword">-&gt;</span><span class="identifier">render</span>(<span class="string">'bf_closure.twig.php'</span>, [
+        <span class="string">'bf_php_value'</span> <span class="keyword">=&gt;</span> var_export(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>, <span class="keyword">true</span>),
+    ])
+}
+</code></pre>
+        <p>
+            Almost every time I've had to output XML from an application, I've used Twig rather than deal with encoding
+            data structures. Why not do it for PHP, too?
+        </p>
+        <pre><code class="twig">&lt;?php declare(strict_types=1);
+
+<span class="comment">{% Brainf*ck Closure Code Template %}</span>
+
+return function (array $input = []): string {
+   $result = (new \Brainfuck\Language)-&gt;run(
+       <span class="output">{{</span> <span class="variable">bf_php_value</span> <span class="output">}}</span>,
+       $input
+   );
+   return implode('', array_map(
+       function (int $ord): string {
+           // BF returns result in bytes (8-bit
+           // integers). Convert to ASCII.
+           return chr($ord);
+       },
+       $result
+   ));
+};
+</code></pre>
+        <p>
+            Similar to before, we register our stream filter, except this time we attach our stream filter to an already
+            existing stream handle. When we read the contents of the stream we get back valid PHP code that we can
+            <code>eval()</code>!
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+BfStreamFilter<span class="keyword">::</span><span class="identifier">register</span>(<span class="string">'bf'</span>);
+
+<span class="variable">$handle</span> <span class="keyword">=</span> fopen(<span class="string">'/app/hello.bf'</span>, <span class="string">'r+'</span>);
+stream_filter_append(<span class="variable">$handle</span>, <span class="string">'bf'</span>);
+
+<span class="variable">$closureCode</span> <span class="keyword">=</span> stream_get_contents(<span class="variable">$handle</span>);
+<span class="variable">$closure</span> <span class="keyword">=</span> <span class="keyword">eval</span>(<span class="string">'?&gt;'</span> <span class="keyword">.</span> <span class="variable">$closureCode</span>);
+
+<span class="variable">$output</span> <span class="keyword">=</span> <span class="variable">$closure</span>(<span class="variable">$input</span>);
+</code></pre>
+        <p>
+            Attaching a filter to a stream handle and evaluating the result each time isn't ideal - and most importantly
+            we can't attach a stream filter to a <code>require</code> statement. That's where one of the most underrated
+            features of PHP comes in: the <code>php://</code> stream wrapper… in particular the <code>php://filter</code>
+            meta-wrapper.
+        </p>
+        <p>
+            The <code>php://filter</code> meta-wrapper allows us to act upon any other stream resource
+            (<code>/resource=</code>), while attaching any number of filters to manipulate the stream when reading it
+            (<code>/read=</code>) as well as when writing to it (<code>/write=</code>).
+        </p>
+        <p>
+            Most importantly, this allows us to specify a resource and attach a filter to it all in one string which we
+            can pass to require. This one string saves us from having to open up a handle, attaching a filter, and
+            evaluating the result of the stream. This one feature of PHP is the basis of this entire article.
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+BfStreamFilter<span class="keyword">::</span><span class="identifier">register</span>(<span class="string">'bf'</span>);
+
+<span class="variable">$script</span> <span class="keyword">=</span> <span class="string">'/app/hello.bf'</span>;
+
+<span class="comment">// php://filter/read=bf/resource=file:///app/hello.bf</span>
+<span class="variable">$closure</span> <span class="keyword">=</span> <span class="keyword">require</span> <span class="string">'php://filter'</span>
+                 <span class="keyword">.</span> <span class="string">'/read=bf'</span>
+                 <span class="keyword">.</span> <span class="string">'/resource=file://'</span> <span class="keyword">.</span> <span class="variable">$script</span>;
+
+<span class="variable">$output</span> <span class="keyword">=</span> <span class="variable">$closure</span>(<span class="variable">$input</span>);
+</code></pre>
+
+        <h3 id="go-aop">Go! AOP</h3>
+        <p>
+            At <a href="https://phpconference.nl/">Dutch PHP Conference</a> 2016 I saw
+            <a href="https://twitter.com/lisachenko">Alexander Lisachenko</a> talk about the
+            <a href="http://go.aopphp.com/">Go! AOP framework</a> he created, which is the main inspiration for this
+            article. I'll give an extremely brief idea of what the project does, then dive straight into the internals
+            to figure out what's going on.
+        </p>
+        <p>
+            Go! AOP is a framework for developing PHP application using aspect-oriented programming: separating out logic
+            when developing and joining it back together at runtime.
+        </p>
+        <ul>
+            <li>Allows separation of cross-cutting concerns</li>
+            <li>Increases modularity</li>
+            <li>Adds additional behaviour to existing code</li>
+        </ul>
+        <p><em>
+            To ensure that I explain the framework accurately, I'll use the same examples as the creator of this
+            framework and I recommend you look up Lisachenko's previous presentations on this subject.
+        </em></p>
+        <p>
+            Let's say we have a method that creates a new user in our application. As far as business logic goes, all
+            that's required for creating a new user is pretty simple:
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">function</span> <span class="identifier">createNewUser</span>(string <span class="variable">$email</span>, string <span class="variable">$password</span>)<span class="keyword">:</span> UserInterface {
+    <span class="variable">$user</span> <span class="keyword">=</span> <span class="keyword">new</span> User(<span class="variable">$email</span>, <span class="variable">$password</span>);
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">persist</span>(<span class="variable">$user</span>);
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">flush</span>();
+    <span class="keyword">return</span> <span class="variable">$user</span>;
+}</code></pre>
+        <p>But in the real world things are never this simple:</p>
+        <ul>
+            <li>
+                We'll need to the authorization of the currently logged-in user to make sure they're allowed to
+                create new users.
+            </li>
+            <li>We should log that a new user is being created.</li>
+            <li>
+                We need to emit an event onto a queue so that an email can be sent asynchronously to the new user
+                informing them that their account is ready to use.
+            </li>
+            <li>And we need exception handling in case something goes wrong.</li>
+        </ul>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">function</span> <span class="identifier">createNewUser</span>(string <span class="variable">$email</span>, string <span class="variable">$password</span>)<span class="keyword">:</span> UserInterface {
+    <span class="keyword">if</span> (<span class="keyword">!</span><span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">security</span><span class="keyword">-&gt;</span><span class="identifier">isGranted</span>(<span class="string">'ROLE_ADMIN'</span>)) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> AccessDeniedException;
+    }
+    <span class="keyword">try</span> {
+        <span class="variable">$user</span> <span class="keyword">=</span> <span class="keyword">new</span> User(<span class="variable">$email</span>, <span class="variable">$password</span>);
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">persist</span>(<span class="variable">$user</span>);
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">flush</span>();
+    } <span class="keyword">catch</span> (ORMException <span class="variable">$e</span>) {
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">error</span>(<span class="string">'Could not persist new user.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$email</span>]);
+        <span class="keyword">throw</span> <span class="variable">$e</span>;
+    }
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eventDispatcher</span><span class="keyword">-&gt;</span><span class="identifier">dispatch</span>(<span class="keyword">new</span> UserCreatedEvent(<span class="variable">$email</span>));
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">info</span>(<span class="string">'User created successfully.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$email</span>]);
+    <span class="keyword">return</span> <span class="variable">$user</span>;
+}
+</code></pre>
+        <p>
+            While this example may not be unwieldy once everything has been factored in, it does demonstrate how even
+            the simplest things need to consider many different cross-cutting concerns. More complex situations can get
+            unwieldy very quickly.
+        </p>
+        <p>
+            Aspect-oriented programming is about keeping your method simple and interrupting the execution flow of the
+            application at specific points to add logic. You keep logic separated, and inject each piece to where it
+            needs to be. These injected pieces of logic are called <strong>pointcuts</strong>.
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">function</span> <span class="identifier">createNewUser</span>(string <span class="variable">$email</span>, string <span class="variable">$password</span>)<span class="keyword">:</span> UserInterface {
+    <span class="variable">$user</span> <span class="keyword">=</span> <span class="keyword">new</span> User(<span class="variable">$email</span>, <span class="variable">$password</span>);
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">persist</span>(<span class="variable">$user</span>);
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">flush</span>();
+    <span class="keyword">return</span> <span class="variable">$user</span>
+}
+
+<span class="doc">/** @Before(pointcut=”public UserService-&gt;*(*)”) */</span>
+<span class="keyword">function</span> <span class="identifier">checkCurrentUserCanCreateUsers</span>(MethodInvocation <span class="variable">$method</span>)<span class="keyword">:</span> void {
+    <span class="keyword">if</span> (<span class="keyword">!</span><span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">security</span><span class="keyword">-&gt;</span><span class="identifier">isGranted</span>(<span class="string">'ROLE_ADMIN'</span>)) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> AccessDeniedException;
+    }
+}
+
+<span class="doc">/** @AfterThrow(pointcut=”public UserService-&gt;createNewUser(*)”) */</span>
+<span class="keyword">function</span> <span class="identifier">handleNewUserDatabaseError</span>(MethodInvocation <span class="variable">$method</span>)<span class="keyword">:</span> void {
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">error</span>(<span class="string">'Could not persist new user.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$method</span><span class="keyword">-&gt;</span><span class="identifier">getArguments</span>()[<span class="literal">0</span>]]);
+    <span class="keyword">throw</span> <span class="variable">$e</span>;
+}
+
+<span class="doc">/** @After(pointcut=”public UserService-&gt;createNewUser(*)”) */</span>
+<span class="keyword">function</span> <span class="identifier">onNewUserSuccessfullyCreated</span>(MethodInvocation <span class="variable">$method</span>)<span class="keyword">:</span> void {
+    <span class="variable">$email</span> <span class="keyword">=</span> <span class="variable">$method</span><span class="keyword">-&gt;</span><span class="identifier">getArguments</span>()[<span class="literal">0</span>];
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eventDispatcher</span><span class="keyword">-&gt;</span><span class="identifier">dispatch</span>(<span class="keyword">new</span> UserCreatedEvent(<span class="variable">$email</span>));
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">info</span>(<span class="string">'User created successfully.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$email</span>]);
+}
+</code></pre>
+        <p>We can even decorate the original method and make modifications to the result if we want to.</p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="doc">/** @Around(pointcut=”public UserService-&gt;createNewUser(*)”) */</span>
+<span class="keyword">function</span> <span class="identifier">logTimeTakenToCreateUser</span>(MethodInvocation <span class="variable">$method</span>)<span class="keyword">:</span> UserInterface {
+    <span class="variable">$start</span> <span class="keyword">=</span> microtime(<span class="keyword">true</span>);
+    <span class="variable">$result</span> <span class="keyword">=</span> <span class="variable">$method</span><span class="keyword">-&gt;</span><span class="identifier">proceed</span>();
+    <span class="variable">$duration</span> <span class="keyword">=</span> microtime(<span class="keyword">true</span>) <span class="keyword">-</span> <span class="variable">$start</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">log</span>(sprintf(<span class="string">'Creating a user took %f seconds'</span>, <span class="variable">$duration</span>));
+    <span class="keyword">return</span> <span class="keyword">new</span> TimedUserCreation(<span class="variable">$result</span>, <span class="variable">$duration</span>);
+}
+</code></pre>
+
+        <h3 id="source-transformers">Source Transformers</h3>
+        <p>
+            The majority of the AOP’s logic is in the form of source transformers. By using AOP in your application,
+            you’re entering the realm of meta-programming: your application transforms its own source code when
+            including it. So what is AOP doing inside that transformer?
+        </p>
+        <ul>
+            <li>
+                AOP queries Composer’s class loader for the location of the file that should contain the class
+                definition for <code>MyClass</code>.
+            </li>
+            <li>
+                It generates a load of metadata about the source code file, including its contents and the Abstract
+                Syntax Tree generated from its contents by <a href="https://github.com/nikic/PHP-Parser">Nikita Popov’s
+                pure-PHP language parser <code>nikic/php-parser</code></a>.
+            </li>
+            <li>
+                It passes that metadata through a series of source transforming classes, each manipulating the AST to
+                provide a particular feature.
+            </li>
+            <li>
+                Dump the final manipulated AST back into PHP code as a string. It’s at this point that the final
+                compiled source is saved to cache so that subsequent requests skip the expensive source transformation
+                stage.
+            </li>
+            <li>The final transformed code is returned to be executed by the PHP engine.</li>
+        </ul>
+        <p>
+            All of this happens while you’re writing PHP applications normally without worrying about loading classes or
+            compiling into usable code. As this article is all about PHP streams, it may not come as a surprise that the
+            main logic behind the AOP framework is built around PHP’s stream filters.
+        </p>
+        <p>
+            A huge amount of complexity is held within this process, enough for an entirely different presentation, so
+            for the sake of simplicity, we’ll simplify AOP’s source transforming process into a single function call.
+            From now on, we’ll use the following function as an alias to implementing and registering a stream filter
+            because, quite frankly, implementing a stream filter didn't fit on the original slides!
+        </p>
+        <pre><code class="php"><span class="variable">$executableCodeContents</span> <span class="keyword">=</span> transformCodeFilter(<span class="variable">$sourceCodeFileOnDisk</span>);</code></pre>
+
+        <h3 id="autoloader-overloading">Autoloader Overloading</h3>
+        <blockquote>
+            <p>
+                <code>new MyClass</code> ⇢ ??? ⇢ <code>transformCodeFilter()</code>
+            </p>
+        </blockquote>
+        <p>
+            But if you try to create a new instance of <code>MyClass</code>, how does AOP manipulate Composer to pass
+            the source code file through the <code>transformCodeFilter()</code> function before getting PHP to execute
+            the contents?
+        </p>
+        <ul>
+            <li>You go to instantiate a new class, eg <code>new MyClass</code></li>
+            <li>
+                Composer does its normal thing of figuring out where the class definition is located, eg
+                <code>/var/www/MyClass.php</code>
+            </li>
+            <li>AOP hijacks the normal Composer logic… <em>I'd like to interject for a moment</em></li>
+            <li>
+                and tells PHP to load a new URI that uses the PHP stream wrapper:
+                <code>php://filter/read=go.source.transforming.loader/resource=file:///var/www/MyClass.php</code>
+            </li>
+        </ul>
+        <p>
+            PHP then applies the <code>go.source.transforming.loader</code> filter when reading the contents of the URI
+            <code>/var/www/MyClass.php</code> from the <code>file://</code> system.
+        </p>
+
+        <aside class="abstract">
+            <p>
+                This article is incomplete and has yet to be transcribed fully.
+            </p>
+        </aside>
+
+    </body>
+</html>

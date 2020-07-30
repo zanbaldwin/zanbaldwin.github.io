@@ -1,0 +1,599 @@
+<!doctype html>
+<html class="no-js" lang="en-GB">
+    <head>
+        <meta charset="utf-8">
+        <title>What is Symfony?</title>
+        <meta name="description" content="What is Symfony?; article version of the presentation to Drupal 7 developers.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/assets/css/latex.css">
+        <link rel="stylesheet" href="/assets/css/code.css">
+        <meta name="theme-color" content="#ffffff">
+    </head>
+    <body>
+
+        <p class="author">
+            <a href="/">Zan Baldwin</a>
+            <br>
+            Monday, 11<sup>th</sup> March, 2019
+        </p>
+        <aside class="abstract">
+            <p>
+                This is an article version of a presentation given to coworkers that were Drupal 7 developers as an
+                introduction to Symfony 4.2, and overview of the Symfony project, and some more technical details.
+            </p>
+        </aside>
+
+        <h2>What is Symfony?</h2>
+
+        <nav role="navigation" class="toc">
+            <h3>Contents</h3>
+            <ol>
+                <li><a href="#components">Components</a> </li>
+                <li><a href="#framework">Framework</a></li>
+                <li><a href="#philosophy">Philosophy</a>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#structure">Structure</a></li>
+                <li><a href="#flex-and-receipes">Flex and Recipes</a></li>
+                <li><a href="#example-recipe">Example Recipe (Doctrine)</a></li>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#bundles">Bundles</a></li>
+                <li><a href="#dependency-injection">Dependency Injection</a></li>
+                <li><a href="#service-definitions">Service Definitions</a></li>
+                <li><a href="#service-configuration">Service Configuration</a></li>
+                <li><a href="#application-service-configuration">Application Service Configuration</a></li>
+                <li><a href="#auto-service-loading">Auto Service Loading</a></li>
+                <li><a href="#autowiring">Autowiring</a></li>
+                <li><a href="#auto-configuration">Auto Configuration</a></li>
+                <li><a href="#configuration">Configuration</a></li>
+                <li><a href="#compilation">Compilation</a></li>
+                <li><a href="#controllers">Controllers</a></li>
+                <li><a href="#model-view-controller">Model-View-Controller</a></li>
+                <li><a href="#action-domain-responder">Action Domain Responder</a></li>
+            </ol>
+        </nav>
+
+        <h3 id="components">Components</h3>
+        <p>
+            Symfony is a toolbox of (over 50) decoupled and reusable software components on which the best PHP
+            applications are built, with outstanding documentation, comprehensive test coverage and contribution
+            guidelines.
+        </p>
+        <p>Examples of components include:</p>
+        <ul>
+            <li>Dependency Injection</li>
+            <li>Console</li>
+            <li>Event Dispatcher</li>
+            <li>Routing</li>
+        </ul>
+        <p>Projects that are using Symfony components include:</p>
+        <ul>
+            <li>Drupal</li>
+            <li>Laravel</li>
+            <li>phpBB</li>
+            <li>Joomla!</li>
+            <li>Yii Framework</li>
+            <li>Magento</li>
+            <li>Facebook SDKs</li>
+            <li>Google SDKs</li>
+            <li>Composer</li>
+            <li>CakePHP</li>
+        </ul>
+
+        <h3 id="framework">Framework</h3>
+        <p>
+            The framework is a methodology (or "assembly guide") for web applications built on top of the components as
+            glue-code to bring them all together in a structured approach. It efficiently and effectively guarantees
+            stability, maintainability and upgradability of complex applications.
+        </p>
+
+        <h3 id="philosophy">Philosophy</h3>
+        <p>
+            The philosophy of Symfony is to embrace and promote professionalism, best practices, standardization and
+            interoperability of applications.
+        </p>
+
+        <h3 id="community">Community</h3>
+        <p>
+            Symfony is a huge and diverse community of over 600,000 developers across 120 countries. It is committed to
+            fostering an open and welcoming environment for everyone, with an appropriate Code of Conduct, Diversity
+            Initiative, support system, user groups, and 9 conferences a year spread across 4 continents.
+        </p>
+
+        <h3 id="structure">Structure</h3>
+        <p>A Symfony application has a very simple file structure.</p>
+        <pre><code>├ bin                Binary executables
+│  └ console         Entrypoint to Symfony via CLI (equivalent to Drush or similar)
+├ config             All configuration files go in here: services, routing, package config, etc.
+│  └ …               By default, most files in this directory are written in YAML
+├ public             Webroot directory
+│  └ index.php       Entrypoint to Symfony via HTTP
+├ src                All project source code goes in here
+│  ├ Controller
+│  │  └ .gitignore
+│  └ Kernel.php      Core of Symfony; sets up bundles, config, and provides service container
+├ var                Variable data: logs, cache, compiled code
+├ vendor             Third-party package dependencies
+├ .env               Default values for project-specific environment variables
+├ .gitignore
+├ composer.json
+├ composer.lock
+└ symfony.lock       Similar to composer.lock, but for Symfony Flex</code></pre>
+
+        <h3 id="flex-and-receipes">Flex and Recipes</h3>
+        <p>
+            Modern Symfony (v4.0+) relies heavily on Composer. Flex is a Symfony-specific Composer plugin that provides
+            extra steps ("recipes") to execute when installing specific, third-party packages.
+        </p>
+
+        <h3 id="example-recipe">Example Recipe (Doctrine)</h3>
+        <p>
+            The recipe executed during the installation of the package
+            <a href="https://packagist.org/packages/doctrine/doctrine-bundle" title="doctrine/doctrine-bundle on Packagist">
+            <code>doctrine/doctrine-bundle</code></a>performs three steps:
+        </p>
+        <ol>
+            <li>Registers the Doctrine bundle with your application's kernel.</li>
+            <li>Creates the file <code>config/packages/doctrine.yaml</code></li>
+            <li>Adds the environment variable <code>DATABASE_URL</code> to your <code>.env</code> file.
+        </ol>
+        <p>
+            These recipes feel like magic at first, but follow predetermined steps defined in the
+            <code>symfony/recipes</code> repository.
+        </p>
+        <p>
+            They set up sensible defaults so that a package can be installed and used without having to invoke some
+            arcane Google-fu to figure out what configuration options go where.
+        </p>
+        <blockquote>
+            <p><strong>Magic</strong> <em>(programming)</em>, <code>ˈmadʒɪk</code></p>
+            <p>
+                An informal term, often carrying bad connotations, for heavy abstraction that hides the true behaviour
+                of code. The action of such abstractions is described as being done "automagically".
+            </p>
+        </blockquote>
+        <p>
+            Many advanced process in Symfony are abstracted away from the developer (DX initiative) and can seem like
+            magic, but are logical and customisable once you start exploring.
+        </p>
+
+        <h3 id="getting-started">Getting Started</h3>
+        <p>
+            The skeleton repository for setting up a new Symfony project (<code>git://github.com/symfony/skeleton</code>)
+            contains just two files: <code>composer.json</code> and <code>composer.lock</code>.
+        </p>
+        <p>Running composer install will:</p>
+        <ol>
+            <li>
+                Install the project's dependencies to the <code>vendor/</code> directory. To start off with, our
+                application has 5 direct dependencies:
+                <ul>
+                    <li><code>symfony/console</code>,</li>
+                    <li><code>symfony/dotenv</code> for project-specific environment variables,</li>
+                    <li><code>symfony/flex</code>,</li>
+                    <li><code>symfony/framework-bundle</code>, and</li>
+                    <li><code>symfony/yaml</code> for reading configuration files written in YAML (the default).</li>
+                </ul>
+            </li>
+            <li>
+                The <code>symfony/flex</code> package is installed and the custom Composer plugin will run, fetching and
+                executing any recipes that exist for the installed dependencies.
+            </li>
+        </ol>
+        <p>
+            The recipe for the <code>symfony/framework-bundle</code> package bootstraps the project structure, resulting
+            in the file structure we saw before.
+        </p>
+
+
+        <h3 id="bundles">Bundles</h3>
+        <p><em>Plugins, modules, extensions… etc.</em></p>
+        <p>
+            They can provide any functionality the main application can, bundled into a reusable, distributable package.
+            By default, only the FrameworkBundle is included.
+        </p>
+        <p>
+            Bundles used to be first-class citizens in Symfony, but they are now abstracted away. You don't need to know
+            much about bundles except they provide functionality and, with Flex, most of them automagically configure
+            themselves with sensible defaults when they are installed through Composer.
+        </p>
+        <ul>
+            <li>Templating is provided via the Twig bundle.</li>
+            <li>Logging is provided via the Monolog bundle.</li>
+            <li>Database functionality is provided via the Doctrine bundle.</li>
+            <li>Email is provided by the SwiftMailer bundle (soon to be deprecated in favour of the MIME component in 4.3+).</li>
+            <li>Security is provided by the Security bundle.</li>
+        </ul>
+
+        <h3 id="dependency-injection">Dependency Injection</h3>
+        <p>
+            Every object-oriented PHP project contains useful objects that do work: the Twig object renders templates
+            and the Monolog object logs messages. These objects are called services and live inside a centralised
+            registry called a service container.
+        </p>
+        <p>
+            Services are the most important part of Symfony. Using the previous examples, the Twig bundle configures and
+            registers the templating service with the service container, and the Monolog bundle configures and registers
+            the logger service with the service container.
+        </p>
+        <pre><code class="yaml">services:
+
+    email_transport_service:
+        class: <span class="string">'App\Email\Transport'</span>
+        arguments: [ <span class="string">'%smtp_server%'</span>, <span class="string">'%username%'</span>, <span class="string">'%password%'</span> ]
+
+    my_emailer_service:
+        class: <span class="string">'App\Email\Emailer'</span>
+        arguments: [ <span class="string">'@email_transport_service'</span> ]
+        calls:
+            - [ <span class="string">'setLogger'</span>, [ <span class="string">'@logger'</span> ]]</code></pre>
+        <blockquote>
+            <p>
+                By default, configuration in Symfony is written in YAML. It's also possible to write configuration in
+                XML or pure PHP if prefered. There is no performance penalty for using any format, configuration is
+                parsed and compiled before being dumped as pure PHP in the cache.
+            </p>
+            <p>
+                Symfony is also extensible enough for custom config loaders to be written for other configuration
+                formats such as JSON or TOML if you happen to be a masochist.
+            </p>
+        </blockquote>
+
+        <h3 id="service-definitions">Service Definitions</h3>
+        <p>
+            Service definitions describe how a service (PHP object) should be constructed, referencing other services
+            <code>@service_name</code> and configuration <code>%parameter%</code>'s. Other configuration options for
+            service definitions include:
+        </p>
+        <ul>
+            <li>Aliases</li>
+            <li>Factories</li>
+            <li>Post-instantiation configurators</li>
+            <li>Lazy-loading with proxies</li>
+            <li>Service decorators</li>
+            <li>Subscribers</li>
+            <li>Locators</li>
+            <li>Tagging</li>
+            <li>Synthetic services</li>
+        </ul>
+
+        <h3 id="service-configuration">Service Configuration</h3>
+        <p>
+            Using the example above, requesting the service <code>my_emailer_service</code> from the service container
+            will return an instantiated class of type <code>App\Email\Emailer</code>, with the service
+            <code>email_transport_service</code> injected into its constructor (which has, in turn, been constructed
+            with the appropriate parameters injected into that constructor), and the service <code>logger</code>
+            injected into its <code>setLogger()</code> method.
+        </p>
+
+        <h3 id="application-service-configuration">Application Service Configuration</h3>
+        <p>
+            The default settings that come with <code>symfony/skeleton</code> (or more precisely, the
+            <code>symfony/framework-bundle</code> recipe that gets executed when installing <code>symfony/skeleton</code>)
+            are:
+        </p>
+        <pre><code class="yaml"><span class="comment"># This file is the entry point to configure your own services.</span>
+<span class="comment"># Files in the packages/ subdirectory configure your dependencies.</span>
+
+<span class="comment"># Put parameters here that don't need to change on each machine where the app is deployed</span>
+<span class="comment"># https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration</span>
+parameters:
+
+services:
+    <span class="comment"># default configuration for services in *this* file</span>
+    _defaults:
+        autowire: <span class="keyword">true</span>      <span class="comment"># Automatically injects dependencies in your services.</span>
+        autoconfigure: <span class="keyword">true</span> <span class="comment"># Automatically registers your services as commands, event subscribers, etc.</span>
+
+    <span class="comment"># makes classes in src/ available to be used as services</span>
+    <span class="comment"># this creates a service per class whose id is the fully-qualified class name</span>
+    App\:
+        resource: <span class="string">'../src/*'</span>
+        exclude: <span class="string">'../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'</span>
+
+    <span class="comment"># controllers are imported separately to make sure services can be injected</span>
+    <span class="comment"># as action arguments even if you don't extend any base controller class</span>
+    App\Controller\:
+        resource: <span class="string">'../src/Controller'</span>
+        tags: [<span class="string">'controller.service_arguments'</span>]
+
+    <span class="comment"># add more service definitions when explicit configuration is needed</span>
+    <span class="comment"># please note that last definitions always *replace* previous ones</span></code></pre>
+
+        <h3 id="auto-service-loading">Auto Service Loading</h3>
+        <p>
+            Automatic service loading allows entire namespaces/directories to be scanned and automatically added as
+            services to the service container, without the need to manually specify service definitions for every
+            single class.
+        </p>
+        <pre><code class="yaml">services:
+
+    <span class="comment"># makes classes in src/ available to be used as services</span>
+    <span class="comment"># this creates a service per class whose id is the fully-qualified class name</span>
+    App\:
+        resource: <span class="string">'../src/*'</span>
+        exclude: <span class="string">'../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'</span></code></pre>
+
+        <h3 id="autowiring">Autowiring</h3>
+        <p>
+            Each service defined in the service container must have a unique name (its service ID); it's convention to
+            use the class name.
+        </p>
+        <p>
+            Autowiring is a service container feature (enabled by default) that tries to automatically configure the
+            value to inject for every service's constructor arguments that has not been manually defined (as is the
+            case with automatic service loading). Each service's constructor is scanned for argument type-hints; if the
+            type-hint exactly matches the ID of a service registered with the service container, it is used. This is why
+            using the class name as the service ID is the convention.
+        </p>
+        <pre><code class="yaml">services:
+
+    <span class="comment"># Service identifier same as FQCN, no need to specify "class" option.</span>
+    App\Email\Transport:
+        arguments: [ <span class="string">'%smtp_server%'</span>, <span class="string">'%username%'</span>, <span class="string">'%password%'</span> ]
+
+    App\Email\Emailer:
+        <span class="comment"># Arguments no longer have to be specified manually.</span>
+        autowire: <span class="keyword">true</span>
+        <span class="comment"># Calls can also be autowired using the @required annotation.</span>
+        calls:
+            - [ <span class="string">'setLogger'</span>, [ <span class="string">'@logger'</span> ]]
+
+    <span class="comment"># Alternatively, apply autowiring to all services defined in this file.</span>
+    _defaults:
+        <span class="comment"># Autowire: automatically inject dependencies in your services.</span>
+        autowire: <span class="keyword">true</span></code></pre>
+        <p>
+            If an interface is implemented by one (and only one) concrete class, the service container is smart enough
+            to realise that when you type-hint an interface you mean the concrete class - it will register the interface
+            as an alias of the service for the concrete class so that autowiring still works. If more than one concrete
+            class implements the interface, manual configuration is required.
+        </p>
+
+        <h3 id="auto-configuration">Auto Configuration</h3>
+        <p>
+            Auto configuration is another service container feature that will apply generic configuration to all
+            services that implement a specific interface.
+        </p>
+        <p>
+            Custom auto configuration is not often used in applications - its main use is for Symfony to automatically
+            find, register and use classes you create.
+        </p>
+        <pre><code class="yaml">services:
+
+    <span class="comment"># Default configuration for services in *this* file.</span>
+    _defaults:
+        <span class="comment"># Automatically registers your services as commands, event subscribers, etc.</span>
+        autoconfigure: <span class="keyword">true</span></code></pre>
+        <pre><code class="php"><span class="keyword">&lt;?php</span> <span class="keyword">declare</span>(strict_types<span class="keyword">=</span><span class="literal">1</span>);
+
+<span class="keyword">namespace</span> App;
+
+<span class="keyword">use</span> Symfony\Component\DependencyInjection\ContainerBuilder;
+<span class="keyword">use</span> Symfony\Component\HttpKernel\Kernel <span class="keyword">as</span> BaseKernel;
+
+<span class="keyword">class</span> <span class="identifier">Kernel</span> <span class="keyword">extends</span> BaseKernel
+{
+    <span class="comment">// ...</span>
+
+    <span class="keyword">protected</span> <span class="keyword">function</span> <span class="identifier">build</span>(ContainerBuilder <span class="variable">$container</span>)<span class="keyword">:</span> void
+    {
+        <span class="variable">$container</span><span class="keyword">-&gt;</span><span class="identifier">registerForAutoconfiguration</span>(MyInterface<span class="keyword">::</span><span class="identifier">class</span>)<span class="keyword">-&gt;</span><span class="identifier">addTag</span>(<span class="string">'my_custom_service_tag'</span>);
+        <span class="variable">$container</span><span class="keyword">-&gt;</span><span class="identifier">addCompilerPass</span>(<span class="keyword">new</span> MyCompilerPassThatHandlesTaggedServices);
+        <span class="keyword">parent</span><span class="keyword">::</span><span class="identifier">build</span>(<span class="variable">$container</span>);
+    }
+}</code></pre>
+        <p>
+            For example, making an event listener implement <code>EventSubscriberInterface</code> results in Symfony
+            automatically registering and executing your event listener with no additional configuration needed.
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span> <span class="keyword">declare</span>(strict_types<span class="keyword">=</span><span class="literal">1</span>);
+
+<span class="keyword">namespace</span> App\Listener;
+
+<span class="keyword">use</span> Symfony\Component\EventDispatcher\EventSubscriberInterface;
+<span class="keyword">use</span> Symfony\Component\HttpKernel\Event\GetResponseEvent;
+<span class="keyword">use</span> Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+<span class="keyword">use</span> Symfony\Component\HttpKernel\KernelEvents;
+
+<span class="keyword">class</span> <span class="identifier">JsonListener</span> <span class="keyword">implements</span> EventSubscriberInterface
+{
+    <span class="doc">/** {@inheritdoc} */</span>
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <span class="identifier">getSubscribedEvents</span>()<span class="keyword">:</span> <span class="keyword">array</span>
+    {
+        <span class="keyword">return</span> [
+            KernelEvents<span class="keyword">::</span><span class="identifier">REQUEST</span> <span class="keyword">=&gt;</span> [<span class="string">'checkContentTypeIsJson'</span>, <span class="literal">34</span>],
+        ];
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">checkContentTypeIsJson</span>(GetResponseEvent <span class="variable">$event</span>)<span class="keyword">:</span> void
+    {
+        <span class="variable">$request</span> <span class="keyword">=</span> <span class="variable">$event</span><span class="keyword">-&gt;</span><span class="identifier">getRequest</span>();
+        <span class="keyword">if</span> (<span class="variable">$request</span><span class="keyword">-&gt;</span><span class="identifier">headers</span><span class="keyword">-&gt;</span><span class="identifier">get</span>(<span class="string">'Content-Type'</span>) <span class="keyword">!==</span> <span class="string">'application/json'</span>) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> NotAcceptableHttpException(<span class="string">'This is an API, fool!'</span>);
+        }
+    }
+}</code></pre>
+
+        <h3 id="configuration">Configuration</h3>
+        <p>
+            Fire-and-forget: default configuration is enough 95% of the time. Just create classes and type
+            hint everything.
+        </p>
+
+        <h3 id="compilation">Compilation</h3>
+        <p>Eventually, all that configuration gets "compiled" into executable, raw PHP files.</p>
+        <p>Compilation means YAML is not parsed on each request.</p>
+        <pre><code class="yaml">services:
+
+    _defaults:
+        autowire: <span class="keyword">true</span>
+        public: <span class="keyword">false</span>
+
+    League\OAuth2\Server\AuthorizationServer:
+        arguments:
+            $privateKey: <span class="string">'@oauth2.private_key'</span>
+            $encryptionKey: <span class="string">'%env(APP_SECRET)%'</span></code></pre>
+        <p>Here be dragons:</p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">use</span> Symfony\Component\DependencyInjection\Argument\RewindableGenerator;
+<span class="keyword">use</span> Symfony\Component\DependencyInjection\Exception\RuntimeException;
+
+<span class="comment">// This file has been auto-generated by the Symfony Dependency Injection Component for internal use.
+</span><span class="comment">// Returns the private 'League\OAuth2\Server\AuthorizationServer' shared autowired service.
+</span><span class="comment"></span>
+<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">privates</span>[<span class="string">'League\OAuth2\Server\AuthorizationServer'</span>] <span class="keyword">=</span>
+<span class="variable">$instance</span> <span class="keyword">=</span> <span class="keyword">new</span> \League\OAuth2\Server\AuthorizationServer(
+    (<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">privates</span>[<span class="string">'App\OAuth2\Respository\ClientRepository'</span>]
+        <span class="keyword">??</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">load</span>(<span class="string">'getClientRepository2Service.php'</span>)),
+    (<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">privates</span>[<span class="string">'App\OAuth2\Repository\AccessTokenRepository'</span>]
+        <span class="keyword">??</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">load</span>(<span class="string">'getAccessTokenRepositoryService.php'</span>)),
+    (<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">privates</span>[<span class="string">'App\OAuth2\Repository\ScopeRepository'</span>]
+        <span class="keyword">??</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">load</span>(<span class="string">'getScopeRepositoryService.php'</span>)),
+    <span class="keyword">new</span> \League\OAuth2\Server\CryptKey(
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">getEnv</span>(<span class="string">'resolve:PRIVATE_KEY_PATH'</span>),
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">getEnv</span>(<span class="string">'PRIVATE_KEY_PASS'</span>),
+        <span class="keyword">false</span>
+    ),
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">getEnv</span>(<span class="string">'APP_SECRET'</span>)
+);
+<span class="variable">$a</span> <span class="keyword">=</span> (<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">private</span>[<span class="string">'App\OAuth2\Repository\RefreshTokenRepository'</span>]
+    <span class="keyword">??</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">load</span>(<span class="string">'getRefreshTokenRepositoryService.php'</span>));
+<span class="variable">$b</span> <span class="keyword">=</span> <span class="keyword">new</span> \League\OAuth2\Server\Grant\RefreshTokenGrant(<span class="variable">$a</span>);
+<span class="variable">$c</span> <span class="keyword">=</span> <span class="keyword">new</span> \DateInterval(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">getEnv</span>(<span class="string">'OAUTH2_REFRESH_TOKEN_DURATION'</span>));
+<span class="variable">$b</span><span class="keyword">-&gt;</span><span class="identifier">setRefreshTokenTTL</span>(<span class="variable">$c</span>);
+<span class="variable">$d</span> <span class="keyword">=</span> <span class="keyword">new</span> \DateInterval(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">getEnv</span>(<span class="string">'OAUTH2_ACCESS_TOKEN_DURATION'</span>));
+<span class="variable">$e</span> <span class="keyword">=</span> <span class="keyword">new</span> \League\OAuth2\Server\Grant\PasswordGrant(
+    (<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">privates</span>[<span class="string">'App\OAuth2\Repository\UserRepository'</span>]
+        <span class="keyword">??</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">load</span>(<span class="string">'getUserRepository2Service.php'</span>)),
+    <span class="variable">$a</span>
+);
+<span class="variable">$e</span><span class="keyword">-&gt;</span><span class="identifier">getRefreshTokenTTL</span>(<span class="variable">$c</span>);
+<span class="variable">$f</span> <span class="keyword">=</span> <span class="keyword">new</span> \League\OAuth2\Server\Grant\AuthCodeGrant(
+    (<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">privates</span>[<span class="string">'App\OAuth2\Repository\AuthCodeRepository'</span>]
+        <span class="keyword">??</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">load</span>(<span class="string">'getAuthCodeRepositoryService.php'</span>)),
+    <span class="variable">$a</span>,
+    <span class="keyword">new</span> \DateInterval(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">getEnv</span>(<span class="string">'OAUTH2_AUTH_CODE_DURATION'</span>))
+);
+<span class="variable">$f</span><span class="keyword">-&gt;</span><span class="identifier">setRefreshTokenTTL</span>(<span class="variable">$c</span>);
+<span class="variable">$instance</span><span class="keyword">-&gt;</span><span class="identifier">enableGrantType</span>(<span class="variable">$b</span>, <span class="variable">$d</span>);
+<span class="variable">$instance</span><span class="keyword">-&gt;</span><span class="identifier">enableGrantType</span>(<span class="keyword">new</span> \League\OAuth2\Server\Grant\ClientCredentialsGrant(), <span class="variable">$d</span>);
+<span class="variable">$instance</span><span class="keyword">-&gt;</span><span class="identifier">enableGrantType</span>(<span class="variable">$e</span>, <span class="variable">$d</span>);
+<span class="variable">$instance</span><span class="keyword">-&gt;</span><span class="identifier">enableGrantType</span>(<span class="variable">$f</span>, <span class="variable">$d</span>);
+<span class="keyword">return</span> <span class="variable">$instance</span>;</code></pre>
+
+        <h3 id="controllers">Controllers</h3>
+        <p>The main entry point for application logic.</p>
+        <p>
+            Controllers are what get triggered when a route is matched. I have no idea what the equivalent in Drupal is
+            because I wasn't listening as much as I should have.
+        </p>
+
+        <h3 id="model-view-controller">Model-View-Controller</h3>
+        <ul>
+            <li>Fetch a model and manipulate it by applying this endpoint's application logic.</li>
+            <li>Pass model to template to be rendered.</li>
+            <li>Return rendered template as response.</li>
+        </ul>
+        <pre><code class="php"><span class="keyword">&lt;?php</span> <span class="keyword">declare</span>(strict_types<span class="keyword">=</span><span class="literal">1</span>);
+
+<span class="keyword">namespace</span> App\Controller;
+
+<span class="keyword">use</span> App\Form\Type\User\EditUserType;
+<span class="keyword">use</span> Doctrine\ORM\EntityManagerInterface;
+<span class="keyword">use</span> Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
+<span class="keyword">use</span> Symfony\Component\HttpFoundation\Request;
+<span class="keyword">use</span> Symfony\Component\HttpFoundation\Response;
+<span class="keyword">use</span> Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+<span class="keyword">class</span> <span class="identifier">UserController</span>
+{
+    <span class="keyword">use</span> ControllerTrait;
+    
+    <span class="keyword">private</span> <span class="variable">$em</span>;
+    
+    <span class="keyword">public</span> <span class="keyword">function</span> __construct(EntityManagerInterface <span class="variable">$em</span>)
+    {
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">em</span> <span class="keyword">=</span> <span class="variable">$em</span>;
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">editAction</span>(Request <span class="variable">$request</span>, int <span class="variable">$userId</span>)<span class="keyword">:</span> Response
+    {
+        <span class="keyword">if</span> (<span class="keyword">null</span> <span class="keyword">===</span> <span class="variable">$user</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">em</span><span class="keyword">-&gt;</span><span class="identifier">findById</span>(User<span class="keyword">::</span><span class="identifier">class</span>, <span class="variable">$userId</span>)) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> NotFoundHttpException;
+        }
+        <span class="variable">$form</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">createForm</span>(EditUserType<span class="keyword">::</span><span class="identifier">class</span>, <span class="variable">$user</span>);
+        <span class="variable">$form</span><span class="keyword">-&gt;</span><span class="identifier">handleRequest</span>(<span class="variable">$request</span>);
+        <span class="keyword">if</span> (<span class="variable">$form</span><span class="keyword">-&gt;</span><span class="identifier">isSubmitted</span>() <span class="keyword">&amp;&amp;</span> <span class="variable">$form</span><span class="keyword">-&gt;</span><span class="identifier">isValid</span>()) {
+            <span class="comment">// Do stuff to update the user...
+</span><span class="comment"></span>            <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">em</span><span class="keyword">-&gt;</span><span class="identifier">persist</span>(<span class="variable">$user</span>);
+            <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">em</span><span class="keyword">-&gt;</span><span class="identifier">flush</span>();
+        }
+        <span class="keyword">return</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">render</span>(<span class="string">'edit_user.html.twig'</span>, [
+            <span class="string">'user'</span> <span class="keyword">=&gt;</span> <span class="variable">$user</span>,
+            <span class="string">'form'</span> <span class="keyword">=&gt;</span> <span class="variable">$form</span><span class="keyword">-&gt;</span><span class="identifier">createView</span>(),
+        ]);
+    }
+}</code></pre>
+
+        <h3 id="action-domain-responder">Action-Domain-Responder</h3>
+        <ul>
+            <li>Actions (controllers) should only be concerned with converting a request into a response.</li>
+            <li>Data-in, data-out.</li>
+            <li>Anything else is outside the scope of an action.</li>
+        </ul>
+        <pre><code class="php"><span class="keyword">&lt;?php</span> <span class="keyword">declare</span>(strict_types<span class="keyword">=</span><span class="literal">1</span>);
+
+<span class="keyword">namespace</span> App\Controller\Webhook;
+
+<span class="keyword">use</span> App\Form\Type\WebhookType;
+<span class="keyword">use</span> App\Repository\WebhookRepository;
+<span class="keyword">use</span> App\Response\ApiResponse;
+<span class="keyword">use</span> App\Response\ApiResponseInterface;
+<span class="keyword">use</span> App\Validator\ValidationHttpException;
+<span class="keyword">use</span> Ramsey\Uuid\UuidInterface;
+<span class="keyword">use</span> Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
+<span class="keyword">use</span> Symfony\Component\HttpFoundation\Request;
+<span class="keyword">use</span> Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+<span class="keyword">class</span> <span class="identifier">UpdateWebhookAction</span>
+{
+    <span class="keyword">use</span> ControllerTrait;
+
+    <span class="keyword">private</span> <span class="variable">$repository</span>;
+    
+    <span class="keyword">public</span> <span class="keyword">function</span> __construct(WebhookRepository <span class="variable">$repository</span>)
+    {
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">repository</span> <span class="keyword">=</span> <span class="variable">$repository</span>;
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">function</span> __invoke(Request <span class="variable">$request</span>, UuidInterface <span class="variable">$webookUuid</span>)<span class="keyword">:</span> ApiResponseInterface
+    {
+        <span class="keyword">if</span> (<span class="keyword">null</span> <span class="keyword">===</span> <span class="variable">$webhook</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">repository</span><span class="keyword">-&gt;</span><span class="identifier">find</span>(<span class="variable">$webhookUuid</span>)) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> NotFoundHttpException;
+        }
+        
+        <span class="variable">$form</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">createForm</span>(WebhookType<span class="keyword">::</span><span class="identifier">class</span>, <span class="variable">$webhook</span>);
+        <span class="variable">$form</span><span class="keyword">-&gt;</span><span class="identifier">handleRequest</span>(<span class="variable">$request</span>);
+        
+        <span class="keyword">if</span> (<span class="variable">$form</span><span class="keyword">-&gt;</span><span class="identifier">isSubmitted</span>() <span class="keyword">&amp;&amp;</span> <span class="variable">$form</span><span class="keyword">-&gt;</span><span class="identifier">isValid</span>()) {
+            <span class="variable">$webhook</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">repository</span><span class="keyword">-&gt;</span><span class="identifier">update</span>(<span class="variable">$webhook</span>, <span class="variable">$form</span><span class="keyword">-&gt;</span><span class="identifier">getData</span>());
+            <span class="keyword">return</span> <span class="keyword">new</span> ApiResponse(<span class="variable">$webhook</span>);
+        }
+        
+        <span class="keyword">throw</span> ValidationHttpException<span class="keyword">::</span><span class="identifier">fromForm</span>(<span class="variable">$form</span>);
+    }
+}</code></pre>
+        <ul>
+            <li>Convert data in (request) to domain model.</li>
+            <li>Pass model to application domain to perform business logic.</li>
+            <li>Convert (or create if nothing returned) resulting domain model to a response model.</li>
+            <li>Return response model, leaving the HTTP response to another service called the responder.</li>
+        </ul>
+        <p>
+            The responder will then determine how this data structure should be converted into a HTTP response according
+            to the MIME type requested by the end-user.
+        </p>
+
+    </body>
+</html>
