@@ -26,6 +26,9 @@ code.php span.string {
 code.php span.variable {
     color: #3462c6;
 }
+code.php span.function {
+    color: #065e1d;
+}
 
 code.twig span.comment {
     color: #a0a1a7;

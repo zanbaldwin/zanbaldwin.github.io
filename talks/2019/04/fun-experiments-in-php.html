@@ -128,9 +128,9 @@
     <span class="doc">/** @var resource $context */</span>
     <span class="keyword">public</span> <span class="variable">$context</span>;
 
-    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <span class="identifier">register</span>(string <span class="variable">$filterName</span>)<span class="keyword">:</span> void
+    <span class="keyword">public static function</span> <span class="identifier">register</span>(string <span class="variable">$filterName</span>)<span class="keyword">:</span> void
     {
-        stream_wrapper_register(<span class="variable">$filterName</span>, <span class="keyword">static</span><span class="keyword">::</span><span class="identifier">class</span>);
+        <span class="function">stream_wrapper_register</span>(<span class="variable">$filterName</span>, <span class="keyword">static</span><span class="keyword">::</span><span class="identifier">class</span>);
     }
 }
 </code></pre>
@@ -146,9 +146,9 @@
 
 <span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_open</span>(string <span class="variable">$path</span>, string <span class="variable">$mode</span>, int <span class="variable">$options</span>, <span class="keyword">&amp;</span><span class="variable">$opened_path</span>)<span class="keyword">:</span> bool
 {
-    <span class="variable">$realpath</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">removeProtocolFromPath</span>(<span class="variable">$path</span>, <span class="keyword">static</span><span class="keyword">::</span><span class="identifier">WRAPPER_PROTOCOL</span>);
+    <span class="variable">$realpath</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="function">removeProtocolFromPath</span>(<span class="variable">$path</span>, <span class="keyword">static</span><span class="keyword">::</span><span class="identifier">WRAPPER_PROTOCOL</span>);
     <span class="keyword">if</span> (file_exists(<span class="string">'file://'</span> <span class="keyword">.</span> <span class="variable">$realpath</span>)) {
-        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">uri</span> <span class="keyword">=</span> <span class="variable">$opened_path</span> <span class="keyword">=</span> <span class="variable">$realpath</span>;
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">uri</span> <span class="keyword">=</span> <span class="variable">$opened_path</span> <span class="keyword">=</span> <span class="variable">$realpath</span>;
         <span class="keyword">return</span> <span class="keyword">true</span>;
     }
     <span class="keyword">return</span> <span class="keyword">false</span>;
@@ -176,14 +176,14 @@
 
 <span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_read</span>(int <span class="variable">$readNumBytes</span>)
 {
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">execute</span>();
-    <span class="variable">$remainingBytes</span> <span class="keyword">=</span> strlen(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span>) <span class="keyword">-</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">pointer</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="function">execute</span>();
+    <span class="variable">$remainingBytes</span> <span class="keyword">=</span> <span class="function">strlen</span>(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">output</span>) <span class="keyword">-</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">pointer</span>;
     <span class="keyword">if</span> (<span class="variable">$remainingBytes</span> <span class="keyword">&gt;</span> <span class="literal">0</span>) {
-        <span class="variable">$buffer</span> <span class="keyword">=</span> substr(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span>, <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">pointer</span>, <span class="variable">$readNumBytes</span>);
-        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">pointer</span> <span class="keyword">+=</span> <span class="variable">$readNumBytes</span>;
+        <span class="variable">$buffer</span> <span class="keyword">=</span> <span class="function">substr</span>(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">output</span>, <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="v">pointer</span>, <span class="variable">$readNumBytes</span>);
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">pointer</span> <span class="keyword">+=</span> <span class="variable">$readNumBytes</span>;
         <span class="keyword">return</span> <span class="variable">$buffer</span>;
     }
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eof</span> <span class="keyword">=</span> <span class="keyword">true</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">eof</span> <span class="keyword">=</span> <span class="keyword">true</span>;
     <span class="keyword">return</span> <span class="keyword">false</span>;
 }
 </code></pre>
@@ -195,7 +195,7 @@
 
 <span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_eof</span>()<span class="keyword">:</span> bool
 {
-    <span class="keyword">return</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eof</span>;
+    <span class="keyword">return</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">eof</span>;
 }
 </code></pre>
         <p>
@@ -211,9 +211,9 @@
 {
     <span class="comment">// Clear internal buffers.
 </span><span class="comment"></span>    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">uri</span> <span class="keyword">=</span> <span class="keyword">null</span>;
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span> <span class="keyword">=</span> <span class="keyword">null</span>;
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">pointer</span> <span class="keyword">=</span> <span class="literal">0</span>;
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eof</span> <span class="keyword">=</span> <span class="keyword">false</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">output</span> <span class="keyword">=</span> <span class="keyword">null</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">pointer</span> <span class="keyword">=</span> <span class="literal">0</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">eof</span> <span class="keyword">=</span> <span class="keyword">false</span>;
     <span class="keyword">return</span> <span class="keyword">true</span>;
 }
 </code></pre>
@@ -228,16 +228,16 @@
 
 <span class="keyword">private</span> <span class="keyword">function</span> <span class="identifier">execute</span>()<span class="keyword">:</span> void
 {
-    <span class="keyword">if</span> (is_string(<span class="variable">$output</span>)) {
+    <span class="keyword">if</span> (<span class="function">is_string</span>(<span class="variable">$output</span>)) {
         <span class="keyword">return</span>;
     }
-    <span class="variable">$result</span> <span class="keyword">=</span> (<span class="keyword">new</span> \Brainfuck\Language)<span class="keyword">-&gt;</span><span class="identifier">run</span>(
-        file_get_contents(<span class="string">'file://'</span> <span class="keyword">.</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">uri</span>),
-        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>
+    <span class="variable">$result</span> <span class="keyword">=</span> (<span class="keyword">new</span> \Brainfuck\Language)<span class="keyword">-&gt;</span><span class="function">run</span>(
+        <span class="function">file_get_contents</span>(<span class="string">'file://'</span> <span class="keyword">.</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">uri</span>),
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">input</span>
     );
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span> <span class="keyword">=</span> implode(<span class="string">''</span>, array_map(<span class="keyword">function</span> (int <span class="variable">$ord</span>)<span class="keyword">:</span> string {
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">output</span> <span class="keyword">=</span> <span class="function">implode</span>(<span class="string">''</span>, <span class="function">array_map</span>(<span class="keyword">function</span> (int <span class="variable">$ord</span>)<span class="keyword">:</span> string {
         <span class="comment">// Brainf*ck returns result in bytes (8-bit integers). Convert to ASCII.
-</span><span class="comment"></span>        <span class="keyword">return</span> chr(<span class="variable">$ord</span>);
+</span><span class="comment"></span>        <span class="keyword">return</span> <span class="function">chr</span>(<span class="variable">$ord</span>);
     }, <span class="variable">$result</span>));
 }</code></pre>
         <p>
@@ -254,13 +254,13 @@
 <span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">stream_write</span>(string <span class="variable">$data</span>)<span class="keyword">:</span> int
 {
    <span class="comment">// No point in recording input if script has already been executed.
-</span><span class="comment"></span>   <span class="keyword">if</span> (is_string(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">output</span>)) {
+</span><span class="comment"></span>   <span class="keyword">if</span> (<span class="function">is_string</span>(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">output</span>)) {
        <span class="keyword">return</span> <span class="literal">0</span>;
    }
    <span class="variable">$count</span> <span class="keyword">=</span> <span class="literal">0</span>;
-   <span class="keyword">foreach</span> (str_split(<span class="variable">$data</span>) <span class="keyword">as</span> <span class="variable">$chr</span>) {
+   <span class="keyword">foreach</span> (<span class="function">str_split</span>(<span class="variable">$data</span>) <span class="keyword">as</span> <span class="variable">$chr</span>) {
        <span class="comment">// Brainf*ck takes bytes (8-bit integers) as input.
-</span><span class="comment"></span>       <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>[] <span class="keyword">=</span> ord(<span class="variable">$chr</span>);
+</span><span class="comment"></span>       <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">input</span>[] <span class="keyword">=</span> <span class="function">ord</span>(<span class="variable">$chr</span>);
        <span class="variable">$count</span><span class="keyword">++</span>;
    }
    <span class="keyword">return</span> <span class="variable">$count</span>;
@@ -284,28 +284,28 @@
         </p>
         <pre><code class="php"><span class="keyword">&lt;?php</span>
 
-<span class="keyword">class</span> <span class="identifier">BfStreamFilter</span> <span class="keyword">extends</span> \php_user_filter
+<span class="keyword">class</span> <span class="identifier">BfStreamFilter</span> <span class="keyword">extends</span> \<span class="identifier">php_user_filter</span>
 {
-    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <span class="identifier">register</span>(string <span class="variable">$filterName</span>)<span class="keyword">:</span> void
+    <span class="keyword">public static function</span> <span class="identifier">register</span>(string <span class="variable">$filterName</span>)<span class="keyword">:</span> void
     {
-        stream_filter_register(<span class="variable">$filterName</span>, self<span class="keyword">::</span><span class="identifier">class</span>);
+        <span class="function">stream_filter_register</span>(<span class="variable">$filterName</span>, self<span class="keyword">::</span><span class="identifier">class</span>);
     }
 
     <span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">filter</span>(<span class="variable">$in</span>, <span class="variable">$out</span>, <span class="keyword">&amp;</span><span class="variable">$consumed</span>, <span class="variable">$closing</span>)<span class="keyword">:</span> int
     {
-        <span class="keyword">while</span> (<span class="variable">$bucket</span> <span class="keyword">=</span> stream_bucket_make_writeable(<span class="variable">$in</span>)) {
-            <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span> <span class="keyword">.=</span> <span class="variable">$bucket</span><span class="keyword">-&gt;</span><span class="identifier">data</span>;
+        <span class="keyword">while</span> (<span class="variable">$bucket</span> <span class="keyword">=</span> <span class="function">stream_bucket_make_writeable</span>(<span class="variable">$in</span>)) {
+            <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">input</span> <span class="keyword">.=</span> <span class="variable">$bucket</span><span class="keyword">-&gt;</span><span class="variable">data</span>;
         }
-        <span class="keyword">if</span> (<span class="variable">$closing</span> <span class="keyword">||</span> feof(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">stream</span>)) {
-            <span class="variable">$consumed</span> <span class="keyword">=</span> strlen(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>);
-            <span class="variable">$bucket</span> <span class="keyword">=</span> stream_bucket_new(
-                <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">stream</span>,
+        <span class="keyword">if</span> (<span class="variable">$closing</span> <span class="keyword">||</span> <span class="function">feof</span>(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">stream</span>)) {
+            <span class="variable">$consumed</span> <span class="keyword">=</span> <span class="function">strlen</span>(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">input</span>);
+            <span class="variable">$bucket</span> <span class="keyword">=</span> <span class="function">stream_bucket_new</span>(
+                <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">stream</span>,
                 <span class="comment">// Has to be static because userland doesn't control instantiation.</span>
-                <span class="keyword">static</span><span class="keyword">::</span><span class="variable">$twig</span><span class="keyword">-&gt;</span><span class="identifier">render</span>(<span class="string">'bf_closure.twig.php'</span>, [
-                    <span class="string">'bf_php_value'</span> <span class="keyword">=&gt;</span> var_export(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>, <span class="keyword">true</span>),
+                <span class="keyword">static</span><span class="keyword">::</span><span class="variable">$twig</span><span class="keyword">-&gt;</span><span class="function">render</span>(<span class="string">'bf_closure.twig.php'</span>, [
+                    <span class="string">'bf_php_value'</span> <span class="keyword">=&gt;</span> <span class="function">var_export</span>(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">input</span>, <span class="keyword">true</span>),
                 ])
             );
-            stream_bucket_append(<span class="variable">$out</span>, <span class="variable">$bucket</span>);
+            <span class="function">stream_bucket_append</span>(<span class="variable">$out</span>, <span class="variable">$bucket</span>);
             <span class="keyword">return</span> \PSFS_PASS_ON;
         }
         <span class="keyword">return</span> \PSFS_FEED_ME;
@@ -321,11 +321,11 @@
 <span class="keyword">public</span> <span class="keyword">function</span> <span class="identifier">filter</span>(<span class="variable">$in</span>, <span class="variable">$out</span>, <span class="keyword">&amp;</span><span class="variable">$consumed</span>, <span class="variable">$closing</span>)<span class="keyword">:</span> int
 {
     <span class="comment">// Data in...</span>
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span> <span class="keyword">.=</span> <span class="variable">$bucket</span><span class="keyword">-&gt;</span><span class="identifier">data</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">input</span> <span class="keyword">.=</span> <span class="variable">$bucket</span><span class="keyword">-&gt;</span><span class="variable">data</span>;
 
     <span class="comment">// Data out...
-</span><span class="comment"></span>    <span class="keyword">static</span><span class="keyword">::</span><span class="variable">$twig</span><span class="keyword">-&gt;</span><span class="identifier">render</span>(<span class="string">'bf_closure.twig.php'</span>, [
-        <span class="string">'bf_php_value'</span> <span class="keyword">=&gt;</span> var_export(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">input</span>, <span class="keyword">true</span>),
+</span><span class="comment"></span>    <span class="keyword">static</span><span class="keyword">::</span><span class="variable">$twig</span><span class="keyword">-&gt;</span><span class="function">render</span>(<span class="string">'bf_closure.twig.php'</span>, [
+        <span class="string">'bf_php_value'</span> <span class="keyword">=&gt;</span> <span class="function">var_export(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">input</span>, <span class="keyword">true</span>),
     ])
 }
 </code></pre>
@@ -359,12 +359,12 @@ return function (array $input = []): string {
         </p>
         <pre><code class="php"><span class="keyword">&lt;?php</span>
 
-BfStreamFilter<span class="keyword">::</span><span class="identifier">register</span>(<span class="string">'bf'</span>);
+BfStreamFilter<span class="keyword">::</span><span class="function">register</span>(<span class="string">'bf'</span>);
 
-<span class="variable">$handle</span> <span class="keyword">=</span> fopen(<span class="string">'/app/hello.bf'</span>, <span class="string">'r+'</span>);
-stream_filter_append(<span class="variable">$handle</span>, <span class="string">'bf'</span>);
+<span class="variable">$handle</span> <span class="keyword">=</span> <span class="function">fopen</span>(<span class="string">'/app/hello.bf'</span>, <span class="string">'r+'</span>);
+<span class="function">stream_filter_append</span>(<span class="variable">$handle</span>, <span class="string">'bf'</span>);
 
-<span class="variable">$closureCode</span> <span class="keyword">=</span> stream_get_contents(<span class="variable">$handle</span>);
+<span class="variable">$closureCode</span> <span class="keyword">=</span> <span class="function">stream_get_contents</span>(<span class="variable">$handle</span>);
 <span class="variable">$closure</span> <span class="keyword">=</span> <span class="keyword">eval</span>(<span class="string">'?&gt;'</span> <span class="keyword">.</span> <span class="variable">$closureCode</span>);
 
 <span class="variable">$output</span> <span class="keyword">=</span> <span class="variable">$closure</span>(<span class="variable">$input</span>);
@@ -387,7 +387,7 @@ stream_filter_append(<span class="variable">$handle</span>, <span class="string"
         </p>
         <pre><code class="php"><span class="keyword">&lt;?php</span>
 
-BfStreamFilter<span class="keyword">::</span><span class="identifier">register</span>(<span class="string">'bf'</span>);
+BfStreamFilter<span class="keyword">::</span><span class="function">register</span>(<span class="string">'bf'</span>);
 
 <span class="variable">$script</span> <span class="keyword">=</span> <span class="string">'/app/hello.bf'</span>;
 
@@ -428,8 +428,8 @@ BfStreamFilter<span class="keyword">::</span><span class="identifier">register</
 
 <span class="keyword">function</span> <span class="identifier">createNewUser</span>(string <span class="variable">$email</span>, string <span class="variable">$password</span>)<span class="keyword">:</span> UserInterface {
     <span class="variable">$user</span> <span class="keyword">=</span> <span class="keyword">new</span> User(<span class="variable">$email</span>, <span class="variable">$password</span>);
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">persist</span>(<span class="variable">$user</span>);
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">flush</span>();
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">entityManager</span><span class="keyword">-&gt;</span><span class="function">persist</span>(<span class="variable">$user</span>);
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">entityManager</span><span class="keyword">-&gt;</span><span class="function">flush</span>();
     <span class="keyword">return</span> <span class="variable">$user</span>;
 }</code></pre>
         <p>But in the real world things are never this simple:</p>
@@ -448,19 +448,19 @@ BfStreamFilter<span class="keyword">::</span><span class="identifier">register</
         <pre><code class="php"><span class="keyword">&lt;?php</span>
 
 <span class="keyword">function</span> <span class="identifier">createNewUser</span>(string <span class="variable">$email</span>, string <span class="variable">$password</span>)<span class="keyword">:</span> UserInterface {
-    <span class="keyword">if</span> (<span class="keyword">!</span><span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">security</span><span class="keyword">-&gt;</span><span class="identifier">isGranted</span>(<span class="string">'ROLE_ADMIN'</span>)) {
+    <span class="keyword">if</span> (<span class="keyword">!</span><span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">security</span><span class="keyword">-&gt;</span><span class="function">isGranted</span>(<span class="string">'ROLE_ADMIN'</span>)) {
         <span class="keyword">throw</span> <span class="keyword">new</span> AccessDeniedException;
     }
     <span class="keyword">try</span> {
         <span class="variable">$user</span> <span class="keyword">=</span> <span class="keyword">new</span> User(<span class="variable">$email</span>, <span class="variable">$password</span>);
-        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">persist</span>(<span class="variable">$user</span>);
-        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">flush</span>();
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">entityManager</span><span class="keyword">-&gt;</span><span class="function">persist</span>(<span class="variable">$user</span>);
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">entityManager</span><span class="keyword">-&gt;</span><span class="function">flush</span>();
     } <span class="keyword">catch</span> (ORMException <span class="variable">$e</span>) {
-        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">error</span>(<span class="string">'Could not persist new user.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$email</span>]);
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">logger</span><span class="keyword">-&gt;</span><span class="function">error</span>(<span class="string">'Could not persist new user.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$email</span>]);
         <span class="keyword">throw</span> <span class="variable">$e</span>;
     }
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eventDispatcher</span><span class="keyword">-&gt;</span><span class="identifier">dispatch</span>(<span class="keyword">new</span> UserCreatedEvent(<span class="variable">$email</span>));
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">info</span>(<span class="string">'User created successfully.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$email</span>]);
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">eventDispatcher</span><span class="keyword">-&gt;</span><span class="function">dispatch</span>(<span class="keyword">new</span> UserCreatedEvent(<span class="variable">$email</span>));
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">logger</span><span class="keyword">-&gt;</span><span class="function">info</span>(<span class="string">'User created successfully.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$email</span>]);
     <span class="keyword">return</span> <span class="variable">$user</span>;
 }
 </code></pre>
@@ -478,29 +478,29 @@ BfStreamFilter<span class="keyword">::</span><span class="identifier">register</
 
 <span class="keyword">function</span> <span class="identifier">createNewUser</span>(string <span class="variable">$email</span>, string <span class="variable">$password</span>)<span class="keyword">:</span> UserInterface {
     <span class="variable">$user</span> <span class="keyword">=</span> <span class="keyword">new</span> User(<span class="variable">$email</span>, <span class="variable">$password</span>);
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">persist</span>(<span class="variable">$user</span>);
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">entityManager</span><span class="keyword">-&gt;</span><span class="identifier">flush</span>();
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">entityManager</span><span class="keyword">-&gt;</span><span class="function">persist</span>(<span class="variable">$user</span>);
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">entityManager</span><span class="keyword">-&gt;</span><span class="function">flush</span>();
     <span class="keyword">return</span> <span class="variable">$user</span>
 }
 
 <span class="doc">/** @Before(pointcut=”public UserService-&gt;*(*)”) */</span>
 <span class="keyword">function</span> <span class="identifier">checkCurrentUserCanCreateUsers</span>(MethodInvocation <span class="variable">$method</span>)<span class="keyword">:</span> void {
-    <span class="keyword">if</span> (<span class="keyword">!</span><span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">security</span><span class="keyword">-&gt;</span><span class="identifier">isGranted</span>(<span class="string">'ROLE_ADMIN'</span>)) {
+    <span class="keyword">if</span> (<span class="keyword">!</span><span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">security</span><span class="keyword">-&gt;</span><span class="function">isGranted</span>(<span class="string">'ROLE_ADMIN'</span>)) {
         <span class="keyword">throw</span> <span class="keyword">new</span> AccessDeniedException;
     }
 }
 
 <span class="doc">/** @AfterThrow(pointcut=”public UserService-&gt;createNewUser(*)”) */</span>
 <span class="keyword">function</span> <span class="identifier">handleNewUserDatabaseError</span>(MethodInvocation <span class="variable">$method</span>)<span class="keyword">:</span> void {
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">error</span>(<span class="string">'Could not persist new user.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$method</span><span class="keyword">-&gt;</span><span class="identifier">getArguments</span>()[<span class="literal">0</span>]]);
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">logger</span><span class="keyword">-&gt;</span><span class="function">error</span>(<span class="string">'Could not persist new user.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$method</span><span class="keyword">-&gt;</span><span class="identifier">getArguments</span>()[<span class="literal">0</span>]]);
     <span class="keyword">throw</span> <span class="variable">$e</span>;
 }
 
 <span class="doc">/** @After(pointcut=”public UserService-&gt;createNewUser(*)”) */</span>
 <span class="keyword">function</span> <span class="identifier">onNewUserSuccessfullyCreated</span>(MethodInvocation <span class="variable">$method</span>)<span class="keyword">:</span> void {
-    <span class="variable">$email</span> <span class="keyword">=</span> <span class="variable">$method</span><span class="keyword">-&gt;</span><span class="identifier">getArguments</span>()[<span class="literal">0</span>];
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">eventDispatcher</span><span class="keyword">-&gt;</span><span class="identifier">dispatch</span>(<span class="keyword">new</span> UserCreatedEvent(<span class="variable">$email</span>));
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">info</span>(<span class="string">'User created successfully.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$email</span>]);
+    <span class="variable">$email</span> <span class="keyword">=</span> <span class="variable">$method</span><span class="keyword">-&gt;</span><span class="function">getArguments</span>()[<span class="literal">0</span>];
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">eventDispatcher</span><span class="keyword">-&gt;</span><span class="function">dispatch</span>(<span class="keyword">new</span> UserCreatedEvent(<span class="variable">$email</span>));
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">logger</span><span class="keyword">-&gt;</span><span class="function">info</span>(<span class="string">'User created successfully.'</span>, [<span class="string">'email'</span> <span class="keyword">=&gt;</span> <span class="variable">$email</span>]);
 }
 </code></pre>
         <p>We can even decorate the original method and make modifications to the result if we want to.</p>
@@ -508,28 +508,28 @@ BfStreamFilter<span class="keyword">::</span><span class="identifier">register</
 
 <span class="doc">/** @Around(pointcut=”public UserService-&gt;createNewUser(*)”) */</span>
 <span class="keyword">function</span> <span class="identifier">logTimeTakenToCreateUser</span>(MethodInvocation <span class="variable">$method</span>)<span class="keyword">:</span> UserInterface {
-    <span class="variable">$start</span> <span class="keyword">=</span> microtime(<span class="keyword">true</span>);
-    <span class="variable">$result</span> <span class="keyword">=</span> <span class="variable">$method</span><span class="keyword">-&gt;</span><span class="identifier">proceed</span>();
-    <span class="variable">$duration</span> <span class="keyword">=</span> microtime(<span class="keyword">true</span>) <span class="keyword">-</span> <span class="variable">$start</span>;
-    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="identifier">logger</span><span class="keyword">-&gt;</span><span class="identifier">log</span>(sprintf(<span class="string">'Creating a user took %f seconds'</span>, <span class="variable">$duration</span>));
+    <span class="variable">$start</span> <span class="keyword">=</span> <span class="function">microtime</span>(<span class="keyword">true</span>);
+    <span class="variable">$result</span> <span class="keyword">=</span> <span class="variable">$method</span><span class="keyword">-&gt;</span><span class="function">proceed</span>();
+    <span class="variable">$duration</span> <span class="keyword">=</span> <span class="function">microtime</span>(<span class="keyword">true</span>) <span class="keyword">-</span> <span class="variable">$start</span>;
+    <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">logger</span><span class="keyword">-&gt;</span><span class="function">log</span>(<span class="function">sprintf</span>(<span class="string">'Creating a user took %f seconds'</span>, <span class="variable">$duration</span>));
     <span class="keyword">return</span> <span class="keyword">new</span> TimedUserCreation(<span class="variable">$result</span>, <span class="variable">$duration</span>);
 }
 </code></pre>
 
         <h3 id="source-transformers">Source Transformers</h3>
         <p>
-            The majority of the AOP’s logic is in the form of source transformers. By using AOP in your application,
-            you’re entering the realm of meta-programming: your application transforms its own source code when
+            The majority of the AOP's logic is in the form of source transformers. By using AOP in your application,
+            you're entering the realm of meta-programming: your application transforms its own source code when
             including it. So what is AOP doing inside that transformer?
         </p>
         <ul>
             <li>
-                AOP queries Composer’s class loader for the location of the file that should contain the class
+                AOP queries Composer's class loader for the location of the file that should contain the class
                 definition for <code>MyClass</code>.
             </li>
             <li>
                 It generates a load of metadata about the source code file, including its contents and the Abstract
-                Syntax Tree generated from its contents by <a href="https://github.com/nikic/PHP-Parser">Nikita Popov’s
+                Syntax Tree generated from its contents by <a href="https://github.com/nikic/PHP-Parser">Nikita Popov's
                 pure-PHP language parser <code>nikic/php-parser</code></a>.
             </li>
             <li>
@@ -537,29 +537,29 @@ BfStreamFilter<span class="keyword">::</span><span class="identifier">register</
                 provide a particular feature.
             </li>
             <li>
-                Dump the final manipulated AST back into PHP code as a string. It’s at this point that the final
+                Dump the final manipulated AST back into PHP code as a string. It's at this point that the final
                 compiled source is saved to cache so that subsequent requests skip the expensive source transformation
                 stage.
             </li>
             <li>The final transformed code is returned to be executed by the PHP engine.</li>
         </ul>
         <p>
-            All of this happens while you’re writing PHP applications normally without worrying about loading classes or
+            All of this happens while you're writing PHP applications normally without worrying about loading classes or
             compiling into usable code. As this article is all about PHP streams, it may not come as a surprise that the
-            main logic behind the AOP framework is built around PHP’s stream filters.
+            main logic behind the AOP framework is built around PHP's stream filters.
         </p>
         <p>
             A huge amount of complexity is held within this process, enough for an entirely different presentation, so
-            for the sake of simplicity, we’ll simplify AOP’s source transforming process into a single function call.
-            From now on, we’ll use the following function as an alias to implementing and registering a stream filter
+            for the sake of simplicity, we'll simplify AOP's source transforming process into a single function call.
+            From now on, we'll use the following function as an alias to implementing and registering a stream filter
             because, quite frankly, implementing a stream filter didn't fit on the original slides!
         </p>
-        <pre><code class="php"><span class="variable">$executableCodeContents</span> <span class="keyword">=</span> transformCodeFilter(<span class="variable">$sourceCodeFileOnDisk</span>);</code></pre>
+        <pre><code class="php"><span class="variable">$executableCodeContents</span> <span class="keyword">=</span> <span class="function">transformCodeFilter</span>(<span class="variable">$sourceCodeFileOnDisk</span>);</code></pre>
 
         <h3 id="autoloader-overloading">Autoloader Overloading</h3>
         <blockquote>
             <p>
-                <code>new MyClass</code> ⇢ ??? ⇢ <code>transformCodeFilter()</code>
+                <code class="php"><span class="keyword">new</span> MyClass</code> ⇢ ??? ⇢ <code class="php"><span class="function">transformCodeFilter</span>()</code>
             </p>
         </blockquote>
         <p>
@@ -576,7 +576,7 @@ BfStreamFilter<span class="keyword">::</span><span class="identifier">register</
             <li>AOP hijacks the normal Composer logic… <em>I'd like to interject for a moment</em></li>
             <li>
                 and tells PHP to load a new URI that uses the PHP stream wrapper:
-                <code>php://filter/read=go.source.transforming.loader/resource=file:///var/www/MyClass.php</code>
+                <code class="php"><span class="string">php://filter/read=go.source.transforming.loader/resource=file:///var/www/MyClass.php</span></code>
             </li>
         </ul>
         <p>
