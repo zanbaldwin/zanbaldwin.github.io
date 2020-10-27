@@ -35,7 +35,22 @@
                 <li><a href="#stream-filters">Stream Filters</a></li>
                 <li><a href="#go-aop">Go! AOP</a></li>
                 <li><a href="#source-transformers">Source Transformers</a></li>
-                <li><a href="#autoloader-overloading">Autoloader Overloading</a></li>
+                <li>
+                    <a href="#autoloader-overloading">Autoloader Overloading</a>
+                    <ul>
+                        <li><a href="#the-magic">The Magic™</a></li>
+                        <li><a href="#other-projects">Other Projects</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#what-next">What Next?</a>
+                    <ul>
+                        <li><a href="#obfuscation">Obfuscation</a></li>
+                    </ul>
+                </li>
+                <li><a href="#performance-like-its-1994">Performance like it's 1994</a></li>
+                <li><a href="#question-experiment-have-fun">Question. Experiment. Have fun.</a></li>
+                <li><a href="#z-engine">Z-Engine</a></li>
             </ol>
         </nav>
 
@@ -569,11 +584,308 @@ BfStreamFilter<span class="keyword">::</span><span class="identifier">register</
             <code>/var/www/MyClass.php</code> from the <code>file://</code> system.
         </p>
 
-        <aside class="abstract">
-            <p>
-                This article is incomplete and has yet to be transcribed fully.
-            </p>
-        </aside>
+        <p>So what kind of sneaky magic is this? 🐍</p>
+        <ul>
+            <li>
+                AOP will fetch all the currently loaded autoloaders using the <code>spl_autoload_functions()</code> function:<br>
+                <em>&ldquo;Hey, PHP! Give me all of the registered autoloaders please! 🙏&rdquo;</em><br>
+                This could return an array like <code>[Composer\Autoload\ClassLoader, MyAppLoader]</code>.
+            </li>
+            <li>
+                AOP will iterate over each autoloader.
+                If AOP finds Composer in the list of autoloaders, it will replace original Composer autoloader with a decorated version:<br>
+                <em>&ldquo;Hmm, let's take a closer look at those… 🔍&rdquo;</em><br>
+                This would end up with an array like <code>[AopComposerLoader(Composer\Autoload\ClassLoader), MyAppLoader]</code>.
+            </li>
+            <li>
+                Pretend it was there all along:<br>
+                <em>&ldquo;Hot dang! I knew it!&rdquo;</em>
+            </li>
+            <li>
+                Then re-register the autoloaders with PHP<br>
+                <em>&ldquo;Okay, thanks PHP! You can have those back now! 😘&rdquo;</em>
+            </li>
+            <li>
+                PHP accepts the divine wisdom of AOP<br>
+                <em>&ldquo;Sure AOP, looks legit 🤷‍♀️&rdquo;</em>
+            </li>
+        </ul>
+        <p>So what does this look like in code?</p>
+
+        <h4 id="the-magic">The Magic™</h4>
+        <p>
+            This is our overloader. Since it decorates Composer we accept it as the first argument, and it's always
+            useful to know the name of the filter we should be applying.
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">class</span> <span class="identifier">AutoloaderOverloader</span>
+{
+    <span class="keyword">private</span> <span class="variable">$composer</span>;
+    <span class="keyword">private</span> <span class="variable">$filterName</span>;
+
+    <span class="keyword">protected function</span> <span class="identifier">__construct</span>(ComposerClassLoader <span class="variable">$composer</span>, string <span class="variable">$filterName</span>) {
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">composer</span> <span class="keyword">=</span> <span class="variable">$composer</span>;
+        <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">filterName</span> <span class="keyword">=</span> <span class="variable">$filterName</span>;
+    }
+}
+</code></pre>
+        <p>
+            The autoloader part: all of the heavy lifting is still done by Composer, all we do it rewrite the file path
+            so that the <code>php://</code> stream wrapper applies a filter when reading the file.
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">class</span> <span class="identifier">AutoloaderOverloader</span>
+{
+    <span class="comment">// ...</span>
+
+    <span class="keyword">public function</span> <span class="identifier">loadClass</span>(<span class="variable">$class</span>) {
+        <span class="variable">$file</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">composer</span><span class="keyword">-&gt;</span><span class="function">findFile</span>(<span class="variable">$class</span>);
+        <span class="variable">$compiledFile</span> <span class="keyword">=</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">cache</span><span class="keyword">-&gt;</span><span class="function">findCachedFile</span>(<span class="variable">$file</span>)
+                     <span class="keyword">?:</span> <span class="string">&#39;php://filter/read=&#39;</span> <span class="keyword">.</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">filterName</span> <span class="keyword">.</span> <span class="string">&#39;/resource=file://&#39;</span> <span class="keyword">.</span> <span class="variable">$file</span>;
+        <span class="keyword">include</span> <span class="variable">$compiledFile</span>;
+    }
+}
+</code></pre>
+        <p>
+            We've already established that we can generate code using templates, so if
+            <code class="php"><span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">composer</span><span class="keyword">-&gt;</span><span class="function">findFile</span>(<span class="variable">$class</span>)</code>
+            did not return a file, this would be the place to do it.
+        </p>
+        <p>Next, the overloader part, we add a static helper method to initialize our overloader.</p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">class</span> <span class="identifier">AutoloaderOverloader</span>
+{
+    <span class="comment">// ...</span>
+
+    <span class="keyword">public static function</span> <span class="identifier">init</span>(string <span class="variable">$filterName</span>)<span class="keyword">:</span> void
+    {
+        <span class="variable">$loaders</span> <span class="keyword">=</span> <span class="function">spl_autoload_functions</span>();
+        <span class="keyword">foreach</span> (<span class="variable">$loaders</span> <span class="keyword">as</span> <span class="keyword">&amp;</span><span class="variable">$loader</span>) {
+            <span class="comment">// Unregister each loader, so they can be re-registered in the same order.</span>
+            <span class="function">spl_autoload_unregister</span>(<span class="variable">$loader</span>);
+            <span class="keyword">if</span> (is_array(<span class="variable">$loader</span>) <span class="keyword">&amp;&amp;</span> <span class="variable">$loader</span>[<span class="literal">0</span>] <span class="keyword">instanceof</span> ComposerClassLoader) {
+                <span class="comment">// Replace Composer autoloader with our hijacking autoloader.</span>
+                <span class="variable">$loader</span>[<span class="literal">0</span>] <span class="keyword">=</span> <span class="keyword">new</span> <span class="identifier">self</span>(<span class="variable">$loader</span>[<span class="literal">0</span>], <span class="variable">$filterName</span>);
+            }
+        }
+        <span class="comment">// Processed all the loaders, re-register them with PHP in their original order.</span>
+        <span class="keyword">foreach</span> (<span class="variable">$loaders</span> <span class="keyword">as</span> <span class="variable">$loader</span>) {
+            <span class="function">spl_autoload_register</span>(<span class="variable">$loader</span>);
+        }
+    }
+}
+</code></pre>
+        <p>Just like we described before in less technical terms, we:</p>
+        <ul>
+            <li>
+                Fetch the list of registered autoloaders and iterate over them<br>
+                <code class="php"><span class="keyword">foreach</span> (<span class="function">spl_autoload_functions</span>() <span class="keyword">as &amp;</span><span class="variable">$loader</span>)</code>
+            </li>
+            <li>
+                If we detect that one of the autoloaders is Composer<br>
+                <code class="php"><span class="keyword">if</span> (is_array(<span class="variable">$loader</span>) <span class="keyword">&amp;&amp;</span> <span class="variable">$loader</span>[<span class="literal">0</span>] <span class="keyword">instanceof</span> ComposerClassLoader)</code>
+            </li>
+            <li>
+                We decorate it, replace it<br>
+                <code class="php"><span class="variable">$loader</span>[<span class="literal">0</span>] = <span class="keyword">new</span> <span class="identifier">self</span>(<span class="variable">$loader</span>[<span class="literal">0</span>], <span class="variable">$filterName</span>);</code>
+            </li>
+            <li>
+                Before re-registering each autoloader in their original order<br>
+                <code class="php">spl_autoload_unregister(<span class="variable">$loader</span>);</code> and<br>
+                <code class="php"><span class="keyword">foreach</span> (<span class="variable">$loaders</span> <span class="keyword">as</span> <span class="variable">$loader</span>) <span class="function">spl_autoload_register</span>(<span class="variable">$loader</span>);</code>
+            </li>
+        </ul>
+        <p>To make all this come to life, we: load Composer, register our stream filter,
+            and initialise our autoloader overloader.</p>
+        <p>
+            Now we carry on developing as normal - any class loaded after initializing our autoloader will have its
+            source code passed through our stream filter!
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span> <span class="comment">// index.php</span>
+
+<span class="keyword">require_once</span> __DIR__ <span class="keyword">.</span> <span class="string">&#39;/vendor/autoload.php&#39;</span>;
+<span class="function">stream_filter_register</span>(<span class="string">&#39;my_compiler_filter&#39;</span>, MyCompilerFilter<span class="keyword">::</span><span class="identifier">class</span>);
+AutoloaderOverloader<span class="keyword">::</span><span class="function">init</span>(<span class="string">&#39;my_compiler_filter&#39;</span>);
+</code></pre>
+        <p>That was a lot of code to throw at you, but that's it for our overloader!</p>
+
+        <h4 id="other-projects">Other Projects</h4>
+        <p>There are other projects out there that implement autoloader overloading.</p>
+        <p>
+            Some evaluate the source code with <code class="php">eval(<span class="variable">$executableCode</span>)</code>
+            but evaluating strings as code using the <code class="php">eval()</code> function is usually disabled on
+            hardened PHP installations, or at least highly discouraged.
+        </p>
+        <p>
+            Others write the generated code to disk before requiring the new file, But this won't work on read-only
+            filesystems, such as sandboxes containers where cache is already warmed up on deployment.
+        </p>
+        <p>
+            Using stream filters is perhaps the most elegant. It's built into PHP's core functionality and just works -
+            it has been there since at least PHP <code>5.0</code>. If you're already into meta-programming by
+            manipulating source code, streams aren't going to be a challenge.
+        </p>
+
+        <h3 id="what-next">What Next?</h3>
+        <p>
+            Now that we know we can modify the PHP code that actually gets executed by PHP on-the-fly from within the
+            application we are running, what's next? What important work can we do given all this power?
+        </p>
+        <p>
+            We could implement PHP 7.4's short closures in PHP 7.3 using <a href="https://github.com/assertchris">Christopher Pitt</a>'s
+            <a href="https://preprocess.io">Preprocessor library</a>. His Preprocessor library takes invalid PHP code
+            and turns it into valid PHP code:
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="comment">// Pre</span>
+<span class="variable">$oddLetterCountWords</span> <span class="keyword">=</span> <span class="function">array_filter</span>(<span class="variable">$fruits</span>, <strong>(<span class="variable">$fruit</span>) <span class="keyword">=&gt;</span> {</strong>
+    <span class="keyword">return</span> <span class="function">strlen</span>(<span class="variable">$fruit</span>) <span class="keyword">%</span> <span class="literal">2</span>;
+});
+
+<span class="comment">// Compiled</span>
+<span class="variable">$oddLetterCountWords</span> <span class="keyword">=</span> <span class="function">array_filter</span>(<span class="variable">$fruits</span>, <strong><span class="keyword">function</span> (<span class="variable">$fruit</span>) {</strong>
+    <span class="keyword">return</span> <span class="function">strlen</span>(<span class="variable">$fruit</span>) <span class="keyword">%</span> <span class="literal">2</span>;
+});
+</code></pre>
+        <p>
+            It's a pretty unremarkable change, but we're transpiling invalid code into something that PHP will
+            understand. Building on the knowledge we've already gone over, implementing this is a two-step process:
+            include the library as a dependency and then use it inside your stream filter.
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="comment"># composer require pre/short-closures:^0.8
+
+// Alias for implementing and registering a stream filter.</span>
+<span class="keyword">public function</span> <span class="identifier">transformCodeFilter</span>(<span class="variable">$sourceFile</span>) {
+    <span class="keyword">return</span> \Pre\Plugin\<span class="function">parse</span>(<span class="function">file_get_contents</span>(<span class="variable">$sourceFile</span>));
+}
+</code></pre>
+
+        <h3 id="obfuscation">Obfuscation</h3>
+        <p>
+            We've established that as long as we return a string containing valid PHP code, we can accept pretty much
+            any input to manipulate even if that input is nothing. Even encrypted source code!
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span> <span class="keyword">exit</span>(<span class="string">&#39;Source Code Protected.&#39;</span>); <span class="keyword">?&gt;</span>
+
+aFcZG1BJF0UNAxVSBAgAEREcERF/HxwJRRJTVQlSeSoADhlFHhUADREANR9QLyYMGwYXAxVMABxYeHMF
+B0VUOxxNFQAbCz8mTw4fCwtLOhw1O1QdA2YBGhpEAFQaCg0pIABTGwoXUwRVbioKH0EdHFRkCAMAGxhU
+NwBOBxcMGR4AHnNbb05DUlkAAUIYAQYAFRobERcMTw1POzpHOh4GGEVBIUUfGhFTFQBXFwYEBwBTH0xD
+ADMLF1AGHVMLTw8qTUVBTlQAVE9SFhEWBxxFAhxXRTwGAQkfGlMRQEJoFgMZHU9FdwwdCAEPc0FSeQBJ
+UwATZQk=
+</code></pre>
+        <p>Which can be unencrypted on-the-fly into something resembling a normal PHP file.</p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span> <span class="keyword">declare</span>(strict_types<span class="keyword">=</span><span class="literal">1</span>);
+
+<span class="keyword">namespace</span> App\Controller;
+
+<span class="keyword">use</span> Symfony\Component\HttpFoundation\Request;
+<span class="keyword">use</span> Symfony\Component\HttpFoundation\Response;
+
+<span class="keyword">class</span> <span class="identifier">DefaultController</span>
+{
+    <span class="keyword">publicfunction</span> <span class="identifier">__invoke</span>(Request <span class="variable">$request</span>)<span class="keyword">:</span> Response {
+        <span class="keyword">return new</span> Response(<span class="string">&#39;Hello, World!&#39;</span>);
+    }
+}
+</code></pre></div>
+        <p>
+            Once again, we have a fairly simple-ish stream filter method to what once seemed like something that could
+            only happen using extensions.
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">function</span> <span class="identifier">transformCodeFilter</span>(string <span class="variable">$sourceFile</span>)<span class="keyword">:</span> string {
+    <span class="variable">$source</span> <span class="keyword">=</span> <span class="function">file_get_contents</span>(<span class="variable">$sourceFile</span>);
+    <span class="keyword">return</span> <span class="function">strpos</span>(<span class="variable">$source</span>, PREAMBLE_TEXT) <span class="keyword">!==</span> <span class="literal">0</span>
+        <span class="keyword">?</span> <span class="variable">$source</span>
+        <span class="keyword">:</span> <span class="function">xorStringWithKey</span>(
+            <span class="function">base64_decode</span>(<span class="function">substr</span>(<span class="variable">$source</span>, <span class="function">strlen</span>(PREAMBLE_TEXT))),
+            ENCRYPTION_KEY
+        );
+}
+</code></pre>
+        <p>
+            We grab the source code just like every other transformation we've done, and if we don't need to decrypt the
+            source code we immediately return it untouched. But if we do detect the source code needs decrypting, by
+            looking for the exit statement at the beginning of the file (called the preamble) we pass it to another
+            function to decrypt it.
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">const</span> PREAMBLE_TEXT <span class="keyword">=</span> <span class="string">&#34;&lt;?php exit(&#39;Source Code Protected&#39;); ?&gt;\n\n&#34;</span>;
+<span class="comment">// The &#34;encryption&#34; key used by GitHub Enterprise. See:
+// http://blog.orange.tw/2017/01/bug-bounty-github-enterprise-sql-injection.html</span>
+<span class="keyword">const</span> ENCRYPTION_KEY <span class="keyword">=</span> <span class="string">&#39;This obfuscation is intended to discourage GitHub Enterprise customers from making modifications to the VM. We know this \&#39;encryption\&#39; is easily broken.&#39;</span>;
+</code></pre>
+        <p>
+            As for the decryption function itself, it iterates each byte of the source file and <code>xor</code>'s it
+            with the corresponding byte in an encryption key. This isn't AES - it's meant to be simple. It also happens
+            to be how GitHub protects their Enterprise source code (people always going to reverse engineer something if
+            they really want, XOR encryption should be enough prove intent in court of law).
+        </p>
+        <pre><code class="php"><span class="keyword">&lt;?php</span>
+
+<span class="keyword">function</span> <span class="identifier">xorStringWithKey</span>(string <span class="variable">$str</span>, string <span class="variable">$key</span>)<span class="keyword">:</span> string {
+    <span class="keyword">for</span> (<span class="variable">$i</span> <span class="keyword">=</span> <span class="literal">0</span>; <span class="variable">$i</span> <span class="keyword">&lt;</span> <span class="function">strlen</span>(<span class="variable">$str</span>); <span class="variable">$i</span><span class="keyword">++</span>) {
+        <span class="variable">$str</span>[<span class="variable">$i</span>] <span class="keyword">.=</span> <span class="variable">$str</span>[<span class="variable">$i</span>] <span class="keyword">^</span> <span class="variable">$key</span>[<span class="variable">$i</span> <span class="keyword">%</span> <span class="function">strlen</span>(<span class="variable">$key</span>)];
+    }
+    <span class="keyword">return</span> <span class="variable">$str</span>;
+}
+</code></pre>
+
+        <h3 id="performance-like-its-1994">Performance like it's 1994 🎉</h3>
+        <p>
+            Remember that this is an experiment. Caching the transformation result from decrypting source code would be
+            completely pointless. Even with the Just-In-Time compiler coming in PHP8, source transformation or
+            manipulating ASTs on the fly is never going to be fast.
+        </p>
+        <p>But that's not the point.</p>
+        <p>You can do some amazing things in PHP that it was never designed to do.</p>
+        <ul>
+            <li>Christopher Pitt's Preprocessor library transpiles new and non-existant language features just like BabelJS.</li>
+            <li>AOP allows you to inject logic at points in your code on-the-fly.</li>
+            <li>
+                Using source transformation and autoloader overloading you can not just manipulate existing code
+                on-the-fly, but generate entirely new classes with code templates.
+            </li>
+            <li>
+                ReactPHP allows you to write asynchronous code by using the native <code>stream_select()</code> function.
+                <ul>
+                    <li>And Icicle does it using generators.</li>
+                </ul>
+            </li>
+        </ul>
+        <p>
+            There are so many projects out there that push PHP beyond the limits of what people thought was possible for
+            the language and the likelihood that the authors of these projects specifically knew what they were going to
+            build ahead of time is very low.
+        </p>
+        
+        <h3 id="question-experiment-have-fun">Question. Experiment. Have fun.</h3>
+        <p>Question what's possible. Experiment with ideas. Have fun, like you did when you first became a developer.</p>
+        <p>
+            You won't know what's possible until you push past the limits of the language. Be curious, I hope you finish
+            this article thinking it didn't go into enough detail, and that you're curious to know more.
+        </p>
+        <p>Create terrible things, because if you don't the amazing things you create will just be average.</p>
+        
+        <h3 id="z-engine">Z-Engine</h3>
+        <p>
+            Since I wrote this talk, Lisachenko has come out with yet another crazy framework for PHP.
+            <a href="https://github.com/lisachenko/z-engine">Z-Engine</a> uses FFI to access internal structures of PHP
+            itself; it loads the definitions of native PHP structures, like <code>zend_class_entry</code>,
+            <code>zval</code>, etc and manipulates them in runtime.
+        </p>
+        <p>
+            If you can use streams to execute encrypted source code, imagine the possibilities of manipulating the
+            internals of the PHP engine itself!
+        </p>
 
     </body>
 </html>
