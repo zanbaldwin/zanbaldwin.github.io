@@ -1,0 +1,531 @@
+<!doctype html>
+<html class="no-js" lang="en-GB">
+    <head>
+        <meta charset="utf-8">
+        <title>Symfony Certification Study Materials</title>
+        <meta name="description" content="Study materials compiled while studying for the Symfony 5 certification.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/assets/css/latex.css">
+        <link rel="stylesheet" href="/assets/css/code.css">
+        <meta name="theme-color" content="#f8f9fa">
+    </head>
+    <body>
+
+        <p class="author">
+            <a href="/">Zan Baldwin</a>
+            <br>
+            Tuesday, 4<sup>th</sup> August, 2020
+        </p>
+        <aside class="abstract">
+            <p>
+                Study materials compiled while studying for the
+                <a href="https://certification.symfony.com/">Symfony 5 certification</a>.
+            </p>
+        </aside>
+
+        <h2>Symfony Certification Study Materials</h2>
+
+        <nav role="navigation" class="toc">
+            <h3>Contents</h3>
+            <ol>
+                <li><a href="#sources">Sources</a></li>
+                <li>
+                    <a href="#php">PHP</a>
+                    <ol>
+                        <li><a href="#php-api-up-to-php-72">PHP API up to PHP 7.2</a></li>
+                        <li><a href="#object-oriented-programming">Object Oriented Programming</a></li>
+                        <li><a href="#namespaces">Namespaces</a></li>
+                        <li><a href="#interfaces">Interfaces</a></li>
+                        <li><a href="#anonymous-functions-and-closures">Anonymous functions and closures</a></li>
+                        <li><a href="#abstract-classes">Abstract classes</a></li>
+                        <li><a href="#exception-and-error-handling">Exception and error handling</a></li>
+                        <li><a href="#traits">Traits</a></li>
+                        <li><a href="#php-extensions">PHP extensions</a></li>
+                        <li><a href="#spl">SPL</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#http">HTTP</a>
+                    <ol>
+                        <li><a href="#client-server-interaction">Client / Server interaction</a></li>
+                        <li><a href="#status-codes">Status codes</a></li>
+                        <li><a href="#http-request">HTTP request</a></li>
+                        <li><a href="#http-response">HTTP response</a></li>
+                        <li><a href="#http-methods">HTTP methods</a></li>
+                        <li><a href="#cookies">Cookies</a></li>
+                        <li><a href="#caching">Caching</a></li>
+                        <li><a href="#content-negotiation">Content negotiation</a></li>
+                        <li><a href="#language-detection">Language detection</a></li>
+                        <li><a href="#symfony-httpclient-component">Symfony HttpClient component</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#symfony-architecture">Symfony Architecture</a>
+                    <ol>
+                        <li><a href="#">Symfony Flex</a></li>
+                        <li><a href="#">License</a></li>
+                        <li><a href="#">Components</a></li>
+                        <li><a href="#">Bridges</a></li>
+                        <li><a href="#">Code organization</a></li>
+                        <li><a href="#">Request handling</a></li>
+                        <li><a href="#">Exception handling</a></li>
+                        <li><a href="#">Event dispatcher and kernel events</a></li>
+                        <li><a href="#">Official best practices</a></li>
+                        <li><a href="#">Release management</a></li>
+                        <li><a href="#">Backward compatibility promise</a></li>
+                        <li><a href="#">Deprecations best practices</a></li>
+                        <li><a href="#">Framework overloading</a></li>
+                        <li><a href="#">Release management and roadmap schedule</a></li>
+                        <li><a href="#">Framework interoperability and PSRs</a></li>
+                        <li><a href="#">Naming conventions</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#controllers">Controllers</a>
+                    <ol>
+                        <li><a href="#">Naming conventions</a></li>
+                        <li><a href="#">The base AbstractController class</a></li>
+                        <li><a href="#">The request</a></li>
+                        <li><a href="#">The response</a></li>
+                        <li><a href="#">The cookies</a></li>
+                        <li><a href="#">The session</a></li>
+                        <li><a href="#">The flash messages</a></li>
+                        <li><a href="#">HTTP redirects</a></li>
+                        <li><a href="#">Internal redirects</a></li>
+                        <li><a href="#">Generate 404 pages</a></li>
+                        <li><a href="#">File upload</a></li>
+                        <li><a href="#">Built-in internal controllers</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#routing">Routing</a>
+                    <ol>
+                        <li><a href="#">Configuration (YAML, XML, PHP & annotations)</a></li>
+                        <li><a href="#">Restrict URL parameters</a></li>
+                        <li><a href="#">Set default values to URL parameters</a></li>
+                        <li><a href="#">Generate URL parameters</a></li>
+                        <li><a href="#">Trigger redirects</a></li>
+                        <li><a href="#">Special internal routing attributes</a></li>
+                        <li><a href="#">Domain name matching</a></li>
+                        <li><a href="#">Conditional request matching</a></li>
+                        <li><a href="#">HTTP methods matching</a></li>
+                        <li><a href="#">User's locale guessing</a></li>
+                        <li><a href="#">Router debugging</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#">Templating with Twig</a>
+                    <ol>
+                        <li><a href="#">Auto escaping</a></li>
+                        <li><a href="#">Template inheritance</a></li>
+                        <li><a href="#">Global variables</a></li>
+                        <li><a href="#">Filters and functions</a></li>
+                        <li><a href="#">Template includes</a></li>
+                        <li><a href="#">Loops and conditions</a></li>
+                        <li><a href="#">URLs generation</a></li>
+                        <li><a href="#">Controller rendering</a></li>
+                        <li><a href="#">Translations and pluralization</a></li>
+                        <li><a href="#">String interpolation</a></li>
+                        <li><a href="#">Assets management</a></li>
+                        <li><a href="#">Debugging variables</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#">Forms</a>
+                    <ol>
+                        <li><a href="#">Forms creation</a></li>
+                        <li><a href="#">Forms handling</a></li>
+                        <li><a href="#">Form types</a></li>
+                        <li><a href="#">Forms rendering with Twig</a></li>
+                        <li><a href="#">Forms theming</a></li>
+                        <li><a href="#">CSRF protection</a></li>
+                        <li><a href="#">Handling file upload</a></li>
+                        <li><a href="#">Built-in form types</a></li>
+                        <li><a href="#">Data transformers</a></li>
+                        <li><a href="#">Form events</a></li>
+                        <li><a href="#">Form type extensions</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#">Data Validation</a>
+                    <ol>
+                        <li><a href="#">PHP object validation</a></li>
+                        <li><a href="#">Built-in validation constraints</a></li>
+                        <li><a href="#">Validation scopes</a></li>
+                        <li><a href="#">Validation groups</a></li>
+                        <li><a href="#">Group sequence</a></li>
+                        <li><a href="#">Custom callback validators</a></li>
+                        <li><a href="#">Violations builder</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#">Dependency Injection</a>
+                    <ol>
+                        <li><a href="#">Service container</a></li>
+                        <li><a href="#">Built-in services</a></li>
+                        <li><a href="#">Configuration parameters</a></li>
+                        <li><a href="#">Services registration</a></li>
+                        <li><a href="#">Tags</a></li>
+                        <li><a href="#">Semantic configuration</a></li>
+                        <li><a href="#">Factories</a></li>
+                        <li><a href="#">Compiler passes</a></li>
+                        <li><a href="#">Services autowiring</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#">Security</a>
+                    <ol>
+                        <li><a href="#">Authentication</a></li>
+                        <li><a href="#">Authorization</a></li>
+                        <li><a href="#">Configuration</a></li>
+                        <li><a href="#">Providers</a></li>
+                        <li><a href="#">Firewalls</a></li>
+                        <li><a href="#">Users</a></li>
+                        <li><a href="#">Passwords encoders</a></li>
+                        <li><a href="#">Roles</a></li>
+                        <li><a href="#">Access Control Rules</a></li>
+                        <li><a href="#">Guard authenticators</a></li>
+                        <li><a href="#">Voters and voting strategies</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#">HTTP Caching</a>
+                    <ol>
+                        <li><a href="#">Cache types (browser, proxies and reverse-proxies)</a></li>
+                        <li><a href="#">Expiration (Expires, Cache-Control)</a></li>
+                        <li><a href="#">Validation (ETag, Last-Modified)</a></li>
+                        <li><a href="#">Client side caching</a></li>
+                        <li><a href="#">Server side caching</a></li>
+                        <li><a href="#">Edge Side Includes</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#">Console</a>
+                    <ol>
+                        <li><a href="#">Built-in commands</a></li>
+                        <li><a href="#">Custom commands</a></li>
+                        <li><a href="#">Configuration</a></li>
+                        <li><a href="#">Options and arguments</a></li>
+                        <li><a href="#">Input and Output objects</a></li>
+                        <li><a href="#">Built-in helpers</a></li>
+                        <li><a href="#">Console events</a></li>
+                        <li><a href="#">Verbosity levels</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#">Automated Tests</a>
+                    <ol>
+                        <li><a href="#">Unit tests with PHPUnit</a></li>
+                        <li><a href="#">Functional tests with PHPUnit</a></li>
+                        <li><a href="#">Client object</a></li>
+                        <li><a href="#">Crawler object</a></li>
+                        <li><a href="#">Profile object</a></li>
+                        <li><a href="#">Framework objects access</a></li>
+                        <li><a href="#">Client configuration</a></li>
+                        <li><a href="#">Request and response objects introspection</a></li>
+                        <li><a href="#">PHPUnit bridge</a></li>
+                        <li><a href="#">Handling legacy deprecated code</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="#">Miscellaneous</a>
+                    <ol>
+                        <li><a href="#">Configuration (incl. DotEnv & ExpressionLanguage components)</a></li>
+                        <li><a href="#">Error handling</a></li>
+                        <li><a href="#">Code debugging</a></li>
+                        <li><a href="#">Deployment best practices</a></li>
+                        <li><a href="#">Process and Serializer components</a></li>
+                        <li><a href="#">Messenger component</a></li>
+                        <li><a href="#">Mime and Mailer components</a></li>
+                        <li><a href="#">Filesystem and Finder components</a></li>
+                        <li><a href="#">Lock component</a></li>
+                        <li><a href="#">Web Profiler, Web Debug Toolbar and Data collectors</a></li>
+                        <li><a href="#">Internationalization and localization (and Intl component)</a></li>
+                    </ol>
+                </li>
+            </ol>
+        </nav>
+
+        <h3 id="sources">Sources</h3>
+        <ul>
+            <li><a href="https://thomasberends.github.io/symfony-certification-preparation-list/">Symfony 4 Certification Preparation List</a></li>
+            <li><a href="https://www.php.net/manual/en/">PHP Documentation</a></li>
+            <li><a href="https://phptherightway.com/">PHP: The Right Way</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/">Mozilla Developer Network Web Docs</a></li>
+            <li><a href="https://symfony.com/doc/5.0/index.html">Symfony 5.0 Documentation</a></li>
+            <li><a href="https://www.php-fig.org/psr/">PHP Framework Interop Group</a></li>
+            <li><a href="https://github.com/symfony/">Symfony Codebase</a></li>
+            <li><a href="https://symfonycasts.com/">SymfonyCasts</a></li>
+            <li><a href="https://twig.symfony.com/doc/3.x/">Twig Documentation</a></li>
+            <li><a href="https://phpunit.readthedocs.io/">PHPUnit Documentation</a></li>
+        </ul>
+
+        <h3 id="php">PHP</h3>
+        <h4 id="php-api-up-to-php-72">PHP API up to PHP 7.2</h4>
+        <ul>
+            <li><a href="https://www.php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration" title="Type declarations">https://www.php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration</a></li>
+        </ul>
+        <h4 id="object-oriented-programming">Object Oriented Programming</h4>
+        <ul>
+            <li><a href="https://www.php.net/manual/en/language.oop5.php" title="Classes and Objects">https://www.php.net/manual/en/language.oop5.php</a></li>
+            <li><a href="https://designpatternsphp.readthedocs.io/" title="Design Patterns PHP">https://designpatternsphp.readthedocs.io/</a></li>
+        </ul>
+        <h4 id="namespaces">Namespaces</h4>
+        <ul>
+            <li><a href="https://phptherightway.com/#namespaces" title="Namespaces">https://phptherightway.com/#namespaces</a></li>
+            <li><a href="https://www.php.net/manual/en/language.namespaces.php" title="Namespaces">https://www.php.net/manual/en/language.namespaces.php</a></li>
+        </ul>
+        <h4 id="interfaces">Interfaces</h4>
+        <ul>
+            <li><a href="https://www.php.net/manual/en/language.oop5.interfaces.php" title="Object Interfaces">https://www.php.net/manual/en/language.oop5.interfaces.php</a></li>
+            <li><a href="https://www.php.net/manual/en/language.operators.type.php" title="Type Operators">https://www.php.net/manual/en/language.operators.type.php</a></li>
+        </ul>
+        <h4 id="anonymous-functions-and-closures">Anonymous functions and closures</h4>
+        <ul>
+            <li><a href="https://www.php.net/manual/en/functions.anonymous.php" title="Anonymous functions">https://www.php.net/manual/en/functions.anonymous.php</a></li>
+            <li><a href="https://www.php.net/manual/en/class.closure.php" title="The Closure class">https://www.php.net/manual/en/class.closure.php</a></li>
+            <li><a href="https://www.php.net/manual/en/language.oop5.anonymous.php" title="Anonymous classes">https://www.php.net/manual/en/language.oop5.anonymous.php</a></li>
+        </ul>
+        <h4 id="abstract-classes">Abstract classes</h4>
+        <ul>
+            <li><a href="https://www.php.net/manual/en/language.oop5.abstract.php">https://www.php.net/manual/en/language.oop5.abstract.php</a></li>
+        </ul>
+        <h4 id="exception-and-error-handling">Exception and error handling</h4>
+        <ul>
+            <li><a href="https://phptherightway.com/#errors" title="Errors">https://phptherightway.com/#errors</a></li>
+            <li><a href="https://phptherightway.com/#exceptions" title="Exceptions">https://phptherightway.com/#exceptions</a></li>
+            <li><a href="https://www.php.net/manual/en/language.errors.basics.php" title="Error Basics">https://www.php.net/manual/en/language.errors.basics.php</a></li>
+            <li><a href="https://www.php.net/manual/en/language.errors.php7.php" title="Errors in PHP 7">https://www.php.net/manual/en/language.errors.php7.php</a></li>
+            <li><a href="https://www.php.net/manual/en/language.exceptions.php" title="Exceptions in PHP">https://www.php.net/manual/en/language.exceptions.php</a></li>
+            <li><a href="https://www.php.net/manual/en/class.exception.php" title="The Exception class">https://www.php.net/manual/en/class.exception.php</a></li>
+            <li><a href="https://www.php.net/manual/en/spl.exceptions.php" title="SPL Exceptions">https://www.php.net/manual/en/spl.exceptions.php</a></li>
+        </ul>
+        <h4 id="traits">Traits</h4>
+        <ul>
+            <li><a href="https://www.php.net/manual/en/language.oop5.traits.php" title="Traits">https://www.php.net/manual/en/language.oop5.traits.php</a></li>
+        </ul>
+        <h4 id="php-extensions">PHP extensions</h4>
+        <ul>
+            <li><a href="https://www.php.net/manual/en/extensions.membership.php" title="PHP Extensions by Membership">https://www.php.net/manual/en/extensions.membership.php</a></li>
+        </ul>
+        <h4 id="spl">SPL</h4>
+        <ul>
+            <li><a href="https://phptherightway.com/#standard_php_library">https://phptherightway.com/#standard_php_library</a></li>
+            <li><a href="https://www.php.net/manual/en/book.spl.php">https://www.php.net/manual/en/book.spl.php</a></li>
+        </ul>
+
+        <h3 id="http">HTTP</h3>
+        <h4 id="client-server-interaction">Client / Server interaction</h4>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" title="Overview of HTTP">https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP" title="Evolution of HTTP">https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/First_steps/Client-Server_overview" title="Client-Server overview">https://developer.mozilla.org/en-US/docs/Learn/Server-side/First_steps/Client-Server_overview</a></li>
+            <li><a href="https://en.wikibooks.org/wiki/Communication_Networks/HTTP_Protocol" title="HTTP Protocol (in Communication Networks)">https://en.wikibooks.org/wiki/Communication_Networks/HTTP_Protocol</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Session" title="A typical HTTP session">https://developer.mozilla.org/en-US/docs/Web/HTTP/Session</a></li>
+        </ul>
+        <h4 id="status-codes">Status codes</h4>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" title="HTTP response status codes">https://developer.mozilla.org/en-US/docs/Web/HTTP/Status</a></li>
+        </ul>
+        <h4 id="http-request">HTTP request</h4>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages#HTTP_Requests" title="HTTP Requests">https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages#HTTP_Requests</a></li>
+        </ul>
+        <h4 id="http-response">HTTP response</h4>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages#HTTP_Responses" title="HTTP Responses">https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages#HTTP_Responses</a></li>
+        </ul>
+        <h4 id="http-methods">HTTP methods</h4>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods" title="HTTP request methods">https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods</a></li>
+        </ul>
+        <h4 id="cookies">Cookies</h4>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cookie" title="The Cookie HTTP request header">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cookie</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie" title="The Set-Cookie response header">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" title="Using HTTP cookies">https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies</a></li>
+            <li><a href="https://tools.ietf.org/html/rfc6265" title="RFC 6265: HTTP State Management Mechanism">https://tools.ietf.org/html/rfc6265</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/HTTP_cookie" title="HTTP Cookie on Wikipedia">https://en.wikipedia.org/wiki/HTTP_cookie</a></li>
+            <li><a href="https://symfony.com/doc/5.0/components/http_foundation.html#setting-cookies" title="Setting Cookies in Symfony">https://symfony.com/doc/5.0/components/http_foundation.html#setting-cookies</a></li>
+        </ul>
+        <h4 id="caching">Caching</h4>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" title="HTTP Caching">https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching</a></li>
+            <li><a href="https://www.mnot.net/cache_docs/" title="Extensive Caching Tutorial">https://www.mnot.net/cache_docs/</a></li>
+            <li><a href="https://tools.ietf.org/html/rfc7234" title="RFC 7234: Hypertext Transfer Protocol Caching">https://tools.ietf.org/html/rfc7234</a></li>
+            <li>See <a href="#http-caching">HTTP Caching</a></li>
+        </ul>
+        <h4 id="content-negotiation">Content negotiation</h4>
+        <ul>
+            <li><a href="https://github.com/willdurand/Negotiation">https://github.com/willdurand/Negotiation</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation" title="HTTP Content Negotiation">https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept" title="The Accept request header">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept</a></li>
+        </ul>
+        <h4 id="language-detection">Language detection</h4>
+        <ul>
+            <li><a href="https://github.com/willdurand/Negotiation">https://github.com/willdurand/Negotiation</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation" title="HTTP Content Negotiation">https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language" title="The Accept-Language request header">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language</a></li>
+        </ul>
+        <h4 id="symfony-httpclient-component">Symfony HttpClient component</h4>
+        <ul>
+            <li><a href="https://github.com/symfony/symfony/tree/5.0/src/Symfony/Component/HttpClient" title="HttpClient Source Code">https://github.com/symfony/symfony/tree/5.0/src/Symfony/Component/HttpClient</a></li>
+            <li><a href="https://symfony.com/doc/current/http_client.html" title="HttpClient Documentation">https://symfony.com/doc/current/http_client.html</a></li>
+        </ul>
+
+        <h3 id="symfony-architecture">Symfony Architecture</h3>
+        <h4 id="symfony-flex">Symfony Flex</h4>
+        <h4 id="license">License</h4>
+        <ul>
+            <li><a href="https://symfony.com/doc/5.0/contributing/code/license.html">https://symfony.com/doc/5.0/contributing/code/license.html</a></li>
+        </ul>
+        <h4 id="#">Components</h4>
+        <ul>
+            <li><a href="https://symfony.com/components">https://symfony.com/components</a></li>
+        </ul>
+        <h4 id="#">Bridges</h4>
+        <h4 id="#">Code organization</h4>
+        <h4 id="#">Request handling</h4>
+        <h4 id="#">Exception handling</h4>
+        <h4 id="#">Event dispatcher and kernel events</h4>
+        <h4 id="#">Official best practices</h4>
+        <h4 id="#">Release management</h4>
+        <h4 id="#">Backward compatibility promise</h4>
+        <h4 id="#">Deprecations best practices</h4>
+        <h4 id="#">Framework overloading</h4>
+        <h4 id="#">Release management and roadmap schedule</h4>
+        <h4 id="#">Framework interoperability and PSRs</h4>
+        <h4 id="#">Naming conventions</h4>
+
+        <h3 id="controllers">Controllers</h3>
+        <h4 id="#">Naming conventions</h4>
+        <h4 id="#">The base AbstractController class</h4>
+        <h4 id="#">The request</h4>
+        <h4 id="#">The response</h4>
+        <h4 id="#">The cookies</h4>
+        <h4 id="#">The session</h4>
+        <h4 id="#">The flash messages</h4>
+        <h4 id="#">HTTP redirects</h4>
+        <h4 id="#">Internal redirects</h4>
+        <h4 id="#">Generate 404 pages</h4>
+        <h4 id="#">File upload</h4>
+        <h4 id="#">Built-in internal controllers</h4>
+
+        <h3 id="routing">Routing</h3>
+        <h4 id="#">Configuration (YAML, XML, PHP & annotations)</h4>
+        <h4 id="#">Restrict URL parameters</h4>
+        <h4 id="#">Set default values to URL parameters</h4>
+        <h4 id="#">Generate URL parameters</h4>
+        <h4 id="#">Trigger redirects</h4>
+        <h4 id="#">Special internal routing attributes</h4>
+        <h4 id="#">Domain name matching</h4>
+        <h4 id="#">Conditional request matching</h4>
+        <h4 id="#">HTTP methods matching</h4>
+        <h4 id="#">User's locale guessing</h4>
+        <h4 id="#">Router debugging</h4>
+
+        <h3 id="templating-with-twig">Templating with Twig</h3>
+        <h4 id="#">Auto escaping</h4>
+        <h4 id="#">Template inheritance</h4>
+        <h4 id="#">Global variables</h4>
+        <h4 id="#">Filters and functions</h4>
+        <h4 id="#">Template includes</h4>
+        <h4 id="#">Loops and conditions</h4>
+        <h4 id="#">URLs generation</h4>
+        <h4 id="#">Controller rendering</h4>
+        <h4 id="#">Translations and pluralization</h4>
+        <h4 id="#">String interpolation</h4>
+        <h4 id="#">Assets management</h4>
+        <h4 id="#">Debugging variables</h4>
+
+        <h3 id="forms">Forms</h3>
+        <h4 id="#">Forms creation</h4>
+        <h4 id="#">Forms handling</h4>
+        <h4 id="#">Form types</h4>
+        <h4 id="#">Forms rendering with Twig</h4>
+        <h4 id="#">Forms theming</h4>
+        <h4 id="#">CSRF protection</h4>
+        <h4 id="#">Handling file upload</h4>
+        <h4 id="#">Built-in form types</h4>
+        <h4 id="#">Data transformers</h4>
+        <h4 id="#">Form events</h4>
+        <h4 id="#">Form type extensions</h4>
+
+        <h3 id="data-validation">Data Validation</h3>
+        <h4 id="#">PHP object validation</h4>
+        <h4 id="#">Built-in validation constraints</h4>
+        <h4 id="#">Validation scopes</h4>
+        <h4 id="#">Validation groups</h4>
+        <h4 id="#">Group sequence</h4>
+        <h4 id="#">Custom callback validators</h4>
+        <h4 id="#">Violations builder</h4>
+
+        <h3 id="dependency-injection">Dependency Injection</h3>
+        <h4 id="#">Service container</h4>
+        <h4 id="#">Built-in services</h4>
+        <h4 id="#">Configuration parameters</h4>
+        <h4 id="#">Services registration</h4>
+        <h4 id="#">Tags</h4>
+        <h4 id="#">Semantic configuration</h4>
+        <h4 id="#">Factories</h4>
+        <h4 id="#">Compiler passes</h4>
+        <h4 id="#">Services autowiring</h4>
+
+        <h3 id="security">Security</h3>
+        <h4 id="#">Authentication</h4>
+        <h4 id="#">Authorization</h4>
+        <h4 id="#">Configuration</h4>
+        <h4 id="#">Providers</h4>
+        <h4 id="#">Firewalls</h4>
+        <h4 id="#">Users</h4>
+        <h4 id="#">Passwords encoders</h4>
+        <h4 id="#">Roles</h4>
+        <h4 id="#">Access Control Rules</h4>
+        <h4 id="#">Guard authenticators</h4>
+        <h4 id="#">Voters and voting strategies</h4>
+
+        <h3 id="http-caching">HTTP Caching</h3>
+        <h4 id="#">Cache types (browser, proxies and reverse-proxies)</h4>
+        <h4 id="#">Expiration (Expires, Cache-Control)</h4>
+        <h4 id="#">Validation (ETag, Last-Modified)</h4>
+        <h4 id="#">Client side caching</h4>
+        <h4 id="#">Server side caching</h4>
+        <h4 id="#">Edge Side Includes</h4>
+
+        <h3 id="console">Console</h3>
+        <h4 id="#">Built-in commands</h4>
+        <h4 id="#">Custom commands</h4>
+        <h4 id="#">Configuration</h4>
+        <h4 id="#">Options and arguments</h4>
+        <h4 id="#">Input and Output objects</h4>
+        <h4 id="#">Built-in helpers</h4>
+        <h4 id="#">Console events</h4>
+        <h4 id="#">Verbosity levels</h4>
+
+        <h3 id="automated-tests">Automated Tests</h3>
+        <h4 id="#">Unit tests with PHPUnit</h4>
+        <h4 id="#">Functional tests with PHPUnit</h4>
+        <h4 id="#">Client object</h4>
+        <h4 id="#">Crawler object</h4>
+        <h4 id="#">Profile object</h4>
+        <h4 id="#">Framework objects access</h4>
+        <h4 id="#">Client configuration</h4>
+        <h4 id="#">Request and response objects introspection</h4>
+        <h4 id="#">PHPUnit bridge</h4>
+        <h4 id="#">Handling legacy deprecated code</h4>
+
+        <h3 id="miscellaneous">Miscellaneous</h3>
+        <h4 id="#">Configuration (including DotEnv and ExpressionLanguage components)</h4>
+        <h4 id="#">Error handling</h4>
+        <h4 id="#">Code debugging</h4>
+        <h4 id="#">Deployment best practices</h4>
+        <h4 id="#">Process and Serializer components</h4>
+        <h4 id="#">Messenger component</h4>
+        <h4 id="#">Mime and Mailer components</h4>
+        <h4 id="#">Filesystem and Finder components</h4>
+        <h4 id="#">Lock component</h4>
+        <h4 id="#">Web Profiler, Web Debug Toolbar and Data collectors</h4>
+        <h4 id="#">Internationalization and localization (and Intl component)</h4>
+
+    </body>
+</html>
