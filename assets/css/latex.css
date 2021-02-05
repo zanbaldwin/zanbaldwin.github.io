@@ -23,3 +23,7 @@ h1 a:visited {
 h1 a:hover {
     text-decoration: underline;
 }
+figure figcaption {
+    text-align: right;
+    font-size: 90%;
+}
