@@ -39,3 +39,14 @@ ul.social li a {
     background-repeat: no-repeat;
     padding-left: 2rem;
 }
+@media only screen and (min-width: 520px) {
+    #skills {
+        column-count: 2;
+        column-gap: 40px;
+    }
+}
+@media only screen and (max-width: 520px) {
+    p small {
+        opacity: 85%;
+    }
+}
