@@ -179,7 +179,7 @@
     <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="function">execute</span>();
     <span class="variable">$remainingBytes</span> <span class="keyword">=</span> <span class="function">strlen</span>(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">output</span>) <span class="keyword">-</span> <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">pointer</span>;
     <span class="keyword">if</span> (<span class="variable">$remainingBytes</span> <span class="keyword">&gt;</span> <span class="literal">0</span>) {
-        <span class="variable">$buffer</span> <span class="keyword">=</span> <span class="function">substr</span>(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">output</span>, <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="v">pointer</span>, <span class="variable">$readNumBytes</span>);
+        <span class="variable">$buffer</span> <span class="keyword">=</span> <span class="function">substr</span>(<span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">output</span>, <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">pointer</span>, <span class="variable">$readNumBytes</span>);
         <span class="variable">$this</span><span class="keyword">-&gt;</span><span class="variable">pointer</span> <span class="keyword">+=</span> <span class="variable">$readNumBytes</span>;
         <span class="keyword">return</span> <span class="variable">$buffer</span>;
     }
@@ -866,7 +866,7 @@ UwATZQk=
             the language and the likelihood that the authors of these projects specifically knew what they were going to
             build ahead of time is very low.
         </p>
-        
+
         <h3 id="question-experiment-have-fun">Question. Experiment. Have fun.</h3>
         <p>Question what's possible. Experiment with ideas. Have fun, like you did when you first became a developer.</p>
         <p>
@@ -874,7 +874,7 @@ UwATZQk=
             this article thinking it didn't go into enough detail, and that you're curious to know more.
         </p>
         <p>Create terrible things, because if you don't the amazing things you create will just be average.</p>
-        
+
         <h3 id="z-engine">Z-Engine</h3>
         <p>
             Since I wrote this talk, Lisachenko has come out with yet another crazy framework for PHP.
