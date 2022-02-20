@@ -346,6 +346,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#greatest-common-cidr" class="md-nav__link">
+    Greatest Common CIDR
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -558,6 +565,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#greatest-common-cidr" class="md-nav__link">
+    Greatest Common CIDR
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -732,6 +746,20 @@ instance.</p>
 <a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nv">$clientIp</span><span class="o">-&gt;</span><span class="na">inRange</span><span class="p">(</span><span class="nv">$hostIp</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span> <span class="c1">// bool(true)</span>
 <a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="nv">$clientIp</span><span class="o">-&gt;</span><span class="na">inRange</span><span class="p">(</span><span class="nv">$hostIp</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span> <span class="c1">// bool(false)</span>
 </code></pre></div>
+<h3 id="greatest-common-cidr">Greatest Common CIDR</h3>
+<blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>@throws \Darsyn\IP\Exception\WrongVersionException
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>getCommonCidr(IpInterface $ip): int
+</code></pre></div>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="nv">$hostIp</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;d6be:583:71a4:aa6d:c77d:77dd:cec:f897&#39;</span><span class="p">);</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nv">$clientIp</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;d6be:583:71a4:aa67:b07a::c7&#39;</span><span class="p">);</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="nv">$hostIp</span><span class="o">-&gt;</span><span class="na">getCommonCidr</span><span class="p">(</span><span class="nv">$clientIp</span><span class="p">);</span> <span class="c1">// int(60)</span>
+</code></pre></div>
 <h2 id="ipv6-vs-multi"><code>IPv6</code> vs <code>Multi</code>?</h2>
 <p>The <code>Multi</code> class tries to deal with both IPv4 and IPv6 interchangeably which
 can lead to some unexpected results if an IPv6 address is detected as an
@@ -747,21 +775,21 @@ use <code>IPv6::fromEmbedded()</code>.</p>
 <p>It accepts both IPv4 and IPv6 addresses, embeds IPv4 addresses into IPv6
 according to the embedding strategy, and from that point on treats it purely as
 an IPv6 address.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">&lt;?php</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Strategy\Mapped</span><span class="p">;</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Ipv6</span><span class="p">;</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">// Strategy is optional; defaults to Mapped unless</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1">// Multi::setDefaultEmbeddingStrategy() called previously.</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IPv6</span><span class="o">::</span><span class="na">fromEmbedded</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Mapped</span><span class="p">);</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">getCompactedAddress</span><span class="p">();</span> <span class="c1">// string(&quot;::ffff:7f00:1&quot;)</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="k">try</span> <span class="p">{</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">getDotAddress</span><span class="p">();</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Error</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="c1">// IPv6 addresses are not considered IPv4 addresses and</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="c1">// therefore do not have the method getDotAddress().</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Strategy\Mapped</span><span class="p">;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Ipv6</span><span class="p">;</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">// Strategy is optional; defaults to Mapped unless</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1">// Multi::setDefaultEmbeddingStrategy() called previously.</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IPv6</span><span class="o">::</span><span class="na">fromEmbedded</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Mapped</span><span class="p">);</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">getCompactedAddress</span><span class="p">();</span> <span class="c1">// string(&quot;::ffff:7f00:1&quot;)</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="k">try</span> <span class="p">{</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    <span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">getDotAddress</span><span class="p">();</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Error</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>    <span class="c1">// IPv6 addresses are not considered IPv4 addresses and</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>    <span class="c1">// therefore do not have the method getDotAddress().</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="p">}</span>
 </code></pre></div>
 <blockquote>
 <p>Please note that calling <code>Multi::fromEmbedded()</code> returns an instance of

@@ -412,6 +412,95 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#benchmarking" class="md-nav__link">
+    Benchmarking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-use-global" class="md-nav__link">
+    Public Use (Global)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipv4-specific" class="md-nav__link">
+    IPv4 Specific
+  </a>
+  
+    <nav class="md-nav" aria-label="IPv4 Specific">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#broadcast" class="md-nav__link">
+    Broadcast
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reserved-for-future-use" class="md-nav__link">
+    Reserved for Future Use
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared" class="md-nav__link">
+    Shared
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipv6-specific" class="md-nav__link">
+    IPv6 Specific
+  </a>
+  
+    <nav class="md-nav" aria-label="IPv6 Specific">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unique-local" class="md-nav__link">
+    Unique Local
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unicast" class="md-nav__link">
+    Unicast
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unicast-global" class="md-nav__link">
+    Unicast Global
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -580,6 +669,95 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#benchmarking" class="md-nav__link">
+    Benchmarking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-use-global" class="md-nav__link">
+    Public Use (Global)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipv4-specific" class="md-nav__link">
+    IPv4 Specific
+  </a>
+  
+    <nav class="md-nav" aria-label="IPv4 Specific">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#broadcast" class="md-nav__link">
+    Broadcast
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reserved-for-future-use" class="md-nav__link">
+    Reserved for Future Use
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared" class="md-nav__link">
+    Shared
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipv6-specific" class="md-nav__link">
+    IPv6 Specific
+  </a>
+  
+    <nav class="md-nav" aria-label="IPv6 Specific">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unique-local" class="md-nav__link">
+    Unique Local
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unicast" class="md-nav__link">
+    Unicast
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unicast-global" class="md-nav__link">
+    Unicast Global
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -615,8 +793,8 @@ the embedding strategy used when creating the IP object.</p>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;::ffff:7f00:1&#39;</span><span class="p">);</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isEmbedded</span><span class="p">();</span> <span class="c1">// bool(true)</span>
 </code></pre></div>
-<p>If you would like to detect if the IP is an IPv4-embedded IPv6 address according
-to <a href="https://tools.ietf.org/html/rfc4291.html#section-2.5.5" title="IP Version 6 Addressing Architecture">RFC 4291</a>, please use the following conditional
+<p>If you would like to detect if the IP is an IPv4-embedded IPv6 address,
+according to <a href="https://tools.ietf.org/html/rfc4291.html" title="IP Version 6 Addressing Architecture">RFC 4291 section 2.5.5</a>, please use the following conditional
 statement:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">&lt;?php</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Strategy\Derived</span><span class="p">;</span>
@@ -626,9 +804,9 @@ statement:</p>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nv">$rfc4291</span> <span class="o">=</span> <span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isMapped</span><span class="p">()</span> <span class="o">||</span> <span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isCompatible</span><span class="p">();</span> <span class="c1">// bool(false)</span>
 </code></pre></div>
 <h3 id="mapped">Mapped</h3>
-<p>Whether the IP is an IPv4-mapped IPv6 address (eg, <code>::ffff:7f00:1</code>) according to
-<a href="https://tools.ietf.org/html/rfc4291#section-2.5.5.2" title="IP Version 6 Addressing Architecture">RFC 4291</a>. The <code>IPv4</code> class will always return
-<code>bool(false)</code> for this method.</p>
+<p>Whether the IP is an IPv4-mapped IPv6 address (eg, <code>::ffff:7f00:1</code>), according
+to <a href="https://tools.ietf.org/html/rfc4291" title="IP Version 6 Addressing Architecture">RFC 4291 section 2.5.5.2</a>. The <code>IPv4</code> class will always return <code>bool(false)</code> for
+this method.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">&lt;?php</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
@@ -636,9 +814,9 @@ statement:</p>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isMapped</span><span class="p">();</span> <span class="c1">// bool(true)</span>
 </code></pre></div>
 <h3 id="derived">Derived</h3>
-<p>Whether the IP is a 6to4-derived IPv6 address (eg, <code>2002:7f00:1::</code>) according
-to <a href="https://tools.ietf.org/html/rfc3056" title="Connection of IPv6 Domains via IPv4 Clouds">RFC 3056</a>. The <code>IPv4</code> class will always return
-<code>bool(false)</code> for this method.</p>
+<p>Whether the IP is a 6to4-derived IPv6 address (eg, <code>2002:7f00:1::</code>), according
+to <a href="https://tools.ietf.org/html/rfc3056" title="Connection of IPv6 Domains via IPv4 Clouds">RFC 3056</a>. The <code>IPv4</code> class will always return <code>bool(false)</code> for this
+method.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">&lt;?php</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -646,9 +824,9 @@ to <a href="https://tools.ietf.org/html/rfc3056" title="Connection of IPv6 Domai
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isDerived</span><span class="p">();</span> <span class="c1">// bool(true)</span>
 </code></pre></div>
 <h3 id="compatible">Compatible</h3>
-<p>Whether the IP is an IPv4-compatible IPv6 address (eg, <code>::7f00:1</code>) according to
-<a href="https://tools.ietf.org/html/rfc4291.html#section-2.5.5.1" title="IP Version 6 Addressing Architecture">RFC 4291</a>. The <code>IPv4</code> class will always return
-<code>bool(false)</code> for this method.</p>
+<p>Whether the IP is an IPv4-compatible IPv6 address (eg, <code>::7f00:1</code>), according to
+<a href="https://tools.ietf.org/html/rfc4291.html" title="IP Version 6 Addressing Architecture">RFC 4291 section 2.5.5.1</a>. The <code>IPv4</code> class will always return <code>bool(false)</code>
+for this method.</p>
 <blockquote>
 <p>IPv4-compatible IPv6 addresses are deprecated in the RFC.</p>
 </blockquote>
@@ -660,8 +838,10 @@ to <a href="https://tools.ietf.org/html/rfc3056" title="Connection of IPv6 Domai
 </code></pre></div>
 <h2 id="detecting-address-types">Detecting Address Types</h2>
 <h3 id="link-local">Link Local</h3>
-<p>Whether the IP is reserved for link-local usage according to
-<a href="https://tools.ietf.org/html/rfc3927" title="Dynamic Configuration of IPv4 Link-Local Addresses">RFC 3927</a> (IPv4) or <a href="https://tools.ietf.org/html/rfc4291" title="IP Version 6 Addressing Architecture">RFC 4291</a> (IPv6).</p>
+<p>Whether the IP is reserved for link-local usage, according to <a href="https://tools.ietf.org/html/rfc3927" title="Dynamic Configuration of IPv4 Link-Local Addresses">RFC
+3927</a> (IPv4) or <a href="https://tools.ietf.org/html/rfc4291" title="IP Version 6 Addressing Architecture">RFC 4291 section
+2.4</a>
+(IPv6).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">&lt;?php</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
@@ -669,9 +849,9 @@ to <a href="https://tools.ietf.org/html/rfc3056" title="Connection of IPv6 Domai
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isLinkLocal</span><span class="p">();</span> <span class="c1">// bool(false)</span>
 </code></pre></div>
 <h3 id="loopback">Loopback</h3>
-<p>Whether the IP is a loopback address according to
-<a href="https://tools.ietf.org/html/rfc3330" title="Special-Use IPv4 Addresses">RFC 3330</a>
-(IPv4) or <a href="https://tools.ietf.org/html/rfc2373" title="IP Version 6 Addressing Architecture">RFC 2373</a> (IPv6).</p>
+<p>Whether the IP is a loopback address, according to <a href="https://tools.ietf.org/html/rfc1122" title="Requirements for Internet Hosts -- Communication Layers">RFC 1122 section
+3.2.1.3</a> (IPv4) or <a href="https://tools.ietf.org/html/rfc2373" title="IP Version 6 Addressing Architecture">RFC 4291 section
+2.5.3</a> (IPv6).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">&lt;?php</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
@@ -679,9 +859,10 @@ to <a href="https://tools.ietf.org/html/rfc3056" title="Connection of IPv6 Domai
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isLoopback</span><span class="p">();</span> <span class="c1">// bool(true)</span>
 </code></pre></div>
 <h3 id="multicast">Multicast</h3>
-<p>Whether the IP is a multicast address according to
-<a href="https://tools.ietf.org/html/rfc3171" title="IANA Guidelines for IPv4 Multicast Address Assignments">RFC 3171</a> (IPv4) or
-<a href="https://tools.ietf.org/html/rfc2373" title="IP Version 6 Addressing Architecture">RFC 2373</a> (IPv6).</p>
+<p>Whether the IP is a multicast address, according to <a href="https://tools.ietf.org/html/rfc5771" title="IANA Guidelines for IPv4 Multicast Address Assignments">RFC
+5771</a> (IPv4) or <a href="https://tools.ietf.org/html/rfc4291" title="IP Version 6 Addressing Architecture">RFC 4291 section
+2.7</a>
+(IPv6).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">&lt;?php</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
@@ -689,8 +870,8 @@ to <a href="https://tools.ietf.org/html/rfc3056" title="Connection of IPv6 Domai
 <a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isMulticast</span><span class="p">();</span> <span class="c1">// bool(false)</span>
 </code></pre></div>
 <h3 id="private-use">Private Use</h3>
-<p>Whether the IP is for private use according to
-<a href="https://tools.ietf.org/html/rfc1918" title="Address Allocation for Private Internets">RFC 1918</a> (IPv4) or <a href="https://tools.ietf.org/html/rfc4193" title="Unique Local IPv6 Unicast Addresses">RFC 4193</a> (IPv6).</p>
+<p>Whether the IP is for private use, according to
+<a href="https://tools.ietf.org/html/rfc1918" title="Address Allocation for Private Internets">RFC 1918 section 3</a> (IPv4) or <a href="https://tools.ietf.org/html/rfc4193" title="Unique Local IPv6 Unicast Addresses">RFC 4193</a> (IPv6).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">&lt;?php</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
@@ -698,14 +879,107 @@ to <a href="https://tools.ietf.org/html/rfc3056" title="Connection of IPv6 Domai
 <a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isPrivateUse</span><span class="p">();</span> <span class="c1">// bool(false)</span>
 </code></pre></div>
 <h3 id="unspecified">Unspecified</h3>
-<p>Whether the IP is unspecified according to
+<p>Whether the IP is unspecified, according to
 <a href="https://tools.ietf.org/html/rfc5735" title="Special Use IPv4 Addresses">RFC 5735</a>
-(IPv4) or <a href="https://tools.ietf.org/html/rfc2373" title="IP Version 6 Addressing Architecture">RFC 2373</a> (IPv6).</p>
+(IPv4) or <a href="https://tools.ietf.org/html/rfc2373" title="IP Version 6 Addressing Architecture">RFC 2373 section 2.5.2</a> (IPv6).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">&lt;?php</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
 <a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isUnspecified</span><span class="p">();</span> <span class="c1">// bool(false)</span>
+</code></pre></div>
+<h3 id="benchmarking">Benchmarking</h3>
+<p>Whether the IP is reserved for network devices benchmarking, according to
+<a href="https://tools.ietf.org/html/rfc2544" title="Benchmarking Methodology for Network Interconnect Devices">RFC 2544</a> corrected in <a href="https://www.rfc-editor.org/errata/eid423">errata
+423</a> (IPv4) or <a href="https://tools.ietf.org/html/rfc5180" title="IPv6 Benchmarking Methodology for Network Interconnect Devices">RFC
+5180</a> corrected in <a href="https://www.rfc-editor.org/errata/eid1752">errata
+1752</a> (IPv6).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isBenchmarking</span><span class="p">();</span> <span class="c1">// bool(false)</span>
+</code></pre></div>
+<h3 id="documentation">Documentation</h3>
+<p>Whether the IP is in range designated for documentation, according to
+<a href="https://tools.ietf.org/html/rfc5737" title="IPv4 Address Blocks Reserved for Documentation">RFC 5737</a> (IPv4) or <a href="https://tools.ietf.org/html/rfc3849" title="IPv6 Address Prefix Reserved for Documentation">RFC 3849</a> (IPv6).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isDocumentation</span><span class="p">();</span> <span class="c1">// bool(false)</span>
+</code></pre></div>
+<h3 id="public-use-global">Public Use (Global)</h3>
+<p>Whether the IP appears to be publicly/globally routable (please refer to the
+following:</p>
+<ul>
+<li><a href="https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml">IANA IPv4 Special-Purpose Address Registry</a></li>
+<li><a href="https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml">IANA IPv6 Special-Purpose Address Registry</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isPublic</span><span class="p">();</span> <span class="c1">// bool(false)</span>
+</code></pre></div>
+<h2 id="ipv4-specific">IPv4 Specific</h2>
+<p>These methods will throw a <code>WrongVersionException</code> if called from <code>Multi</code> on an
+IPv6 address (non IPv4-embedded).</p>
+<h3 id="broadcast">Broadcast</h3>
+<p>Whether the IP is a broadcast address, according to
+<a href="https://tools.ietf.org/html/rfc919" title="BROADCASTING INTERNET DATAGRAMS">RFC 919</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isBroadcast</span><span class="p">();</span> <span class="c1">// bool(false)</span>
+</code></pre></div>
+<h3 id="reserved-for-future-use">Reserved for Future Use</h3>
+<p>Whether the IP is reserved for future use, according to <a href="https://tools.ietf.org/html/rfc1112" title="Host Extensions for IP Multicasting">RFC
+1112</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isFutureReserved</span><span class="p">();</span> <span class="c1">// bool(false)</span>
+</code></pre></div>
+<h3 id="shared">Shared</h3>
+<p>Whether the IP is part of the Shared Address Space, according to <a href="https://tools.ietf.org/html/rfc6598" title="IANA-Reserved IPv4 Prefix for Shared Address Space">RFC
+6598</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isShared</span><span class="p">();</span> <span class="c1">// bool(false)</span>
+</code></pre></div>
+<h2 id="ipv6-specific">IPv6 Specific</h2>
+<h3 id="unique-local">Unique Local</h3>
+<p>Whether the IP is a unique local address, according to <a href="https://tools.ietf.org/html/rfc4193" title="Unique Local IPv6 Unicast Addresses">RFC
+4193</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;::1&#39;</span><span class="p">);</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isUniqueLocal</span><span class="p">();</span> <span class="c1">// bool(false)</span>
+</code></pre></div>
+<h3 id="unicast">Unicast</h3>
+<p>Whether the IP is a unicast address, according to <a href="https://tools.ietf.org/html/rfc4291" title="IP Version 6 Addressing Architecture">RFC
+4291</a> (any IPv6 address that is not a multicast address is unicast, and
+vice-versa).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;::1&#39;</span><span class="p">);</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isUnicast</span><span class="p">();</span> <span class="c1">// bool(false)</span>
+</code></pre></div>
+<h3 id="unicast-global">Unicast Global</h3>
+<p>Whether the IP is a globally routable unicast address, according to <a href="https://tools.ietf.org/html/rfc2941" title="IP Version 6 Addressing Architecture">RFC 4291
+section 2.5.4</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="k">use</span> <span class="nx">Darsyn\IP\Version\Multi</span> <span class="k">as</span> <span class="nx">IP</span><span class="p">;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="nv">$ip</span> <span class="o">=</span> <span class="nx">IP</span><span class="o">::</span><span class="na">factory</span><span class="p">(</span><span class="s1">&#39;::1&#39;</span><span class="p">);</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="nv">$ip</span><span class="o">-&gt;</span><span class="na">isUnicastGlobal</span><span class="p">();</span> <span class="c1">// bool(false)</span>
 </code></pre></div>
 
               
