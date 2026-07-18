@@ -1,115 +1,197 @@
 <!doctype html>
-<html class="no-js" lang="en-GB">
+<html lang="en-GB">
     <head>
         <meta charset="utf-8">
-        <title>Zan Baldwin</title>
-        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/assets/css/latex.css">
-        <meta name="theme-color" content="#f8f9fa">
+        <meta name="theme-color" content="#1b1e24">
+        <meta name="description" content="Zan Baldwin: Senior Software Engineer using Rust and PHP">
+        <title>Zan Baldwin</title>
         <script type="application/ld+json">
             {
                 "@context": "http://schema.org/",
                 "@type": "Person",
                 "givenName": "Zan",
                 "familyName": "Baldwin",
-                "gender": "Female",
-                "honorificPrefix": "Ms",
                 "email": "hello@zanbaldwin.com",
                 "image": {
                     "@type": "ImageObject",
                     "contentUrl": "https://zanbaldwin.com/profile.jpg",
                     "encodingFormat": "image/jpeg",
-                    "sha256": "d4f6c91348803b36d693c28f2047fec580ddaf61b7f10a6a12621517d872df76",
-                    "width": 676,
-                    "height": 676
-                },
-                "nationality": {
-                    "@type": "Country",
-                    "name": "United Kingdom"
+                    "sha256": "015119fc770ebd0482660dbf74325fe29dfe2bf5acf62876f4b358290f54f5bd",
+                    "width": 402,
+                    "height": 403
                 },
                 "url": "https://zanbaldwin.com",
                 "sameAs": [
-                    "https://twitter.com/ZanBaldwin",
-                    "https://www.instagram.com/zanbaldwin",
-                    "https://github.com/zanbaldwin"
+                    "https://bsky.app/profile/zanbaldwin.com",
+                    "https://github.com/zanbaldwin",
+                    "https://www.linkedin.com/in/zanbaldwin/"
                 ],
-                "vatID": "NL003612100B44",
-                "jobTitle": "Software Developer",
-                "worksFor": {
-                    "@type": "Organization",
-                    "name": "SmarterQueue",
-                    "email": "info@smarterqueue.com",
-                    "url": "https://smarterqueue.com",
-                    "address": {
-                        "@type": "PostalAddress",
-                        "addressCountry": {
-                            "@type": "Country",
-                            "name": "United Kingdom"
-                        },
-                        "addressLocality": "London",
-                        "postalCode": "WC1N 3AX",
-                        "streetAddress": "27 Old Gloucester Street"
-                    },
-                    "logo": "https://smarterqueue.com/images/logos/smarterqueue_logo_header_430x100.png",
-                    "sameAs": [
-                        "https://twitter.com/smarterqueue",
-                        "https://www.facebook.com/smarterqueue",
-                        "https://www.linkedin.com/company/smarterqueue"
-                    ],
-                    "image": [
-                        "https://smarterqueue.com/images/marketing/wide_categorised_schedule.jpg",
-                        "https://smarterqueue.com/images/marketing/lp_search_filters.png",
-                        "https://smarterqueue.com/images/marketing/lp_category_stats.png"
-                    ]
-                }
+                "jobTitle": "Senior Software Engineer"
             }
         </script>
+        <style type="text/css">
+            :root {
+                --bg: #1b1e24;
+                --bg-soft:#21252b;
+                --text: #abb2bf;
+                --ink: #e6e9ef;
+                --muted: #5c6370;
+                --kw: #c678dd;
+                --fn: #61afef;
+                --str: #98c379;
+                --accent: #e0a561;
+                --link: #61afef;
+                --hair: #2c313a;
+                --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+            }
+            * { box-sizing: border-box; }
+            html { -webkit-text-size-adjust: 100%; }
+            body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+            main { max-width: 720px; margin: 0 auto; padding: 8vh 24px 12vh; }
+            a { color: var(--link); text-decoration: none; }
+            a:hover, a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+            header small { font-family: var(--mono); color: var(--muted); font-size: 0.85rem; }
+            h1 { font-family: var(--mono); color: var(--ink); font-size: clamp(2rem, 7vw, 2.9rem); font-weight: 800; letter-spacing: -0.01em; margin: 0.2em 0 0.15em; line-height: 1.05; }
+            header p:first-of-type { font-family: var(--mono); color: var(--ink); font-size: 1rem; margin: 0 0 1.5em; }
+            header p:first-of-type b { color: var(--accent); font-weight: normal; }
+            header p:not(:first-of-type) { margin: 0.5em 0 0; max-width: 60ch; text-indent: 1em; }
+            section { margin-top: 3em; }
+            h2, h3 { font-family: var(--mono); font-size: 1.05rem; margin: 0; color: var(--fn); font-weight: 700; }
+            h3 { text-transform: lowercase; }
+            h2::before, h3::before { color: var(--kw); font-style: italic; font-weight: normal; }
+            h2::before {content: "impl Display for "; }
+            h3::before { content: "pub fn "; }
+            h2::after { content: " {"; color: var(--ink); }
+            h3::after { content: "() {"; color: var(--ink); }
+            section::after { content: "}"; display: block; font-family: var(--mono); color: var(--ink); font-weight: 600; margin-top: 0.9em; }
+            section > ul, section > dl { border-left: 1px solid var(--hair); margin: 0.9em 0; padding: 0.2em 0 0.2em 1.4em; }
+            section > ul { list-style: none; }
+            li { margin: 0 0 1.5em; }
+            li:last-child { margin-bottom: 0.2em; }
+            li > h4 { padding-right: 0.5em; display: inline; font-family: var(--mono); font-size: 1rem; font-weight: 700; color: var(--ink); margin: 0; }
+            li > h4 small { color: var(--muted); font-weight: 600; font-size: 1em; }
+            li > i { font-family: var(--mono); font-style: normal; color: var(--accent); font-size: 0.8rem; }
+            li > i::before { content: "// "; }
+            li > p { margin: 0.15em 0 0.35em; max-width: 62ch; color: var(--text); }
+            li > p code { font-family: var(--mono); }
+            li > p:has(b) { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); max-width: none; margin: 0; }
+            li > p:has(b) b { color: var(--str); }              /* language */
+            li > ul { display: flex; flex-wrap: wrap; list-style: none; font-family: var(--mono); font-size: 0.82rem; margin: 0.25em 0 0; padding: 0; }
+            li > ul li { margin: 0; }
+            li > ul li + li::before { content: "·"; color: var(--muted); margin: 0 0.4em; }
+            section > dl { display: grid; grid-template-columns: 8.5em 1fr; row-gap: 0.5em; }
+            section > dl dt { font-family: var(--mono); color: var(--muted); }
+            section > dl dd { margin: 0; }
+            footer { margin-top: 4em; padding-top: 1.4em; border-top: 1px solid var(--hair); }
+            footer p:first-of-type { font-family: var(--mono); color: var(--muted); font-size: 0.85rem; margin: 0; }
+            footer p:last-of-type { margin: 0.6em 0 0; color: var(--muted); font-size: 0.85rem; max-width: 60ch; }
+            footer code { font-family: var(--mono); color: var(--accent); }
+            @media (max-width: 600px) {
+                main { padding: 6vh 18px 10vh; }
+                section > ul, section > dl { padding-left: 1em; }
+                section > dl { grid-template-columns: 1fr; row-gap: 0.15em; }
+            }
+        </style>
     </head>
     <body>
-        <header>
-            <h1>Zan Baldwin</h1>
-        </header>
-
-        <nav role="navigation" class="toc">
-            <h3>Contents</h3>
-            <ol>
-                <li><a href="/resume.html">Résumé</a></li>
-                <li><b>Projects</b>
-                    <ol>
-                        <li><a href="https://github.com/darsyn/ip"><code>darsyn/ip</code></a></li>
-                        <li><a href="https://github.com/zanbaldwin/dotfiles"><code>zanbaldwin/dotfiles</code></a></li>
-                    </ol>
-                </li>
-                <li><b>Talks</b>
-                    <ol>
-                        <li><a href="/talks/2019/04/fun-experiments-in-php.html">Fun Experiments in PHP (Not for Production)</a></li>
-                        <li><a href="/talks/2018/09/symfony-open-source-community.html">The Symfony Open-source Community</a></li>
-                    </ol>
-                </li>
-                <li><b>Posts</b>
-                    <ol>
-                        <li><a href="/posts/2019/03/what-is-symfony.html">What is Symfony?</a></li>
-                    </ol>
-                </li>
-            </ol>
-        </nav>
-
-        <h2>Contact</h2>
-
-        <p>You can contact me at:</p>
-        <address style="font-style: normal;">
-            <a href="&#109;&#97;&#105;&#x006C;&#x0074;&#x006F;&#58;&#104;&#101;&#108;&#108;&#111;&#43;&#119;&#101;&#98;&#115;&#x0069;&#116;&#101;&#64;&#x007A;&#97;&#110;&#98;&#x0061;&#108;&#100;&#119;&#x0069;&#110;&#46;&#x0063;&#x006F;&#x006D;" style="color: #1a1818; text-decoration: none; font-size: 92%; font-family: Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;">
-                <span style="unicode-bidi: bidi-override; direction: rtl;">&#x006D;&#x006F;&#99;&#x002E;&#x006E;&#105;&#x0077;&#100;&#108;&#x0061;&#98;&#x006E;&#97;&#x007A;&#64;&#x006F;&#108;&#108;&#101;&#104;</span>
-            </a>
-        </address>
-        <p>Or find me on any of the following:</p>
-        <ul class="social">
-            <li><a href="https://github.com/zanbaldwin" style="background-image: url('/assets/icons/github.svg');" class="monochrome"><span>GitHub</span></a></li>
-            <li><a href="https://symfony-devs.slack.com/team/UBHGRU3NW" title="@Zan on Symfony Dev's Slack" style="background-image: url('/assets/icons/slack.svg');">Slack: Symfony Devs</a></li>
-            <li><a href="https://twitter.com/ZanBaldwin" style="background-image: url('/assets/icons/twitter.svg')">Twitter</a></li>
-            <li><a href="https://www.polywork.com/zanbaldwin" style="background-image: url('/assets/icons/polywork.svg')">Polywork</a></li>
-            <li><a href="https://www.instagram.com/zanbaldwin" style="background-image: url('/assets/icons/instagram.svg')" class="monochrome"><span>Instagram</span></a></li>
-        </ul>
+        <main>
+            <header>
+                <small>$ whoami</small>
+                <h1>Zan Baldwin</h1>
+                <p>Senior Software Engineer: <b>Rust</b> · PHP · Systems</p>
+                <p>
+                    Sixteen years of production experience, from software supply chain infrastructure at Packagist to
+                    healthcare compliance, fintech regulation, and high-traffic event platforms.
+                    Experience in scalable API design, security-sensitive systems, and open-source community leadership.
+                </p>
+                <p>
+                    After over a decade climbing from junior to conference keynotes, I enjoyed the ascent to the top of
+                    the PHP world more than being there; I'm making that climb again in Rust. Strongest where
+                    correctness matters more than shipping speed.
+                </p>
+            </header>
+            <section>
+                <h2>Resume</h2>
+                <dl>
+                    <dt>screen (dark)</dt>
+                    <dd><a href="https://zanbaldwin.com/resume.pdf">resume.pdf</a></dd>
+                    <dt>print (light)</dt>
+                    <dd><a href="https://zanbaldwin.com/print.pdf">print.pdf</a></dd>
+                </dl>
+            </section>
+            <section>
+                <h3>Projects</h3>
+                <ul>
+                    <li>
+                        <h4><small>zanbaldwin/</small>fakesky</h4>
+                        <i>in progress</i>
+                        <p>
+                            Hands-on <code>did:plc</code> tamper-detection training on a web platform that teaches
+                            ATProto identity-attack recovery by doing it yourself: real commands on throwaway
+                            identities.
+                        </p>
+                        <p><b>Rust</b> · Axum · Pingora</p>
+                    </li>
+                    <li>
+                        <h4><small>zanbaldwin/</small>atshield</h4>
+                        cryptographically-verified tamper-detection for ATProto
+                        <p>
+                            Re-verifies every did:plc operation from scratch: canonical DAG-CBOR, strict low-S ECDSA,
+                            attributes each change to its signing key, and validated against the official interop
+                            vectors.
+                        </p>
+                        <p><b>Rust</b> · library + CLI</p>
+                        <ul>
+                            <li><a href="https://github.com/zanbaldwin/atshield" target="_blank" rel="noopener">github.com</a></li>
+                            <li><a href="https://crates.io/crates/atshield-core" target="_blank" rel="noopener">crates.io</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4><small>darsyn/</small>ip</h4>
+                        128-bit byte-level IP address library
+                        <p>
+                            Author and maintainer since 2015, six major versions, Doctrine integration, dependency-free.
+                            Aligned with the IANA special-purpose registries. One codebase, tested across ten PHP
+                            runtimes (7.1–8.5) and verified by ~6k tests, under strict SemVer and static analysis.
+                        </p>
+                        <p><b>PHP</b> · 2M+ installs · ~35k/month</p>
+                        <ul>
+                            <li><a href="https://github.com/darsyn/ip" target="_blank" rel="noopener">github.com</a></li>
+                            <li><a href="https://packagist.org/packages/darsyn/ip/stats" target="_blank" rel="noopener">packagist.org</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4><small>zanbaldwin/</small>rawr</h4>
+                        content-addressed offline archival tool
+                        <p>
+                            BLAKE3-addressed content storage, compile-time typestate-enforced state machine, Tokio
+                            streaming, pluggable local/S3 backends.
+                        </p>
+                        <p><b>Rust</b> · 11-crate workspace</p>
+                        <ul>
+                            <li><a href="https://github.com/zanbaldwin/rawr" target="_blank" rel="noopener">github.com</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h3>Links</h3>
+                <dl>
+                    <dt>GitHub</dt>
+                    <dd><a href="https://github.com/zanbaldwin" target="_blank" rel="noopener">github.com/zanbaldwin</a></dd>
+                    <dt>Bluesky</dt>
+                    <dd><a href="https://bsky.app/profile/zanbaldwin.com" target="_blank" rel="noopener">@zanbaldwin.com</a></dd>
+                    <dt>LinkedIn</dt>
+                    <dd><a href="https://www.linkedin.com/in/zanbaldwin/" target="_blank" rel="noopener">/in/zanbaldwin</a></dd>
+                    <dt>Email</dt>
+                    <dd><a href="mailto:hello@zanbaldwin.com">hello@zanbaldwin.com</a></dd>
+                </dl>
+            </section>
+            <footer>
+                <p>2026 <code>@zanbaldwin.com</code></p>
+                <p>Made with spite, contempt, and matcha 🍵</p>
+            </footer>
+        </main>
     </body>
 </html>
