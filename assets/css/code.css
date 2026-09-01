@@ -1,0 +1,103 @@
+pre {
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+}
+
+code.php span.comment {
+    color: #a0a1a7;
+    font-style: italic;
+}
+code.php span.doc {
+    color: #50a14f;
+}
+code.php span.identifier {
+    color: #009526;
+}
+code.php span.keyword {
+    color: #a626a4;
+}
+code.php span.literal {
+    color: #986801;
+}
+code.php span.string {
+    color: #e60415;
+}
+code.php span.variable {
+    color: #3462c6;
+}
+code.php span.function {
+    color: #065e1d;
+}
+
+code.twig span.comment {
+    color: #a0a1a7;
+    font-style: italic;
+}
+code.twig span.output {
+    color: #009526;
+}
+code.twig span.variable {
+    color: #3462c6;
+}
+
+code.yaml span.comment {
+    color: #a0a1a7;
+    font-style: italic;
+}
+code.yaml span.keyword {
+    color: #009526;
+}
+code.yaml span.string {
+    color: #e60415;
+}
+
+@media (prefers-color-scheme: dark) {
+    pre {
+        background-color: #353535;
+    }
+    code.php span.comment {
+        color: #808080 !important;
+    }
+    code.php span.doc {
+        color: #629755 !important;
+    }
+    code.php span.identifier {
+        color: #ffc66d !important;
+    }
+    code.php span.keyword {
+        color: #cc7832 !important;
+    }
+    code.php span.literal {
+        color: #6897bb !important;
+    }
+    code.php span.string {
+        color: #70bb44 !important;
+    }
+    code.php span.variable {
+        color: #cea7e3 !important;
+    }
+    code.php span.function {
+        color: #45d1ff !important;
+    }
+
+    code.twig span.comment {
+        color: #808080 !important;
+    }
+    code.twig span.output {
+        color: #00b32e !important;
+    }
+    code.twig span.variable {
+        color: #d0df01 !important;
+    }
+
+    code.yaml span.comment {
+        color: #808080 !important;
+    }
+    code.yaml span.keyword {
+        color: #ff943b !important;
+    }
+    code.yaml span.string {
+        color: #70bb44 !important;
+    }
+}
